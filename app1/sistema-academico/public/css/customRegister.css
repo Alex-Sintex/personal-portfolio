@@ -1,0 +1,425 @@
+/* CUSTOM REGISTER VIEW STYLE */
+.invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: .25rem;
+  font-size: .875em;
+}
+
+/* Card */
+.cardC {
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, .2);
+  background: transparent;
+}
+
+.cardC-header,
+.cardC-footer {
+  border-color: #ebeef4;
+  background-color: #fff;
+  color: #798eb3;
+  padding: 15px;
+}
+
+.cardC-title {
+  padding: 20px 0 15px 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #2b5c36;
+  font-family: "Poppins", sans-serif;
+}
+
+.cardC-title span {
+  color: #899bbd;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.cardC-body {
+    padding: 0 20px 5px 20px;
+
+}
+
+.cardC-img-overlay {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.profile {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.cont {
+  position: relative;
+  width: 30%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 25px;
+  margin: 0px auto 20px;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #405c36;
+  overflow: hidden;
+  width: 0;
+  height: 100%;
+  transition: .5s ease;
+  pointer-events: none;
+}
+
+.cont:hover .profile {
+  opacity: 0.3;
+}
+
+.cont:hover .overlay {
+  opacity: 1;
+  width: 100%;
+}
+
+.text {
+  white-space: nowrap;
+  color: white;
+  font-size: medium;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+#file {
+  display: none;
+}
+
+input[type=file] {
+    display: block;
+
+}
+
+/*--------------------------------------------------------------
+# Dropdown Register page
+--------------------------------------------------------------*/
+/*Styling Selectbox*/
+.dropdownC {
+  width: 100%;
+  display: block;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: all .5s ease;
+  position: relative;
+  font-size: 14px;
+  color: #474747;
+  height: auto;
+  text-align: left
+}
+
+.dropdownC .select {
+    cursor: pointer;
+    display: block;
+    padding: 5px;
+    margin-top: 10px;
+
+}
+
+.dropdownC .select>i {
+  font-size: 13px;
+  color: #888;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  float: right;
+  line-height: 20px
+}
+
+.dropdownC:hover {
+  box-shadow: 0 0 4px rgb(204, 204, 204)
+}
+
+.dropdownC:active {
+  background-color: #f8f8f8
+}
+
+.dropdownC.active:hover,
+.dropdownC.active {
+  box-shadow: 0 0 4px rgb(204, 204, 204);
+  border-radius: 2px 2px 0 0;
+  background-color: #f8f8f8
+}
+
+.dropdownC.active .select>i {
+  transform: rotate(-90deg)
+}
+
+.dropdownC .dropdownC-menu {
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  left: 0;
+  margin-top: 1px;
+  box-shadow: 0 1px 2px rgb(204, 204, 204);
+  border-radius: 0 1px 2px 2px;
+  overflow: hidden;
+  display: none;
+  height: auto;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.dropdownC .dropdownC-menu li {
+  padding: 10px;
+  transition: all .2s ease-in-out;
+  cursor: pointer
+}
+
+.dropdownC .dropdownC-menu {
+  padding: 0;
+  list-style: none;
+}
+
+.dropdownC .dropdownC-menu li:hover {
+  background-color: #f2f2f2
+}
+
+.dropdownC .dropdownC-menu li:active {
+  background-color: #e2e2e2
+}
+
+/*--------------------------------------------------------------
+# Dropdown users page
+--------------------------------------------------------------*/
+/* Styling Selectbox */
+.dropdownUs {
+  width: 100%;
+  display: contents;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: all .5s ease;
+  position: relative;
+  font-size: 14px;
+  color: #474747;
+  height: auto;
+  text-align: left
+}
+
+.dropdownUs .select {
+  cursor: pointer;
+  display: block;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.dropdownUs .select>i {
+  font-size: 13px;
+  color: #888;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  float: right;
+  line-height: 20px
+}
+
+.dropdownUs:hover {
+  box-shadow: 0 0 4px rgb(204, 204, 204)
+}
+
+.dropdownUs:active {
+  background-color: #f8f8f8
+}
+
+.dropdownUs.active:hover,
+.dropdownUs.active {
+  box-shadow: 0 0 4px rgb(204, 204, 204);
+  border-radius: 2px 2px 0 0;
+  background-color: #f8f8f8
+}
+
+.dropdownUs.active .select>i {
+  transform: rotate(-90deg)
+}
+
+.dropdownUs .dropdownUs-menu {
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  left: 0;
+  margin-top: 1px;
+  box-shadow: 0 1px 2px rgb(204, 204, 204);
+  border-radius: 0 1px 2px 2px;
+  overflow: hidden;
+  display: none;
+  height: auto;
+  overflow-y: auto;
+  z-index: 999;
+
+}
+
+.dropdownUs .dropdownUs-menu li {
+  padding: 10px;
+  transition: all .2s ease-in-out;
+  cursor: pointer
+}
+
+.dropdownUs .dropdownUs-menu {
+  padding: 0;
+  list-style: none;
+}
+
+/* Edit dropdw users */
+.dropdownEditU {
+  width: 100%;
+  display: contents;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: all .5s ease;
+  position: relative;
+  font-size: 14px;
+  color: #474747;
+  height: auto;
+  text-align: left
+}
+
+.dropdownEditU .select {
+    cursor: pointer;
+    display: block;
+    padding: 5px;
+    margin-top: 10px;
+
+}
+
+.dropdownEditU .select>i {
+  font-size: 13px;
+  color: #888;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  float: right;
+  line-height: 20px
+}
+
+.dropdownEditU:hover {
+  box-shadow: 0 0 4px rgb(204, 204, 204)
+}
+
+.dropdownEditU:active {
+  background-color: #f8f8f8
+}
+
+.dropdownEditU.active:hover,
+.dropdownEditU.active {
+  box-shadow: 0 0 4px rgb(204, 204, 204);
+  border-radius: 2px 2px 0 0;
+  background-color: #f8f8f8
+}
+
+.dropdownEditU.active .select>i {
+  transform: rotate(-90deg)
+}
+
+.dropdownEditU .dropdownEditU-menu {
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  left: 0;
+  margin-top: 1px;
+  box-shadow: 0 1px 2px rgb(204, 204, 204);
+  border-radius: 0 1px 2px 2px;
+  overflow: hidden;
+  display: none;
+  height: auto;
+  overflow-y: auto;
+  z-index: 999;
+
+}
+
+.dropdownEditU .dropdownEditU-menu li {
+  padding: 10px;
+  transition: all .2s ease-in-out;
+  cursor: pointer
+}
+
+.dropdownEditU .dropdownEditU-menu {
+  padding: 0;
+  list-style: none;
+}
+
+/* dropdw edit career user */
+.dropdownEditC {
+  width: 100%;
+  display: contents;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: all .5s ease;
+  position: relative;
+  font-size: 14px;
+  color: #474747;
+  height: auto;
+  text-align: left
+}
+
+.dropdownEditC .select {
+    cursor: pointer;
+    display: block;
+    padding: 5px;
+    margin-top: 10px;
+
+}
+
+.dropdownEditC .select>i {
+  font-size: 13px;
+  color: #888;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  float: right;
+  line-height: 20px
+}
+
+.dropdownEditC:hover {
+  box-shadow: 0 0 4px rgb(204, 204, 204)
+}
+
+.dropdownEditC:active {
+  background-color: #f8f8f8
+}
+
+.dropdownEditC.active:hover,
+.dropdownEditC.active {
+  box-shadow: 0 0 4px rgb(204, 204, 204);
+  border-radius: 2px 2px 0 0;
+  background-color: #f8f8f8
+}
+
+.dropdownEditC.active .select>i {
+  transform: rotate(-90deg)
+}
+
+.dropdownEditC .dropdownEditC-menu {
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  left: 0;
+  margin-top: 1px;
+  box-shadow: 0 1px 2px rgb(204, 204, 204);
+  border-radius: 0 1px 2px 2px;
+  overflow: hidden;
+  display: none;
+  height: auto;
+  overflow-y: auto;
+  z-index: 999;
+
+}
+
+.dropdownEditC .dropdownEditC-menu li {
+  padding: 10px;
+  transition: all .2s ease-in-out;
+  cursor: pointer
+}
+
+.dropdownEditC .dropdownEditC-menu {
+  padding: 0;
+  list-style: none;
+}
