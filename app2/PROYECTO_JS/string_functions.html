@@ -10,7 +10,41 @@
         let word = 'JavaScript';
         document.write('La palabra es: ', word);
         document.write('<br>');
+
+        document.write('Cantidad de letras: ', word.length); // Sees the length of the string
+        document.write('<br>');
+
+        document.write('Primeras 4 letras: ', word.slice(0, 4)); // Sees the first 4 letters
+        document.write('<br>');
+
+        document.write('Primeras 4 letras: ', word.substring(0, 4)); // Sees the first 4 letters
+        document.write('<br>');
         
+        let salute = 'Hola a todos';
+        salute = salute.replace('Hola', 'Adios'); // Replaces 'Hola' with 'adios'
+        document.write(salute);
+        document.write('<br>');
+
+        document.write('En mayusculas: ', word.toUpperCase()); // Converts to uppercase
+        document.write('<br>');
+        document.write('En minusculas: ', word.toLowerCase()); // Converts to lowercase
+        document.write('<br>');
+
+        let word2 = 'Curso de ';
+        document.write('Unir palabras: ', word2.concat(word)); // Joins two strings
+        document.write('<br>');
+
+        let word3 = '    Hola    ';
+        document.write(word3);
+        document.write('<br>');
+        document.write(word3.trimStart()); // Removes spaces at the beginning
+        document.write('<br>');
+        document.write(word3.trimEnd()); // Removes spaces at the end
+        document.write('<br>');
+        document.write(word3.trim()); // Removes spaces at the beginning and end
+        document.write('<br>');
+
+        document.write(word.split('Java')); // Splits the string into an array
         
     </script>
 </body>

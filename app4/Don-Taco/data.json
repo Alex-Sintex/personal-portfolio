@@ -1,0 +1,40 @@
+[
+    {
+        "id": 1,
+        "Fecha": "09/05/25",
+        "carne": "0.0",
+        "queso": "0.0",
+        "tortilla_maiz": "0.0",
+        "tortilla_h_gde": "42.0",
+        "longaniza": "0.0",
+        "pan": "28.0",
+        "bodegon": "0.0",
+        "adel_marcos": "0.0",
+        "trans_marcos": "0.0",
+        "nomina": "550.0",
+        "nomina_weekend": "0.0",
+        "mundo_novi": "0.0",
+        "color": "0.0",
+        "otros": "256.0",
+        "observaciones": "taxi 100, chedraui 6, gas 150."
+    },
+    {
+        "id": 2,
+        "Fecha": "10/05/25",
+        "carne": "0.0",
+        "queso": "0.0",
+        "tortilla_maiz": "0.0",
+        "tortilla_h_gde": "42.0",
+        "longaniza": "0.0",
+        "pan": "28.0",
+        "bodegon": "0.0",
+        "adel_marcos": "0.0",
+        "trans_marcos": "0.0",
+        "nomina": "550.0",
+        "nomina_weekend": "0.0",
+        "mundo_novi": "0.0",
+        "color": "0.0",
+        "otros": "256.0",
+        "observaciones": "taxi 100, chedraui 6, gas 150."
+    }
+]
