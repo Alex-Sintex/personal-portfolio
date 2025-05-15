@@ -25,23 +25,25 @@
             <caption>Gastos diarios</caption>
             <thead>
                 <tr>
-                    <th>Fecha</th>
-                    <th>Carne</th>
-                    <th>Queso</th>
-                    <th>Tortilla Maíz</th>
-                    <th>Tortilla Harina Grande</th>
-                    <th>Longaniza</th>
-                    <th>Pan</th>
-                    <th>Bodegón</th>
-                    <th>Adelanto Marcos</th>
-                    <th>Transporte Marcos</th>
-                    <th>Nómina</th>
-                    <th>Nómina Weekend</th>
-                    <th>Mundo Novi</th>
-                    <th>Color</th>
-                    <th>Otros</th>
-                    <th>Observaciones</th>
-                    <th>Acción</th>
+                    <th scope="col">No.</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Carne</th>
+                    <th scope="col">Queso</th>
+                    <th scope="col">Tortilla Maíz</th>
+                    <th scope="col">Tortilla Harina Grande</th>
+                    <th scope="col">Longaniza</th>
+                    <th scope="col">Pan</th>
+                    <th scope="col">Bodegón</th>
+                    <th scope="col">Adelanto Marcos</th>
+                    <th scope="col">Transporte Marcos</th>
+                    <th scope="col">Nómina</th  >
+                    <th scope="col">Nómina Weekend</th>
+                    <th scope="col">Mundo Novi</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Otros</th>
+                    <th scope="col">Observaciones</th>
+                    <th scope="col">Total Gastos Diarios</th>
+                    <th scope="col">Acción</th>
                 </tr>
             </thead>
         </table>
