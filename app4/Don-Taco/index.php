@@ -1,25 +1,25 @@
 <?php
-// Get requested URI path (e.g., /balance.php or /style.css)
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Normalize path to prevent directory traversal
-$path = ltrim($path, '/');
-$allowedPages = ['gastos_diarios.php', 'balance.php']; // Add allowed .php files here
+// Normalize
+$path = trim($path, '/');
 
-// Only allow access to allowed PHP pages
+// Redirect if the user is accessing Don-Taco folder directly
+if ($path === 'app4/Don-Taco' || $path === 'app4/Don-Taco/') {
+    header("Location: /app4/Don-Taco/balance.php");
+    exit;
+}
+
+// Only allow access to these pages
+$allowedPages = ['app4/Don-Taco/gastos_diarios.php', 'app4/Don-Taco/balance.php'];
+
 if (in_array($path, $allowedPages)) {
-    include $path;
+    include __DIR__ . '/' . $path;
     exit;
 }
 
-// If it's empty (root /), load default page
-if ($path === '' || $path === 'index.php') {
-    include 'gastos_diarios.php';
-    exit;
-}
-
-// For everything else: deny access or show 404
-http_response_code(403); // Or use 404 if you prefer
+// Otherwise, block
+http_response_code(403);
 echo 'Access Denied.';
 exit;
 ?>

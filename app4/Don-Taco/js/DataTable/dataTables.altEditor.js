@@ -259,7 +259,7 @@
                 });
 
                 function checkUnique(elm) {
-                    console.log(elm);
+                    //console.log(elm);
                     if ($(elm.target).attr('data-unique') == null || $(elm.target).attr('data-unique') === 'false') {
                         return;
                     }
@@ -309,33 +309,33 @@
              * @private
              */
             _initLanguage: function () {
-                this.language.modalClose = this.language.modalClose || 'Close';
+                this.language.modalClose = this.language.modalClose || 'Cerrar';
                 this.language.edit = this.language.edit || {};
-                this.language.edit = { 
-                    title: this.language.edit.title || 'Edit record',
-                    button: this.language.edit.button || 'Edit'
+                this.language.edit = {
+                    title: this.language.edit.title || 'Editar el registro',
+                    button: this.language.edit.button || 'Guardar'
                 };
                 this.language.delete = this.language.delete || {};
                 this.language.delete = { 
-                    title: this.language.delete.title || 'Delete record',
+                    title: this.language.delete.title || 'Eliminar el registro',
                     button: this.language.delete.button || 'Delete' 
                 };
                 this.language.add = this.language.add || {};
                 this.language.add = { 
-                    title: this.language.add.title || 'Add record',
-                    button: this.language.add.button || 'Add'
+                    title: this.language.add.title || 'Añadir registro',
+                    button: this.language.add.button || 'Añadir'
                 };
                 this.language.deleteMessage =
                   this.language.deleteMessage ||
-                  "Are you sure you wish to delete this row?";
-                this.language.success = this.language.success || 'Success!';
+                  "¿Seguro que desea borrar esta fila?";
+                this.language.success = this.language.success || '¡Éxito!';
                 this.language.error = this.language.error || {};
                 this.language.error = { 
-                    message: this.language.error.message || 'There was an unknown error!',
+                    message: this.language.error.message || '¡Hubo un error desconocido!',
                     label: this.language.error.label || 'Error!',
                     responseCode: this.language.error.responseCode || 'Response code: ',
-                    required: this.language.error.required || 'Field is required',
-                    unique: this.language.error.unique || 'Duplicated field'
+                    required: this.language.error.required || 'Se requiere campo',
+                    unique: this.language.error.unique || 'Campo duplicado'
                 };
             },
 

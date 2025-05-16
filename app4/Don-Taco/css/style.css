@@ -1,11 +1,12 @@
 html {
-  box-sizing: border-box;
+    box-sizing: border-box;
+    height: 100%;
 }
 
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+    box-sizing: inherit;
 }
 
 body {
@@ -14,6 +15,20 @@ body {
     margin: 0;
     padding: 10px;
     background: #fafafa;
+}
+
+/* Input styles */
+input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: auto;
+    border: none;
+    border-bottom: 1px solid #757575;
+}
+
+input:focus {
+    outline: none;
 }
 
 /* Table style */

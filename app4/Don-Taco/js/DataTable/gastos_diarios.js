@@ -49,7 +49,8 @@ $(document).ready(function () {
           render: function (data, type, row, meta) {
             return meta.row + 1;
           },
-          disabled: true
+          disabled: true,
+          type: "hidden"
         },
         {
           data: "Fecha",
@@ -83,7 +84,8 @@ $(document).ready(function () {
           render: function () {
             return '<a class="delbutton fa fa-minus-square btn btn-danger" href="#"></a>';
           },
-          disabled: true
+          disabled: true,
+          type: "hidden"
         }
       ],
       select: {
