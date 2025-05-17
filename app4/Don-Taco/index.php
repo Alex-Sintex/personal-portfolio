@@ -11,7 +11,7 @@ if ($path === 'app4/Don-Taco' || $path === 'app4/Don-Taco/') {
 }
 
 // Only allow access to these pages
-$allowedPages = ['app4/Don-Taco/gastos_diarios.php', 'app4/Don-Taco/balance.php'];
+$allowedPages = ['app4/Don-Taco/gastos_diarios.php', 'app4/Don-Taco/balance.php', 'app4/Don-Taco/dist/index.php'];
 
 if (in_array($path, $allowedPages)) {
     include __DIR__ . '/' . $path;

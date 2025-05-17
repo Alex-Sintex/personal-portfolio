@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +16,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" />
+    <!-- Toast styles -->
+    <link rel="stylesheet" href="Toasty/dist/toasty.min.css">
 </head>
+
 <body>
     <div class="container">
         <button class="btn btn-primary" id="addbutton" title="Add"><span class="fa fa-plus-square"></span></button>
@@ -35,7 +39,7 @@
                     <th scope="col">TOTAL INGRESOS</th>
                     <th scope="col">UTILIDAD PISO</th>
                     <th scope="col">UTILIDAD DISPONIBLE</th>
-                    <th scope="col">INGRESO PLATAFORMAS</th  >
+                    <th scope="col">INGRESO PLATAFORMAS</th>
                     <th scope="col">NOMBRE</th>
                     <th scope="col">ACCIÓN</th>
                 </tr>
@@ -54,5 +58,8 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.js"></script>
     <script src="js/DataTable/dataTables.altEditor.js"></script>
     <script src="js/DataTable/balance.js"></script>
+    <!-- Toast scripts -->
+    <script src="Toasty/dist/toasty.min.js"></script>
 </body>
+
 </html>
