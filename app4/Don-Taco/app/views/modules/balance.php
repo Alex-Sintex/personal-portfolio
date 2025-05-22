@@ -7,13 +7,13 @@
                 <h1 class="mt-4">Balance</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="<?= PATH_URL; ?>">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Módulo 1</li>
+                    <li class="breadcrumb-item active">Módulo 2</li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-body">
-                        Control de balance
-                        <br>
+                        <center>Añadir nuevo registro</center>
                     </div>
+                    <button class="btn btn-primary" id="addbutton" title="Add"><span class="fa fa-plus-square"></span></button>
                 </div>
                 <div class="card mb-4">
                     <div class="card-header">
@@ -21,9 +21,30 @@
                         Tabla de balance
                     </div>
                     <div class="card-body">
-                        <table id="tableB" class="ui celled table hover" style="width:100%"></table>
+                        <table class="dataTable responsive-table" id="tableB">
+                            <caption>Balance</caption>
+                            <thead>
+                                <tr>
+                                    <th>NO.</th>
+                                    <th>FECHA</th>
+                                    <th>GASTOS FIJOS DIARIOS</th>
+                                    <th>GASTOS DIARIOS</th>
+                                    <th>TOTAL EGRESOS</th>
+                                    <th>VENTA EFECTIVO</th>
+                                    <th>VENTA TRANSFERENCIA</th>
+                                    <th>VENTA NETA TARJETA</th>
+                                    <th>VENTA TARJETA - %</th>
+                                    <th>TOTAL INGRESOS</th>
+                                    <th>UTILIDAD PISO</th>
+                                    <th>UTILIDAD DISPONIBLE</th>
+                                    <th>INGRESO PLATAFORMAS</th>
+                                    <th>NOMBRE</th>
+                                    <th>ACCIÓN</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
         </main>
-<?php require PATH_APP . '/views/footer/footer.php'; ?>
+        <?php require PATH_APP . '/views/footer/footer.php'; ?>

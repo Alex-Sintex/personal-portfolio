@@ -6,7 +6,7 @@ class Pages extends Controller
 
     public function __construct()
     {
-        $this->productModel = $this->model('Producto');
+        $this->productModel = $this->model('ProductM');
         /*
         __construct() is use to prepare or set up things before using the rest of the class.
         Common examples:

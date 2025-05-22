@@ -52,7 +52,7 @@
                             </a>
                             <div class="collapse" id="pagesCollapseMod1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<?= PATH_URL; ?>balance">Balance</a>
+                                    <a class="nav-link" href="product">Producto</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseMod2" aria-expanded="false" aria-controls="pagesCollapseError">
@@ -61,7 +61,7 @@
                             </a>
                             <div class="collapse" id="pagesCollapseMod2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Ingreso diario plataformas</a>
+                                    <a class="nav-link" href="balance">Balance</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseMod3" aria-expanded="false" aria-controls="pagesCollapseError">
@@ -70,10 +70,10 @@
                             </a>
                             <div class="collapse" id="pagesCollapseMod3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Gastos fijos diarios</a>
+                                    <a class="nav-link" href="gastosd">Gastos</a>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseMod4" aria-expanded="false" aria-controls="pagesCollapseError">
+                            <!--<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseMod4" aria-expanded="false" aria-controls="pagesCollapseError">
                                 Módulo 4
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -90,7 +90,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="#">Klar</a>
                                 </nav>
-                            </div>
+                            </div>-->
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">

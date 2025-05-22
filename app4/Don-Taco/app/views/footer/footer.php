@@ -20,18 +20,25 @@
 
 <!-- SCRIPT LOADER -->
 <?php
+// Load DataTable Simple scripts
 $loadDataTablesSimple = $data['loadDataTablesSimple'] ?? false;
 $loadDataTables = $data['loadDataTables'] ?? false;
+
+// Load DataTables for each main page
+$loadDataTablesProduct = $data['loadDataTablesProduct'] ?? false;
 $loadDataTablesBalance = $data['loadDataTablesBalance'] ?? false;
 $loadDataTablesGD = $data['loadDataTablesGD'] ?? false;
+
+// Load assets for Toasty
 $loadToasty = $data['loadToasty'] ?? false;
+// Load assets for Charts
 $loadCharts = $data['loadCharts'] ?? false;
 ?>
 
 <!-- Core JS -->
-<script src="<?= PATH_URL ?>js/bootstrap.bundle.min.js"></script>
-<script src="<?= PATH_URL ?>js/scripts.js"></script>
-<script src="<?= PATH_URL ?>js/all.js"></script>
+<script src="<?= PATH_URL ?>js/Main/bootstrap.bundle.min.js"></script>
+<script src="<?= PATH_URL ?>js/Main/scripts.js"></script>
+<script src="<?= PATH_URL ?>js/Main/all.js"></script>
 
 <?php if ($loadDataTablesSimple): ?>
     <!-- DataTables Simple -->
