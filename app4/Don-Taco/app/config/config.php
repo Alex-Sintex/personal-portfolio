@@ -1,5 +1,11 @@
 <?php
 
+// Database configuration
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASSWORD', '@Alex4976');
+define('DB_NAME', 'don_taco_db');
+
 // Path of the application
 define('PATH_APP', dirname(dirname(__FILE__)));
 

@@ -2,17 +2,32 @@
 // Class Pages extends the main controller
 class Pages extends Controller
 {
+    private $productModel;
+
     public function __construct()
     {
-        //echo 'Pages controller loaded';
+        $this->productModel = $this->model('Producto');
+        /*
+        __construct() is use to prepare or set up things before using the rest of the class.
+        Common examples:
+            - Load models or helpers
+            - Start a session
+            - Set default values
+            - Authorize access (e.g., check if user is logged in)
+            - Load config files or dependencies
+        */
     }
 
     public function index()
     {
-        /*$data = [
-            'title' => 'Welcome to Don-Taco MVC'
-        ];*/
+        $products = $this->productModel->getProducts();
 
-        $this->view('home/dashboard');
+        $data = [
+            'loadCharts' => true,          // JS
+            'loadDataTablesSimple' => true, // JS
+            'loadDataTableStyles' => true,  // CSS
+            'products' => $products
+        ];
+        $this->view('home/dashboard', $data);
     }
 }

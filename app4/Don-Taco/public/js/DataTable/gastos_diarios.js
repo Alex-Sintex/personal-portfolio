@@ -1,5 +1,31 @@
 $(document).ready(function () {
-  $.getJSON('data.json', function (dataSet) {
+  $.getJSON('../../json/data.json', function (dataSet) {
+
+    // Initialize the Toasty library
+    var toast = new Toasty(options);
+
+    var options = {
+      classname: "toast",
+      transition: "pinItUp",
+      insertBefore: true,
+      duration: 4000,
+      enableSounds: true,
+      autoClose: true,
+      progressBar: false,
+      sounds: {
+        // path to sound for informational message:
+        info: "../Toasty/sounds/info/1.mp3",
+        // path to sound for successfull message:
+        success: "../Toasty/sounds/success/1.mp3",
+        // path to sound for warn message:
+        warning: "../Toasty/sounds/warning/1.mp3",
+        // path to sound for error message:
+        error: "../Toasty/sounds/error/1.mp3",
+      },
+    };
+
+    // configure the plugin after be instantiated:
+    toast.configure(options);
 
     const keysToSum = [
       "carne", "queso", "tortilla_maiz", "tortilla_h_gde", "longaniza",
@@ -37,7 +63,7 @@ $(document).ready(function () {
     });
 
     // Initialize DataTable
-    var myTable = $('#gastos_d').DataTable({
+    var myTable = $('#tableGD').DataTable({
       data: dataSet,
       responsive: true,
       altEditor: true,
@@ -96,13 +122,13 @@ $(document).ready(function () {
     });
 
     // Edit row
-    $('#gastos_d tbody').on('click', 'td', function () {
+    $('#tableGD tbody').on('click', 'td', function () {
       const cellIndex = this.cellIndex;
       if (cellIndex === 0 || cellIndex === 17) return;
 
       myTable.row(this).select();
 
-      const that = $('#gastos_d')[0].altEditor;
+      const that = $('#tableGD')[0].altEditor;
       that._openEditModal();
 
       $('#altEditor-edit-form-' + that.random_id)
@@ -111,12 +137,14 @@ $(document).ready(function () {
           e.preventDefault();
           e.stopPropagation();
           that._editRowData();
+          // show a successful message:
+          toast.success("¡Registro actualizado!");
         });
     });
 
     // Delete row
-    $(document).on('click', '#gastos_d .delbutton', function (x) {
-      var that = $('#gastos_d')[0].altEditor;
+    $(document).on('click', '#tableGD .delbutton', function (x) {
+      var that = $('#tableGD')[0].altEditor;
       that._openDeleteModal();
       $('#altEditor-delete-form-' + that.random_id)
         .off('submit')
@@ -124,13 +152,15 @@ $(document).ready(function () {
           e.preventDefault();
           e.stopPropagation();
           that._deleteRow();
+          // show a successful message:
+          toast.success("¡Registro eliminado!");
         });
       x.stopPropagation();
     });
 
     // Add row
     $('#addbutton').on('click', function () {
-      var that = $('#gastos_d')[0].altEditor;
+      var that = $('#tableGD')[0].altEditor;
       that._openAddModal();
       $('#altEditor-add-form-' + that.random_id)
         .off('submit')
@@ -138,6 +168,8 @@ $(document).ready(function () {
           e.preventDefault();
           e.stopPropagation();
           that._addRowData();
+          // show a successful message:
+          toast.success("¡Registro añadido!");
         });
     });
 

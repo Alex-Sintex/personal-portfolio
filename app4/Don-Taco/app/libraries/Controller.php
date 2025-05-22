@@ -23,7 +23,7 @@ class Controller
             require_once '../app/views/' . $view . '.php';
         } else {
             // If the view does not exist, show 404 error
-            die('View does not exist');
+            $this->view('errors/404');
         }
     }
 }
