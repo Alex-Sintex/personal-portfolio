@@ -6,7 +6,7 @@ class Balance extends Controller
 
     public function __construct()
     {
-        $this->modelProduct = $this->model('Producto');
+        $this->modelProduct = $this->model('Product');
     }
 
     // Load balance view with required resources

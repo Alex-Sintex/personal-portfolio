@@ -1,3 +1,24 @@
+<!-- FOOTER SECTION -->
+<footer class="py-4 bg-light mt-auto">
+    <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">
+                <script>
+                    document.querySelector('.text-muted').innerHTML = `Copyright &copy; Don-Taco ${new Date().getFullYear()}`
+                </script>
+            </div>
+            <div>
+                <a href="#">Privacy Policy</a>
+                &middot;
+                <a href="#">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+<!-- SCRIPT LOADER -->
 <?php
 $loadDataTablesSimple = $data['loadDataTablesSimple'] ?? false;
 $loadDataTables = $data['loadDataTables'] ?? false;
@@ -28,6 +49,10 @@ $loadCharts = $data['loadCharts'] ?? false;
     <script src="<?= PATH_URL ?>js/DataTable/jquery.datetimepicker.full.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.altEditor.js"></script>
 
+    <?php if (!empty($loadDataTablesProduct)): ?>
+        <script src="<?= PATH_URL ?>js/DataTable/product.js"></script>
+    <?php endif; ?>
+
     <?php if (!empty($loadDataTablesBalance)): ?>
         <script src="<?= PATH_URL ?>js/DataTable/balance.js"></script>
     <?php endif; ?>
@@ -40,7 +65,7 @@ $loadCharts = $data['loadCharts'] ?? false;
 <?php if ($loadToasty): ?>
     <!-- Toasty -->
     <script src="<?= PATH_URL ?>Toasty/js/toasty.js"></script>
-    
+
 <?php endif; ?>
 
 <?php if ($loadCharts): ?>
@@ -49,6 +74,7 @@ $loadCharts = $data['loadCharts'] ?? false;
     <script src="<?= PATH_URL ?>js/Chart/chart-area-demo.js"></script>
     <script src="<?= PATH_URL ?>js/Chart/chart-bar-demo.js"></script>
 <?php endif; ?>
+<!-- SCRIPTS -->
 
 </body>
 
