@@ -6,10 +6,6 @@ class Product extends Controller
 
     public function __construct()
     {
-<<<<<<< HEAD
-=======
-        requireLogin();
->>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
         $this->modelProduct = $this->model('ProductM');
     }
 
@@ -17,21 +13,11 @@ class Product extends Controller
     public function index()
     {
         $data = [
-<<<<<<< HEAD
             'loadDataTables' => true,
             'loadDataTablesProduct' => true,
             'loadToasty' => true,
             'loadDataTableStyles' => true,
             'loadToastStyle' => true
-=======
-            'loadJQueryLibrary' => true,    // JS
-            'loadDataTables' => true,       // JS
-            'loadDataTablesProduct' => true, // JS
-            'loadToasty' => true,           // JS
-            'loadStyles' => true,           // CSS
-            'loadDataTableStyles' => true,  // CSS
-            'loadToastStyle' => true        // CSS
->>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
         ];
         $this->view('modules/product', $data);
     }
@@ -45,17 +31,9 @@ class Product extends Controller
 
         foreach ($product as $row) {
             $cleaned[] = [
-<<<<<<< HEAD
                 'id' => $row->Id_Producto,
                 'name' => $row->Nombre_Prod,
                 'price' => $row->Prec_Unit_Prod
-=======
-                'id' => $row->in_product_id,
-                'name' => $row->in_product_name,
-                'price' => $row->unit_price_product,
-                'measure_n' => $row->measure_name,
-                'provider_n' => $row->provider_name
->>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
             ];
         }
 

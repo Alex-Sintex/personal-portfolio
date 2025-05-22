@@ -1,10 +1,10 @@
 /*! Toasty.js - v1.5.0 - 2018-05-04
 * https://jakim.me/Toasty.js/
 * Copyright (c) 2015-2018 Jakim Hernández; Licensed MIT */
-;(function () {
+; (function () {
 
     'use strict';
-    
+
     /**
      * All available default CSS transitions for plug-in:
      *
@@ -75,11 +75,11 @@
 
         // callback:
         // onShow function will be fired when a toast message appears.
-        onShow: function (type) {},
+        onShow: function (type) { },
 
         // callback:
         // onHide function will be fired when a toast message disappears.
-        onHide: function (type) {},
+        onHide: function (type) { },
 
         // the placement where prepend the toast container:
         prependTo: document.body.childNodes[0]
@@ -94,10 +94,10 @@
         container: "{:class-name}-container",
         mainwrapp: "{:class-name}-wrapper",
         toasts: {
-               info: "{:class-name}--info",
+            info: "{:class-name}--info",
             success: "{:class-name}--success",
             warning: "{:class-name}--warning",
-              error: "{:class-name}--error",
+            error: "{:class-name}--error",
         },
         animate: {
             init: "{:transition}-init",
@@ -126,7 +126,7 @@
      *
      * @return object
      */
-    function extend () {
+    function extend() {
 
         var extended = {};
         var deep = false;
@@ -134,9 +134,9 @@
         var length = arguments.length;
 
         // check if a deep merge
-        if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]' ) {
+        if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
             deep = arguments[0];
-            i ++;
+            i++;
         }
 
         // merge the object into the extended object
@@ -173,7 +173,7 @@
      *
      * @return HTML Element
      */
-    function parentElement (el) {
+    function parentElement(el) {
         return el.parentElement || el.parentNode;
     }
 
@@ -182,7 +182,7 @@
      *
      * @return RegExp Obj
      */
-    function classReg (className) {
+    function classReg(className) {
         return new RegExp('(^|\\s+)' + className + '(\\s+|$)');
     }
 
@@ -196,13 +196,13 @@
      * 
      * @return bool
      */
-    function containsClass (el, className) {
+    function containsClass(el, className) {
         var fn;
         if (document.documentElement.classList) {
             fn = function (el, className) { return el.classList.contains(className); }
         } else {
             fn = function (el, className) {
-                if (! el || ! el.className)
+                if (!el || !el.className)
                     return false;
                 return el.className.match(classReg(className));
             }
@@ -220,7 +220,7 @@
      *
      * @return HTML Element|bool false
      */
-    function addClass (el) {
+    function addClass(el) {
         var fn;
         var classNames = arguments;
         if (classNames.length <= 1 || typeof el != 'object')
@@ -228,14 +228,14 @@
 
         if (document.documentElement.classList)
             fn = function (el, classNames) {
-                for (var i = 1; i < classNames.length; i ++) if (typeof classNames[i] == 'string') {
+                for (var i = 1; i < classNames.length; i++) if (typeof classNames[i] == 'string') {
                     el.classList.add(classNames[i]);
                 }
                 return el;
             }
         else
             fn = function (el, classNames) {
-                for (var i = 1; i < classNames.length; i ++) if (! containsClass(el, classNames[i]) && typeof classNames[i] == 'string') {
+                for (var i = 1; i < classNames.length; i++) if (!containsClass(el, classNames[i]) && typeof classNames[i] == 'string') {
                     el.className += (el.className ? ' ' : '') + classNames[i];
                 }
                 return el;
@@ -254,22 +254,22 @@
      *
      * @return HTML Element|bool false
      */
-    function removeClass (el) {
+    function removeClass(el) {
         var fn;
         var classNames = arguments;
         if (classNames.length <= 1 || typeof el != 'object')
             return false;
-        
+
         if (document.documentElement.classList)
             fn = function (el, classNames) {
-                for (var i = 1; i < classNames.length; i ++) if (typeof classNames[i] == 'string') {
+                for (var i = 1; i < classNames.length; i++) if (typeof classNames[i] == 'string') {
                     el.classList.remove(classNames[i]);
                 }
                 return el;
             }
         else
             fn = function (el, classNames) {
-                for (var i = 1; i < classNames.length; i ++) if (containsClass(el, classNames[i]) && typeof classNames[i] == 'string') {
+                for (var i = 1; i < classNames.length; i++) if (containsClass(el, classNames[i]) && typeof classNames[i] == 'string') {
                     el.className = el.className.replace(classReg(classNames[i]), '$2');
                 }
                 return el;
@@ -287,7 +287,7 @@
      *
      * @return bool
      */
-    function toggleClass (el, className) {
+    function toggleClass(el, className) {
         var fn;
         if (document.documentElement.classList)
             fn = function (el, className) { return el.classList.toggle(className); }
@@ -295,8 +295,8 @@
             fn = function (el, className) {
                 var exists = containsClass(el, className);
                 var caller = exists === true ? removeClass : addClass;
-                    caller(el, className);
-                return ! exists;
+                caller(el, className);
+                return !exists;
             }
         return fn(el, className);
     }
@@ -314,7 +314,7 @@
      * @param  {boolean}  bubbling
      * @return el
      */
-    function addEvent (el, evt, fn, bubble) {
+    function addEvent(el, evt, fn, bubble) {
         if ('addEventListener' in el) {
             // BBOS6 doesn't support handleEvent, catch and polyfill:
             try {
@@ -343,7 +343,7 @@
 
         return el;
     }
-        
+
     /**
      * Remove Event
      *
@@ -357,7 +357,7 @@
      * @param  {boolean}  bubbling
      * @return el
      */
-    function removeEvent (el, evt, fn, bubble) {
+    function removeEvent(el, evt, fn, bubble) {
         if ('removeEventListener' in el) {
             try {
                 el.removeEventListener(evt, fn, bubble);
@@ -391,15 +391,15 @@
      *
      * @return string|undefined (if transitions not supported by client)
      */
-    function whichTransitionEvent () {
+    function whichTransitionEvent() {
         var t,
             el = node('transitionElement');
 
         var transitions = {
-            WebkitTransition : 'webkitTransitionEnd',
-            MozTransition    : 'transitionend',
-            OTransition      : 'oTransitionEnd otransitionend',
-            transition       : 'transitionend'
+            WebkitTransition: 'webkitTransitionEnd',
+            MozTransition: 'transitionend',
+            OTransition: 'oTransitionEnd otransitionend',
+            transition: 'transitionend'
         };
 
         for (t in transitions) if (el.style[t] !== undefined) {
@@ -413,10 +413,10 @@
      * 
      * @return number
      */
-    function getAutoCloseDuration (message, duration, settings) {
-            duration = duration || settings.duration;
+    function getAutoCloseDuration(message, duration, settings) {
+        duration = duration || settings.duration;
         if (duration == 0)
-            duration = message.length * (_timeOffset /2);
+            duration = message.length * (_timeOffset / 2);
         return Math.floor(duration);
     }
 
@@ -425,10 +425,10 @@
      *
      * @return object
      */
-    function walker (obj, map) {
+    function walker(obj, map) {
 
         for (var o in obj) if (obj.hasOwnProperty(o) === true) {
-        // ini loop:
+            // ini loop:
             switch (typeof obj[o]) {
                 case 'object':
                     walker(obj[o], map);
@@ -439,7 +439,7 @@
                     }
                     break;
             }
-        // end loop.
+            // end loop.
         }
 
         return obj;
@@ -454,15 +454,15 @@
     var playSound = function (type, container, sounds, playerclass) {
         var sound = sounds[type],
             audio = addClass(node('audio'), playerclass);
-            addEvent(audio, 'ended', function() {
-                var parent = parentElement(this);
-                    this.remove();
-                // also, remove the main container if it empty:
-                if (parent.childNodes.length < 1) parentElement(parent).remove();
-            });
+        addEvent(audio, 'ended', function () {
+            var parent = parentElement(this);
+            this.remove();
+            // also, remove the main container if it empty:
+            if (parent.childNodes.length < 1) parentElement(parent).remove();
+        });
         audio.setAttribute('autoplay', 'autoplay');
         audio.innerHTML = '<source src="' + sound + '" type="audio/mpeg"/>' +
-                          '<embed hidden="true" autoplay="false" loop="false" src="' + sound + '" />';
+            '<embed hidden="true" autoplay="false" loop="false" src="' + sound + '" />';
         parentElement(container).appendChild(audio);
     };
 
@@ -499,7 +499,7 @@
 
         // insert in the DOM and show toast:
         var beforeNode = container.childNodes;
-            beforeNode = beforeNode[insertBefore === true ? 0 : beforeNode.length];
+        beforeNode = beforeNode[insertBefore === true ? 0 : beforeNode.length];
         container.insertBefore(el, beforeNode);
         delay(show, _timeOffset);
     };
@@ -546,7 +546,7 @@
             addClass(el, animate.hide);
         };
 
-        delay(hide, (_timeOffset *10) + duration);
+        delay(hide, (_timeOffset * 10) + duration);
     };
 
     /**
@@ -571,7 +571,7 @@
      * @return void
      */
     var showProgressBar = function (type, el, duration, transition) {
-        
+
         var timer = 0;
         var delay = function (callback, ms) {
             clearTimeout(timer);
@@ -584,11 +584,11 @@
 
             var iterat = 0,
                 offset = 0;
-            var interval = setInterval(function() {
+            var interval = setInterval(function () {
 
-                iterat ++;
-                offset = Math.round((1000 *iterat) / duration);
-            
+                iterat++;
+                offset = Math.round((1000 * iterat) / duration);
+
                 if (offset > 100) {
                     clearInterval(interval);
                 } else {
@@ -598,7 +598,7 @@
             }, 10);
         }
 
-        delay(progressbar, _timeOffset *10);
+        delay(progressbar, _timeOffset * 10);
     };
 
     /**
@@ -643,7 +643,7 @@
     };
 
     Toasty.prototype.toast = function (type, message, duration) {
-        
+
         var classes = this.classmap;
         var options = this.settings;
 
@@ -660,7 +660,7 @@
         else
             container = document.querySelector('.' + transition.container);
 
-        var containerExists = !! container;
+        var containerExists = !!container;
         if (containerExists) {
             // create the toast container if not exists:
             container = container.querySelector('.' + transition.mainwrapp); // use the wrapper instead of main container.
@@ -674,12 +674,12 @@
 
         // create a new toast instance
         var newToast = addClass(node('div'), options.classname, transition.toasts[type], transition.animate.init);
-            newToast.innerHTML = message;
+        newToast.innerHTML = message;
 
         // insert the toast container into the HTML:
-        if (! containerExists)
+        if (!containerExists)
             document.body
-                    .insertBefore(parentElement(container), options.prependTo);
+                .insertBefore(parentElement(container), options.prependTo);
 
 
         // OPTIONAL STEP (must be first):
@@ -749,7 +749,7 @@
     if ('remove' in Element.prototype) {
         // the browser supports .remove() function...
     } else {
-        Element.prototype.remove = function() {
+        Element.prototype.remove = function () {
             if (this.parentNode)
                 this.parentNode.removeChild(this);
         };

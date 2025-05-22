@@ -383,12 +383,14 @@
 .toast-container--pinItUp .toast-wrapper {
   display: inline-block;
   height: 25px;
-.toast-container--pinItUp .toast-wrapper,
-.toast-container--pinItDown .toast-wrapper {
-  display: flex;
-  justify-content: flex-end; /* Aligns content to the right */
-  height: 25px;
-}
+
+  .toast-container--pinItUp .toast-wrapper,
+  .toast-container--pinItDown .toast-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    /* Aligns content to the right */
+    height: 25px;
+  }
 }
 
 .toast.pinItUp-init {
@@ -418,11 +420,13 @@
 .toast-container--pinItDown .toast-wrapper {
   display: inline-block;
   height: 25px;
-.toast-container--pinItDown .toast-wrapper {
-  display: flex;
-  justify-content: flex-end; /* Aligns content to the right */
-  height: 25px;
-}
+
+  .toast-container--pinItDown .toast-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    /* Aligns content to the right */
+    height: 25px;
+  }
 }
 
 .toast.pinItDown-init {

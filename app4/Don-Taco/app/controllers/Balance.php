@@ -6,10 +6,6 @@ class Balance extends Controller
 
     public function __construct()
     {
-<<<<<<< HEAD
-=======
-        requireLogin();
->>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
         //$this->modelBalance = $this->model('Balance');
     }
 
