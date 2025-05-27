@@ -260,13 +260,11 @@ svg {
 
 /* CUSTOM TABLE CSS */
 .content-table {
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  min-width: 400px;
-  border: 2px solid #000;
-  /* full outer border */
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-collapse: collapse;
+    font-size: 0.9em;
+    border: 2px solid #000;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
 }
 
 /* Header row */
@@ -1941,21 +1939,22 @@ progress {
 
 .table,
 .datatable-table {
-  --bs-table-color: var(--bs-body-color);
-  --bs-table-bg: transparent;
-  --bs-table-border-color: var(--bs-border-color);
-  --bs-table-accent-bg: transparent;
-  --bs-table-striped-color: var(--bs-body-color);
-  --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
-  --bs-table-active-color: var(--bs-body-color);
-  --bs-table-active-bg: rgba(0, 0, 0, 0.1);
-  --bs-table-hover-color: var(--bs-body-color);
-  --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
-  width: 100%;
-  margin-bottom: 1rem;
-  color: var(--bs-table-color);
-  vertical-align: top;
-  border-color: var(--bs-table-border-color);
+    --bs-table-color: var(--bs-body-color);
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--bs-border-color);
+    --bs-table-accent-bg: transparent;
+    --bs-table-striped-color: var(--bs-body-color);
+    --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+    --bs-table-active-color: var(--bs-body-color);
+    --bs-table-active-bg: rgba(0, 0, 0, 0.1);
+    --bs-table-hover-color: var(--bs-body-color);
+    --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+    width: 100%;
+    margin-bottom: 1rem;
+    color: var(--bs-table-color);
+    vertical-align: top;
+    border-color: var(--bs-table-border-color);
+
 }
 
 .table> :not(caption)>*>*,
@@ -1995,7 +1994,8 @@ progress {
 
 .table-bordered> :not(caption)>*>*,
 .datatable-table> :not(caption)>*>* {
-  border-width: 0 1px;
+    /* border-width: 0 1px; */
+
 }
 
 .table-borderless> :not(caption)>*>* {
@@ -12519,7 +12519,8 @@ body {
 }
 
 .datatable-wrapper.no-footer .datatable-container {
-  border-bottom: none;
+    border-bottom: none;
+
 }
 
 .datatable-top {
@@ -12587,7 +12588,8 @@ body {
 
 /* TABLE */
 .datatable-table {
-  border-collapse: collapse;
+    border-collapse: collapse;
+
 }
 
 .datatable-table>tbody>tr>td,
@@ -12596,8 +12598,9 @@ body {
 .datatable-table>tfoot>tr>th,
 .datatable-table>thead>tr>td,
 .datatable-table>thead>tr>th {
-  vertical-align: top;
-  padding: 0.5rem 0.5rem;
+    vertical-align: top;
+    padding: 0.5rem 0.5rem;
+
 }
 
 .datatable-table>thead>tr>th {
