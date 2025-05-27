@@ -22,7 +22,7 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="#!">Cerrar sesión</a></li>
+                    <li><a class="dropdown-item" href="<?= PATH_URL ?>auth/logout">Cerrar sesión</a></li>
                 </ul>
             </li>
         </ul>
@@ -115,8 +115,8 @@
                 </div>
             </div>
             <div class="sb-sidenav-footer">
-                <div class="small">Logged in as:</div>
-                Admin
+                <div class="small">¡Bienvenido!</div>
+                <?= htmlspecialchars($_SESSION['user_name'] ?? 'Admin') ?>
             </div>
         </nav>
     </div>

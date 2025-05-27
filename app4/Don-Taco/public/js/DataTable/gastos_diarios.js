@@ -89,6 +89,7 @@ $(document).ready(function () {
         { data: "tortilla_h_gde" },
         { data: "longaniza" },
         { data: "pan" },
+        { data: 'vinagre' },
         { data: "bodegon" },
         { data: "adel_marcos" },
         { data: "trans_marcos" },

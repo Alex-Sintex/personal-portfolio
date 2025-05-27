@@ -10,7 +10,7 @@ Example: /articles/update/1
 
 class Core
 {
-    protected $controllerActual = 'pages';
+    protected $controllerActual = 'main';
     protected $methodActual = 'index';
     protected $parameters = [];
 

@@ -36,11 +36,11 @@
         // .... re-stylized the plug-in and default toast styles, including CSS3 transitions are lost.
         classname: "toast",
         // STRING: name of the CSS transition that will be used to show and hide all toast by default:
-        transition: "fade",
+        transition: "slideUpFade",
         // BOOLEAN: specifies the way in which the toasts will be inserted in the HTML code:
         // .... Set to BOOLEAN TRUE and the toast messages will be inserted before those already generated toasts.
         // .... Set to BOOLEAN FALSE otherwise.
-        insertBefore: true,
+        insertBefore: false,
         // INTEGER: duration that the toast will be displayed in milliseconds:
         // .... Default value is set to 4000 (4 seconds). 
         // .... If it set to 0, the duration for each toast is calculated by text-message length.
@@ -49,7 +49,7 @@
         // .... Set to BOOLEAN TRUE  - to enable toast sounds.
         // .... Set to BOOLEAN FALSE - otherwise.
         // NOTE: this is not supported by mobile devices.
-        enableSounds: false,
+        enableSounds: true,
         // BOOLEAN: enable or disable auto hiding on toast messages:
         // .... Set to BOOLEAN TRUE  - to enable auto hiding.
         // .... Set to BOOLEAN FALSE - disable auto hiding. Instead the user must click on toast message to close it.
@@ -64,13 +64,13 @@
         // NOTE: the paths must point from the project's root folder.
         sounds: {
             // path to sound for informational message:
-            info: "./dist/sounds/info/1.mp3",
+            info: "../Toasty/sounds/info/2.mp3",
             // path to sound for successfull message:
-            success: "./dist/sounds/success/1.mp3",
+            success: "../Toasty/sounds/success/3.mp3",
             // path to sound for warn message:
-            warning: "./dist/sounds/warning/1.mp3",
+            warning: "../Toasty/sounds/warning/2.mp3",
             // path to sound for error message:
-            error: "./dist/sounds/error/1.mp3",
+            error: "../Toasty/sounds/error/1.mp3",
         },
 
         // callback:

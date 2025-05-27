@@ -258,10 +258,40 @@ svg {
   vertical-align: middle;
 }
 
-table {
-  caption-side: bottom;
+/* CUSTOM TABLE CSS */
+.content-table {
   border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  border: 2px solid #000;
+  /* full outer border */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
+
+/* Header row */
+.content-table thead tr {
+  background-color: #000;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+/* Header cells and regular cells */
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+  border: 1px solid #000;
+  /* border on all sides */
+}
+
+/* Optional hover effect */
+.content-table tbody tr:hover {
+  background-color: #f7f310;
+  font-weight: bold;
+}
+
+/*----------------------------------------*/
 
 caption {
   padding-top: 0.5rem;
@@ -12645,12 +12675,12 @@ body {
 
 /* Logo style */
 .logo {
-    position: absolute;
-    top: 5px;
-    left: 20px;
-    height: 50px;
-    object-fit: contain;
-    z-index: 1000;
+  position: absolute;
+  top: 5px;
+  left: 20px;
+  height: 50px;
+  object-fit: contain;
+  z-index: 1000;
 
 }
 

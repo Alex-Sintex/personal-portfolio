@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     // Initialize the Toasty library
+<<<<<<< HEAD
     var toast = new Toasty(options);
 
     var options = {
@@ -26,6 +27,10 @@ $(document).ready(function () {
     // configure the plugin after be instantiated:
     toast.configure(options);
 
+=======
+    var toast = new Toasty();
+
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
     $.getJSON('../../json/data2.json', function (dataSet) {
 
         let editingRowIndex = null;

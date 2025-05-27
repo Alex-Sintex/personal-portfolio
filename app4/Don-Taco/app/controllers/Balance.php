@@ -6,6 +6,10 @@ class Balance extends Controller
 
     public function __construct()
     {
+<<<<<<< HEAD
+=======
+        requireLogin();
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
         //$this->modelBalance = $this->model('Balance');
     }
 
@@ -13,11 +17,13 @@ class Balance extends Controller
     public function index()
     {
         $data = [
-            'loadDataTables' => true,
-            'loadDataTablesBalance' => true,
-            'loadToasty' => true,
-            'loadDataTableStyles' => true,
-            'loadToastStyle' => true
+            'loadJQueryLibrary' => true,    // JS
+            'loadDataTables' => true,       // JS
+            'loadDataTablesBalance' => true,// JS
+            'loadToasty' => true,           // JS
+            'loadStyles' => true,           // CSS
+            'loadDataTableStyles' => true,  // CSS
+            'loadToastStyle' => true        // CSS
         ];
         $this->view('modules/balance', $data);
     }

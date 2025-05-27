@@ -20,6 +20,13 @@
 
 <!-- SCRIPT LOADER -->
 <?php
+<<<<<<< HEAD
+=======
+// Load JQuery Library
+$loadJQueryLibrary = $data['loadJQueryLibrary'] ?? false;
+// Load JS for Auth page
+$loadJSLogin = $data['loadJSLogin'] ?? false;
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
 // Load DataTable Simple scripts
 $loadDataTablesSimple = $data['loadDataTablesSimple'] ?? false;
 $loadDataTables = $data['loadDataTables'] ?? false;
@@ -39,6 +46,18 @@ $loadCharts = $data['loadCharts'] ?? false;
 <script src="<?= PATH_URL ?>js/Main/bootstrap.bundle.min.js"></script>
 <script src="<?= PATH_URL ?>js/Main/scripts.js"></script>
 <script src="<?= PATH_URL ?>js/Main/all.js"></script>
+<<<<<<< HEAD
+=======
+
+<!-- Load JQuery Library -->
+<?php if ($loadJQueryLibrary): ?>
+    <script src="<?= PATH_URL ?>js/DataTable/jquery-3.7.1.min.js"></script>
+<?php endif; ?>
+
+<?php if (!empty($loadJSLogin)): ?>
+    <script src="<?= PATH_URL ?>js/auth/login.js"></script>
+<?php endif; ?>
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
 
 <?php if ($loadDataTablesSimple): ?>
     <!-- DataTables Simple -->
@@ -47,11 +66,12 @@ $loadCharts = $data['loadCharts'] ?? false;
 <?php endif; ?>
 
 <?php if ($loadDataTables): ?>
+
     <!-- DataTables -->
-    <script src="<?= PATH_URL ?>js/DataTable/jquery-3.7.1.min.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/jquery.dataTables.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.buttons.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.select.js"></script>
+    <script src="<?= PATH_URL ?>js/DataTable/dataTables.select2.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.responsive.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/jquery.datetimepicker.full.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.altEditor.js"></script>

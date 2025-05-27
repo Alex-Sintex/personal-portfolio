@@ -21,7 +21,11 @@
                         Tabla de gastos diarios
                     </div>
                     <div class="card-body">
+<<<<<<< HEAD
                         <table id="tableGD" class="ui celled table hover" style="width:100%">
+=======
+                        <table id="tableGD" class="content-table" style="width:100%">
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -32,6 +36,10 @@
                                     <th>Tortilla Harina Grande</th>
                                     <th>Longaniza</th>
                                     <th>Pan</th>
+<<<<<<< HEAD
+=======
+                                    <th>Vinagre</th>
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
                                     <th>Bodegón</th>
                                     <th>Adelanto Marcos</th>
                                     <th>Transporte Marcos</th>

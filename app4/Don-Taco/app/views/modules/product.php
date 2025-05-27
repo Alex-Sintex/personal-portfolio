@@ -21,9 +21,17 @@
                         Tabla de productos
                     </div>
                     <div class="card-body">
+<<<<<<< HEAD
                         <table id="tableP" class="ui celled table hover" style="width:100%"></table>
+=======
+                        <table id="tableP" class="content-table" style="width:100%"></table>
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
                     </div>
                 </div>
             </div>
         </main>
+<<<<<<< HEAD
 <?php require PATH_APP . '/views/footer/footer.php'; ?>
+=======
+        <?php require PATH_APP . '/views/footer/footer.php'; ?>
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))

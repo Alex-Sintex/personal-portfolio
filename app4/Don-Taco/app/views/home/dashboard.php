@@ -51,7 +51,11 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-area me-1"></i>
+<<<<<<< HEAD
                                 Gráfico de área Productos
+=======
+                                Total ingresos
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
                             </div>
                             <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                         </div>
@@ -60,7 +64,11 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-bar me-1"></i>
+<<<<<<< HEAD
                                 Gráfico de barras Productos
+=======
+                                Total gastos diarios
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
                             </div>
                             <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                         </div>
@@ -75,17 +83,20 @@
                         <table id="datatablesSimple">
                             <thead>
                                 <tr>
-                                    <th>NO</th>
-                                    <th>Nombre del producto</th>
-                                    <th>Precio unitario</th>
+                                    <th>#</th>
+                                    <th>NOMBRE PRODUCTO</th>
+                                    <th>PRECIO</th>
+                                    <th>UNIDAD DE MEDIDA</th>
+                                    <th>PROVEEDOR</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>NO</th>
-                                    <th>Nombre del producto</th>
-                                    <th>Precio unitario</th>
-                                </tr>
+                                    <th>#</th>
+                                    <th>NOMBRE PRODUCTO</th>
+                                    <th>PRECIO</th>
+                                    <th>UNIDAD DE MEDIDA</th>
+                                    <th>PROVEEDOR</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -93,8 +104,15 @@
                                 <?php foreach ($data['products'] as $product) : ?>
                                     <tr>
                                         <td><?= $counter++; ?></td>
+<<<<<<< HEAD
                                         <td><?= $product->Nombre_Prod; ?></td>
                                         <td><?= $product->Prec_Unit_Prod; ?></td>
+=======
+                                        <td><?= $product->in_product_name; ?></td>
+                                        <td><?= $product->unit_price_product; ?></td>
+                                        <td><?= $product->measure_name; ?></td>
+                                        <td><?= $product->provider_name; ?></td>
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

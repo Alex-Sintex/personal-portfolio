@@ -1436,7 +1436,8 @@ Buttons.defaults = {
 			tag: 'ActiveXObject' in window ?
 				'a' :
 				'button',
-			className: 'dt-button',
+			// Set a custom css name
+			className: 'buttonDT',
 			active: 'active',
 			disabled: 'disabled'
 		},

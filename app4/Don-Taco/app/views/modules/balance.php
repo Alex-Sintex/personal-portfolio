@@ -21,7 +21,11 @@
                         Tabla de balance
                     </div>
                     <div class="card-body">
+<<<<<<< HEAD
                         <table class="dataTable responsive-table" id="tableB">
+=======
+                        <table id="tableB" class="content-table" style="width:100%">
+>>>>>>> 680170b (Implemented all modules: Product, Balance and Gastos (all working))
                             <caption>Balance</caption>
                             <thead>
                                 <tr>
