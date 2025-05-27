@@ -6,7 +6,7 @@ class Base
     private $host = DB_HOST;
     private $user = DB_USER;
     private $passwd = DB_PASSWORD;
-    private $base_name = DB_NAME;
+    private $baseName = DB_NAME;
 
     // Database handler
     private $dbh;
@@ -16,8 +16,8 @@ class Base
 
     public function __construct()
     {
-        // Conecction conf
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->base_name;
+        // Connection conf
+        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->baseName;
         $options = array(
             PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION

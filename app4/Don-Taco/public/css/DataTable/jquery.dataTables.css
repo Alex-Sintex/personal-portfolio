@@ -413,8 +413,8 @@ table.dataTable, table.dataTable th, table.dataTable td {
     border: 1px solid #D5D9DB;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path fill='%238C92A0' d='M11.44 10.73l4.41 4.42a.5.5 0 1 1-.7.7l-4.42-4.41a6.5 6.5 0 1 1 .7-.7v-.01zM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z'></path></svg>");
     background-repeat: no-repeat;
-    background-position: 15px 10px;
-    background-size: 20px 20px;
+    background-position: 12px center;
+    background-size: auto;
     border-radius: 0.6em;
     width: auto;
     padding: .5em 1em .5em 2.5em;
@@ -423,6 +423,7 @@ table.dataTable, table.dataTable th, table.dataTable td {
     text-decoration: none;
     text-align: left;
     font-family: "Montserrat", sans-serif;
+
 }
 
 .input-grey-rounded::placeholder {
