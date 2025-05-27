@@ -21,7 +21,7 @@
                         Tabla de productos
                     </div>
                     <div class="card-body">
-                        <table id="tableP" class="ui celled table hover" style="width:100%"></table>
+                        <table id="tableP" class="content-table" style="width:100%"></table>
                     </div>
                 </div>
             </div>

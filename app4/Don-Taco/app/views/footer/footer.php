@@ -20,6 +20,10 @@
 
 <!-- SCRIPT LOADER -->
 <?php
+// Load JQuery Library
+$loadJQueryLibrary = $data['loadJQueryLibrary'] ?? false;
+// Load JS for Auth page
+$loadJSLogin = $data['loadJSLogin'] ?? false;
 // Load DataTable Simple scripts
 $loadDataTablesSimple = $data['loadDataTablesSimple'] ?? false;
 $loadDataTables = $data['loadDataTables'] ?? false;
@@ -39,6 +43,15 @@ $loadCharts = $data['loadCharts'] ?? false;
 <script src="<?= PATH_URL ?>js/Main/bootstrap.bundle.min.js"></script>
 <script src="<?= PATH_URL ?>js/Main/scripts.js"></script>
 <script src="<?= PATH_URL ?>js/Main/all.js"></script>
+
+<!-- Load JQuery Library -->
+<?php if ($loadJQueryLibrary): ?>
+    <script src="<?= PATH_URL ?>js/DataTable/jquery-3.7.1.min.js"></script>
+<?php endif; ?>
+
+<?php if (!empty($loadJSLogin)): ?>
+    <script src="<?= PATH_URL ?>js/auth/login.js"></script>
+<?php endif; ?>
 
 <?php if ($loadDataTablesSimple): ?>
     <!-- DataTables Simple -->

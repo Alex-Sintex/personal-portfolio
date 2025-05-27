@@ -7382,11 +7382,12 @@ fieldset:disabled .btn {
 .fixed-top,
 .sb-nav-fixed #layoutSidenav #layoutSidenav_nav,
 .sb-nav-fixed .sb-topnav {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1030;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+
 }
 
 .fixed-bottom {
@@ -8479,7 +8480,8 @@ fieldset:disabled .btn {
 }
 
 .ps-3 {
-  padding-left: 1rem !important;
+    padding-left: 1rem !important;
+
 }
 
 .ps-4 {
@@ -12312,7 +12314,8 @@ body {
 }
 
 .sb-nav-fixed .sb-topnav {
-  z-index: 1039;
+    z-index: 1039;
+
 }
 
 .sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
@@ -12365,8 +12368,8 @@ body {
 }
 
 .sb-topnav .navbar-brand {
-  width: 225px;
-  margin: 0;
+    width: 225px;
+    margin: 0;
 
 }
 
@@ -12675,12 +12678,11 @@ body {
 
 /* Logo style */
 .logo {
-  position: absolute;
-  top: 5px;
-  left: 20px;
-  height: 50px;
-  object-fit: contain;
-  z-index: 1000;
+    top: 5px;
+    left: 20px;
+    height: 50px;
+    object-fit: contain;
+    z-index: 1000;
 
 }
 

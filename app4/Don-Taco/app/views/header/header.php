@@ -18,11 +18,11 @@ $loadStyles = $data['loadStyles'] ?? false;
     <link rel="icon" href="<?= PATH_URL; ?>img/favicon/favicon.ico" type="image/x-icon">
     <!-- Optional: for Apple devices -->
     <link rel="apple-touch-icon" href="<?= PATH_URL; ?>img/favicon/apple-touch-icon.png">
-
-    <?php if ($loadStyles): ?>
-        <link rel="stylesheet" href="<?= PATH_URL; ?>css/Main/style.min.css" type="text/css" />
-        <link rel="stylesheet" href="<?= PATH_URL; ?>css/Main/styles.css" type="text/css" />
-        <link rel="stylesheet" href="<?= PATH_URL ?>css/Main/bootstrap.min.css" type="text/css" />
+    
+    <?php if($loadStyles): ?>
+    <link rel="stylesheet" href="<?= PATH_URL; ?>css/Main/style.min.css" type="text/css" />
+    <link rel="stylesheet" href="<?= PATH_URL; ?>css/Main/styles.css" type="text/css" />
+    <link rel="stylesheet" href="<?= PATH_URL ?>css/Main/bootstrap.min.css" type="text/css" />
     <?php endif; ?>
 
     <?php if ($loadStyleforAuth): ?>

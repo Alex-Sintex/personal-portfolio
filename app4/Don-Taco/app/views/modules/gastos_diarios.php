@@ -21,7 +21,7 @@
                         Tabla de gastos diarios
                     </div>
                     <div class="card-body">
-                        <table id="tableGD" class="ui celled table hover" style="width:100%">
+                        <table id="tableGD" class="content-table" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -32,6 +32,7 @@
                                     <th>Tortilla Harina Grande</th>
                                     <th>Longaniza</th>
                                     <th>Pan</th>
+                                    <th>Vinagre</th>
                                     <th>Bodegón</th>
                                     <th>Adelanto Marcos</th>
                                     <th>Transporte Marcos</th>

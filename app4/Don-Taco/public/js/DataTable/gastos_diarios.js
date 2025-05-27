@@ -173,6 +173,5 @@ $(document).ready(function () {
           toast.success("¡Registro añadido!");
         });
     });
-
   });
 });
