@@ -1,4 +1,7 @@
 <?php require PATH_APP . '/views/header/header.php'; ?>
+<style>
+input:invalid {border-color :red}
+</style>
 <div id="layoutSidenav">
     <?php require PATH_APP . '/views/navigation/navigation.php'; ?>
     <div id="layoutSidenav_content">

@@ -3,6 +3,7 @@
 namespace App\controllers;
 
 use App\Libraries\Controller;
+use App\Helpers\Validator;
 
 class Product extends Controller
 {
@@ -32,7 +33,6 @@ class Product extends Controller
     // Fetch all products
     public function fetch()
     {
-        header('Content-Type: application/json');
         $product = $this->modelProduct->getProducts();
         $cleaned = [];
 
@@ -52,38 +52,164 @@ class Product extends Controller
     // Insert new product
     public function insert()
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-        header('Content-Type: application/json');
+        header('Content-Type: application/json'); // ✅ Asegura salida JSON
 
-        if (!isset($data['nombre']) || !isset($data['precio'])) {
-            echo json_encode(['status' => 'error', 'message' => 'Missing fields']);
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
             return;
         }
 
-        $result = $this->modelProduct->addProduct($data);
-        echo json_encode(['status' => $result ? 'Added' : 'error']);
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $data['measure_n'] = $data['measure_n'] ?? '';
+        $data['provider_n'] = $data['provider_n'] ?? '';
+
+        $validator = new Validator();
+
+        $rules = [
+            'name'       => ['required' => true, 'type' => 'string', 'max' => 100],
+            'price'      => ['required' => true, 'type' => 'numeric'],
+            'measure_n'  => ['required' => true, 'type' => 'string', 'max' => 50],
+            'provider_n' => ['required' => true, 'type' => 'string', 'max' => 100]
+        ];
+
+        if (!$validator->validate($data, $rules)) {
+            http_response_code(422); // Unprocessable Entity
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error de validación',
+                'errors' => $validator->errors()
+            ]);
+            return;
+        }
+
+        $cleanData = $validator->sanitize($data);
+
+        // 🔍 Get unit_measure_id
+        $measure = $this->modelProduct->getMeasureIdByName($cleanData['measure_n']);
+        if (!$measure) {
+            http_response_code(404);
+            echo json_encode(['status' => 'error', 'message' => 'Unidad de medida no encontrada']);
+            return;
+        }
+
+        // 🔍 Get provider_id
+        $provider = $this->modelProduct->getProviderIdByName($cleanData['provider_n']);
+        if (!$provider) {
+            http_response_code(404);
+            echo json_encode(['status' => 'error', 'message' => 'Proveedor no encontrado']);
+            return;
+        }
+
+        $insertData = [
+            'name'            => $cleanData['name'],
+            'price'           => $cleanData['price'],
+            'unit_measure_id' => $measure->unit_measure_id,
+            'provider_id'     => $provider->provider_id
+        ];
+
+        $result = $this->modelProduct->addProduct($insertData);
+
+        if ($result) {
+            http_response_code(200);
+            echo json_encode(['status' => 'success', 'message' => '¡Registro añadido!']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['status' => 'error', 'message' => '¡Error al añadir el registro!']);
+        }
     }
 
     // Update product
     public function update($id)
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-        header('Content-Type: application/json');
+        header('Content-Type: application/json'); // ✅ Asegura salida JSON
 
-        if (!isset($data['nombre']) || !isset($data['precio'])) {
-            echo json_encode(['status' => 'error', 'message' => 'Missing fields']);
+        if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
+            http_response_code(405);
+            echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
             return;
         }
 
-        $result = $this->modelProduct->updateProduct($id, $data);
-        echo json_encode(['status' => $result ? 'Updated' : 'error']);
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $data['measure_n'] = $data['measure_n'] ?? '';
+        $data['provider_n'] = $data['provider_n'] ?? '';
+
+        $validator = new Validator();
+
+        $rules = [
+            'name'       => ['required' => true, 'type' => 'string', 'max' => 100],
+            'price'      => ['required' => true, 'type' => 'numeric'],
+            'measure_n'  => ['required' => true, 'type' => 'string', 'max' => 50],
+            'provider_n' => ['required' => true, 'type' => 'string', 'max' => 100]
+        ];
+
+        if (!$validator->validate($data, $rules)) {
+            http_response_code(422); // Unprocessable Entity
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error de validación',
+                'errors' => $validator->errors()
+            ]);
+            return;
+        }
+
+        $cleanData = $validator->sanitize($data);
+
+        // 🔍 Get unit_measure_id
+        $measure = $this->modelProduct->getMeasureIdByName($cleanData['measure_n']);
+        if (!$measure) {
+            http_response_code(404);
+            echo json_encode(['status' => 'error', 'message' => 'Unidad de medida no encontrada']);
+            return;
+        }
+
+        // 🔍 Get provider_id
+        $provider = $this->modelProduct->getProviderIdByName($cleanData['provider_n']);
+        if (!$provider) {
+            http_response_code(404);
+            echo json_encode(['status' => 'error', 'message' => 'Proveedor no encontrado']);
+            return;
+        }
+
+        $insertData = [
+            'name'            => $cleanData['name'],
+            'price'           => $cleanData['price'],
+            'unit_measure_id' => $measure->unit_measure_id,
+            'provider_id'     => $provider->provider_id
+        ];
+
+        $result = $this->modelProduct->updateProduct($id, $insertData);
+
+        if ($result) {
+            http_response_code(200);
+            echo json_encode(['status' => 'success', 'message' => '¡Registro actualizado!']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['status' => 'error', 'message' => '¡Error al actualizar el registro!']);
+        }
     }
 
     // Delete product
     public function delete($id)
     {
         header('Content-Type: application/json');
+
+        if (!is_numeric($id)) {
+            http_response_code(400);
+            echo json_encode(['status' => 'error', 'message' => 'Invalid ID']);
+            return;
+        }
+
         $result = $this->modelProduct->deleteProduct($id);
-        echo json_encode(['status' => $result ? 'Deleted' : 'error']);
+
+        if ($result) {
+            http_response_code(200);
+            echo json_encode(['status' => 'success', 'message' => '¡Registro eliminado!']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['status' => 'error', 'message' => '¡Error al eliminar el registro!']);
+        }
     }
 }

@@ -71,15 +71,15 @@ $loadCharts = $data['loadCharts'] ?? false;
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.altEditor.js"></script>
 
     <?php if (!empty($loadDataTablesProduct)): ?>
-        <script src="<?= PATH_URL ?>js/DataTable/product.js"></script>
+        <script src="<?= PATH_URL ?>js/product/product.js"></script>
     <?php endif; ?>
 
     <?php if (!empty($loadDataTablesBalance)): ?>
-        <script src="<?= PATH_URL ?>js/DataTable/balance.js"></script>
+        <script src="<?= PATH_URL ?>js/balance/balance.js"></script>
     <?php endif; ?>
 
     <?php if (!empty($loadDataTablesGD)): ?>
-        <script src="<?= PATH_URL ?>js/DataTable/gastos_diarios.js"></script>
+        <script src="<?= PATH_URL ?>js/expense/daily_expenses.js"></script>
     <?php endif; ?>
 <?php endif; ?>
 

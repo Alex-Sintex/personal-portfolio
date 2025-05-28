@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 require_once __DIR__ . '/../app/config/config.php';
 require_once __DIR__ . '/../app/helpers/url_helper.php';
 require_once __DIR__ . '/../app/helpers/auth_helper.php';
+require_once __DIR__ . '/../app/helpers/Validator.php';
 
 use App\Libraries\Core;
 
