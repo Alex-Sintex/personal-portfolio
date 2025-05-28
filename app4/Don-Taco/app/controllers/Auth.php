@@ -11,7 +11,7 @@ class Auth extends Controller
 
     public function __construct()
     {
-        $this->userModel = $this->model('User');
+        $this->userModel = $this->model('UserModel');
     }
 
     // Show login view

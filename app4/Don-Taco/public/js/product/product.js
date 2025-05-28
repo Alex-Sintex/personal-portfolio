@@ -31,6 +31,7 @@ $(document).ready(function () {
         {
             data: null,
             title: '#',
+            type: 'hidden',
             render: function (data, type, row, meta) {
                 return meta.row + 1;
             }
@@ -38,7 +39,8 @@ $(document).ready(function () {
         {
             data: 'id',
             title: 'ID',
-            visible: false
+            visible: false,
+            type: 'hidden'
         },
         { data: 'name', title: 'NOMBRE PRODUCTO' },
         { data: 'price', title: 'PRECIO' },
@@ -115,7 +117,6 @@ $(document).ready(function () {
                     }
                 },
                 error: function (xhr) {
-                    console.error("AJAX error:", xhr);
                     let message = "Error en el servidor";
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         message = xhr.responseJSON.message;
@@ -148,7 +149,6 @@ $(document).ready(function () {
                     }
                 },
                 error: function (xhr) {
-                    console.error("AJAX error:", xhr);
                     let message = "Error en el servidor";
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         message = xhr.responseJSON.message;
@@ -178,7 +178,6 @@ $(document).ready(function () {
                     }
                 },
                 error: function (xhr) {
-                    console.error("AJAX error:", xhr);
                     let message = "Error en el servidor";
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         message = xhr.responseJSON.message;

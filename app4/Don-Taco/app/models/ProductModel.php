@@ -4,7 +4,7 @@ namespace App\models;
 
 use App\Libraries\Base;
 
-class ProductM
+class ProductModel
 {
     private $db;
 

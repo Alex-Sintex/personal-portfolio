@@ -12,7 +12,7 @@ class Main extends Controller
     public function __construct()
     {
         requireLogin();
-        $this->productModel = $this->model('ProductM');
+        $this->productModel = $this->model('ProductModel');
     }
 
     public function index()

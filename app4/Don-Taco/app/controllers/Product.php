@@ -12,7 +12,7 @@ class Product extends Controller
     public function __construct()
     {
         requireLogin();
-        $this->modelProduct = $this->model('ProductM');
+        $this->modelProduct = $this->model('ProductModel');
     }
 
     // Load balance view with required resources
