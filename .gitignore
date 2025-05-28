@@ -14,3 +14,4 @@
 ../.DS_Store
 app4/Certificates/app4.local-key.pem
 app4/Certificates/app4.local.pem
+.vscode/settings.json
