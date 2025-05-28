@@ -1,2 +1,16 @@
-.DS_Store
-.pem
+# Ignorar archivos del sistema
+*.DS_Store
+
+# Ignorar vendor y composer.json si no pertenecen al subproyecto
+/vendor/
+/composer.lock
+/composer.json
+
+# Ignorar carpetas no relacionadas
+../Certificates/
+../../vendor/
+../../composer.json
+../../.DS_Store
+../.DS_Store
+app4/Certificates/app4.local-key.pem
+app4/Certificates/app4.local.pem
