@@ -1,50 +1,39 @@
 <?php
-// Map the URL entered in the browser (Routing mechanism)
-/*
-Mapping of the URL entered to the browser
-1. Controller
-2. Method
-3. Parameters
-Example: /articles/update/1
-*/
+
+namespace App\Libraries;
 
 class Core
 {
-    protected $controllerActual = 'main';
+    protected $controllerActual = 'App\controllers\Main';
     protected $methodActual = 'index';
     protected $parameters = [];
 
-    // Constructor
     public function __construct()
     {
         $url = $this->getUrl();
 
-        // Search for the controller if it exists
-        if (!empty($url) && file_exists('../app/controllers/' . ucwords($url[0]) . '.php')) {
-            // if exists then set the controller by default
-            $this->controllerActual = ucwords($url[0]);
-
-            // Unset with index 0
-            unset($url[0]);
-        }
-
-        // Require the controller
-        require_once '../app/controllers/' . $this->controllerActual . '.php';
-        $this->controllerActual = new $this->controllerActual;
-
-        // Check the second part of the URL that would be the method
-        if (isset($url[1])) {
-            // Check if the method exists in the controller
-            if (method_exists($this->controllerActual, $url[1])) {
-                $this->methodActual = $url[1];
-                unset($url[1]);
+        if (!empty($url)) {
+            // Use ucfirst for class names if controllers use PascalCase
+            $controllerName = 'App\\Controllers\\' . ucfirst($url[0]);
+            if (class_exists($controllerName)) {
+                $this->controllerActual = $controllerName;
+                unset($url[0]);
             }
         }
 
-        // Get possible parameters
+        // Instantiate controller
+        $this->controllerActual = new $this->controllerActual;
+
+        // Check method
+        if (isset($url[1]) && method_exists($this->controllerActual, $url[1])) {
+            $this->methodActual = $url[1];
+            unset($url[1]);
+        }
+
+        // Parameters
         $this->parameters = $url ? array_values($url) : [];
 
-        // Call a callback with an array of parameters
+        // Call method with parameters
         call_user_func_array([$this->controllerActual, $this->methodActual], $this->parameters);
     }
 
@@ -53,9 +42,8 @@ class Core
         if (isset($_GET['url'])) {
             $url = rtrim($_GET['url'], '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);
-            $url = explode('/', $url);
-            return $url;
+            return explode('/', $url);
         }
-        return []; // safer to return an empty array if no URL is set
+        return [];
     }
 }

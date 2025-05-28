@@ -1,5 +1,9 @@
 <?php
 
+namespace App\models;
+
+use App\Libraries\Base;
+
 class ProductM
 {
     private $db;

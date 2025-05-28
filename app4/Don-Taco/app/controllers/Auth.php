@@ -1,6 +1,10 @@
 <?php
 // Auth.php — Controller for login, registration, logout, etc.
 
+namespace App\controllers;
+
+use App\Libraries\Controller;
+
 class Auth extends Controller
 {
     private $userModel;

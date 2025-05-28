@@ -1,5 +1,9 @@
 <?php
 
+namespace App\controllers;
+
+use App\Libraries\Controller;
+
 class Product extends Controller
 {
     private $modelProduct;

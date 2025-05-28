@@ -1,9 +1,11 @@
 <?php
 
+namespace App\controllers;
+
+use App\Libraries\Controller;
+
 class Balance extends Controller
 {
-    //private $modelBalance;
-
     public function __construct()
     {
         //$this->modelBalance = $this->model('Balance');

@@ -1,5 +1,10 @@
 <?php
 // Class Balance extends the main controller
+
+namespace App\controllers;
+
+use App\Libraries\Controller;
+
 class GastosD extends Controller
 {
     public function __construct()

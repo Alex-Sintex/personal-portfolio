@@ -1,5 +1,10 @@
 <?php
 // Class Pages extends the main controller
+
+namespace App\controllers;
+
+use App\Libraries\Controller;
+
 class Main extends Controller
 {
     private $productModel;

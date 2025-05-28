@@ -1,29 +1,35 @@
 <?php
+namespace App\Libraries;
 
-// Class main controller
-// It's in charge for loading the model and view
+use App\exceptions\ModelNotFoundException;
 
 class Controller
 {
-
     // Load the model
     public function model($model)
     {
-        // Load
-        require_once '../app/models/' . $model . '.php';
-        // Instantiate the model
-        return new $model();
+        $modelClass = 'App\\Models\\' . $model;
+        if (class_exists($modelClass)) {
+            return new $modelClass();
+        } else {
+            throw new ModelNotFoundException("Model $modelClass not found");
+        }
     }
 
     // Load the view
     public function view($view, $data = [])
     {
-        // Check if file view exists
-        if (file_exists('../app/views/' . $view . '.php')) {
-            require_once '../app/views/' . $view . '.php';
+        $viewFile = '../app/views/' . $view . '.php';
+        if (file_exists($viewFile)) {
+            require_once $viewFile;
         } else {
-            // If the view does not exist, show 404 error
-            $this->view('errors/404');
+            // View not found: maybe load a 404 page
+            $errorView = '../app/views/errors/404.php';
+            if (file_exists($errorView)) {
+                require_once $errorView;
+            } else {
+                echo "404 View not found";
+            }
         }
     }
 }
