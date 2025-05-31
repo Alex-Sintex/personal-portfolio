@@ -4,7 +4,7 @@ namespace App\Libraries;
 
 class Core
 {
-    protected $controllerActual = 'App\controllers\Main';
+    protected $controllerActual = 'App\\Controllers\\Main';
     protected $methodActual = 'index';
     protected $parameters = [];
 
@@ -12,28 +12,37 @@ class Core
     {
         $url = $this->getUrl();
 
+        // Get controller
         if (!empty($url)) {
-            // Use ucfirst for class names if controllers use PascalCase
             $controllerName = 'App\\Controllers\\' . ucfirst($url[0]);
+
             if (class_exists($controllerName)) {
                 $this->controllerActual = $controllerName;
                 unset($url[0]);
+            } else {
+                $this->loadErrorPage();
+                return;
             }
         }
 
         // Instantiate controller
         $this->controllerActual = new $this->controllerActual;
 
-        // Check method
-        if (isset($url[1]) && method_exists($this->controllerActual, $url[1])) {
-            $this->methodActual = $url[1];
-            unset($url[1]);
+        // Get method
+        if (isset($url[1])) {
+            if (method_exists($this->controllerActual, $url[1])) {
+                $this->methodActual = $url[1];
+                unset($url[1]);
+            } else {
+                $this->loadErrorPage();
+                return;
+            }
         }
 
-        // Parameters
+        // Get parameters
         $this->parameters = $url ? array_values($url) : [];
 
-        // Call method with parameters
+        // Call the method with parameters
         call_user_func_array([$this->controllerActual, $this->methodActual], $this->parameters);
     }
 
@@ -45,5 +54,12 @@ class Core
             return explode('/', $url);
         }
         return [];
+    }
+
+    private function loadErrorPage()
+    {
+        // Use a controller to show the 404 view
+        $errorController = new \App\Controllers\Errors();
+        $errorController->notFound();
     }
 }

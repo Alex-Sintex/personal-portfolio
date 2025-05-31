@@ -7,12 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>404 Error - SB Admin</title>
-    <link href="<?= PATH_URL; ?>css/styles.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <title><?php echo WEBSITE; ?></title>
+    <link rel="icon" href="<?= PATH_URL; ?>img/favicon/favicon.ico" type="image/x-icon">
+    <!-- Optional: for Apple devices -->
+    <link rel="apple-touch-icon" href="<?= PATH_URL; ?>img/favicon/apple-touch-icon.png">
+    <link href="<?= PATH_URL; ?>css/Main/style.css" rel="stylesheet" />
+    <link href="<?= PATH_URL; ?>css/Main/error.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="bg-primary">
     <div id="layoutError">
         <div id="layoutError_content">
             <main>
@@ -20,23 +23,34 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-6">
                             <div class="text-center mt-4">
-                                <img class="mb-4 img-error" src="<?= PATH_URL; ?>img/error-404-monochrome.svg" />
-                                <p class="lead">This requested URL was not found on this server.</p>
-                                <a href="<?php echo PATH_URL; ?>">
-                                    <i class="fas fa-arrow-left me-1"></i>
-                                    Return to Dashboard
-                                </a>
+                                <header>
+                                    <div class="logo">
+                                        <img id="image" src="<?= PATH_URL; ?>img/favicon/apple-touch-icon.png" class="class=" mb-4 img-error"" alt="Logo" />
+                                    </div>
+                                </header>
+                                <div class="content">
+                                    <h1>404</h1>
+                                    <h2>Página no encontrada</h2>
+                                    <a class="back" href="<?= PATH_URL; ?>/">
+                                        Regresar a inicio
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </main>
         </div>
+
         <div id="layoutError_footer">
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Don-Taco 2025</div>
+                        <div class="text-muted">
+                            <script>
+                                document.querySelector('.text-muted').innerHTML = `Copyright &copy; Don-Taco ${new Date().getFullYear()}`
+                            </script>
+                        </div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;
@@ -47,8 +61,11 @@
             </footer>
         </div>
     </div>
-    <script src="<?php echo PATH_URL; ?>js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="<?= PATH_URL; ?>js/scripts.js"></script>
+    <script src="<?php echo PATH_URL; ?>js/Main/jquery-3.7.1.min.js"></script>
+    <script src="<?php echo PATH_URL; ?>js/Main/all.js"></script>
+    <script src="<?php echo PATH_URL; ?>js/Main/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo PATH_URL; ?>js/Main/scripts.js"></script>
+    <script src="<?php echo PATH_URL; ?>js/error/error.js"></script>
 </body>
 
 </html>

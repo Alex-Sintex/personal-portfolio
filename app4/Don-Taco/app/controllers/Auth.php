@@ -70,7 +70,7 @@ class Auth extends Controller
 
                 echo json_encode([
                     'success' => true,
-                    'redirect' => PATH_URL . 'dashboard'
+                    'redirect' => PATH_URL . 'main'
                 ]);
                 return;
             } else {
@@ -89,16 +89,16 @@ class Auth extends Controller
     }
 
     // Stub: register user
-    public function register()
+    /*public function register()
     {
         // To be implemented
-    }
+    }*/
 
     // Stub: forgot password logic
-    public function forgotPassword()
+    /*public function forgotPassword()
     {
         // To be implemented
-    }
+    }*/
 
     // Log out and redirect
     public function logout()

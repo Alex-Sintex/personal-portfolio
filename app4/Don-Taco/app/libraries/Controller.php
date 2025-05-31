@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Libraries;
 
-use App\exceptions\ModelNotFoundException;
+use App\Exceptions\ModelNotFoundException;
 
 class Controller
 {
-    // Load the model
+    // Load a model
     public function model($model)
     {
         $modelClass = 'App\\Models\\' . $model;
@@ -16,14 +17,15 @@ class Controller
         }
     }
 
-    // Load the view
+    // Load a view
     public function view($view, $data = [])
     {
         $viewFile = '../app/views/' . $view . '.php';
+
         if (file_exists($viewFile)) {
             require_once $viewFile;
         } else {
-            // View not found: maybe load a 404 page
+            // If view is missing, fallback to error view
             $errorView = '../app/views/errors/404.php';
             if (file_exists($errorView)) {
                 require_once $errorView;

@@ -46,7 +46,7 @@ $loadCharts = $data['loadCharts'] ?? false;
 
 <!-- Load JQuery Library -->
 <?php if ($loadJQueryLibrary): ?>
-    <script src="<?= PATH_URL ?>js/DataTable/jquery-3.7.1.min.js"></script>
+    <script src="<?= PATH_URL ?>js/Main/jquery-3.7.1.min.js"></script>
 <?php endif; ?>
 
 <?php if (!empty($loadJSLogin)): ?>
