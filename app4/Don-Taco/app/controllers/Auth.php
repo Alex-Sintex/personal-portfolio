@@ -70,7 +70,7 @@ class Auth extends Controller
 
                 echo json_encode([
                     'success' => true,
-                    'redirect' => PATH_URL . 'main'
+                    'redirect' => PATH_URL . 'dashboard'
                 ]);
                 return;
             } else {

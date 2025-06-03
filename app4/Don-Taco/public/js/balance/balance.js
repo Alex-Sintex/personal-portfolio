@@ -1,213 +1,201 @@
 $(document).ready(function () {
+    const toast = new Toasty();
 
-    // Initialize the Toasty library
-    var toast = new Toasty(options);
+    function check(value, title) {
+        const isEmpty = typeof value === 'string' && value.trim() === '';
+        const isNotNumber = isNaN(parseFloat(value));
 
-    var options = {
-        classname: "toast",
-        transition: "pinItUp",
-        insertBefore: true,
-        duration: 4000,
-        enableSounds: true,
-        autoClose: true,
-        progressBar: false,
-        sounds: {
-            // path to sound for informational message:
-            info: "../Toasty/sounds/info/1.mp3",
-            // path to sound for successfull message:
-            success: "../Toasty/sounds/success/1.mp3",
-            // path to sound for warn message:
-            warning: "../Toasty/sounds/warning/1.mp3",
-            // path to sound for error message:
-            error: "../Toasty/sounds/error/1.mp3",
-        },
-    };
-
-    // configure the plugin after be instantiated:
-    toast.configure(options);
-
-    $.getJSON('../../json/data2.json', function (dataSet) {
-
-        let editingRowIndex = null;
-
-        // Functions to calculate totals
-        function calcularTotales(modalSelector, isEdit = false) {
-            const gastosFD = parseFloat(modalSelector.find('#gastos_f_d').val().replace(/,/g, '')) || 0;
-            const gastosD = parseFloat(modalSelector.find('#gastos_diarios').val().replace(/,/g, '')) || 0;
-            const ventaNetaTarjeta = parseFloat(modalSelector.find('#venta_ntar').val().replace(/,/g, '')) || 0;
-            const ventaEfec = parseFloat(modalSelector.find('#venta_efec').val().replace(/,/g, '')) || 0;
-            const ventaTransf = parseFloat(modalSelector.find('#venta_transf').val().replace(/,/g, '')) || 0;
-            const ingresoPlatfs = parseFloat(modalSelector.find('#ingreso_platfs').val().replace(/,/g, '')) || 0;
-
-            // Total egresos
-            const totalEgre = gastosFD + gastosD;
-            modalSelector.find('#total_egre').val(totalEgre.toLocaleString('en-US', { minimumFractionDigits: 2 }));
-
-            // Venta tarjeta
-            const ventaTarjeta = ventaNetaTarjeta * 0.9652;
-            modalSelector.find('#venta_tarjeta').val(ventaTarjeta.toLocaleString('en-US', { minimumFractionDigits: 2 }));
-
-            // Total ingresos
-            const totalIngre = ventaEfec + ventaTransf + ventaTarjeta;
-            modalSelector.find('#total_ingre').val(totalIngre.toLocaleString('en-US', { minimumFractionDigits: 2 }));
-
-            // Utilidad piso
-            const utilidadP = totalIngre + ingresoPlatfs - totalEgre;
-            modalSelector.find('#utilidad_p').val(utilidadP.toLocaleString('en-US', { minimumFractionDigits: 2 }));
-
-            // Utilidad disponible
-            let utilidadAnterior = 0;
-            const currentIndex = isEdit ? editingRowIndex : myTable.data().count(); // Index of current editing or new record
-
-            if (currentIndex > 0) {
-                const prevRow = myTable.row(currentIndex - 1).data();
-                utilidadAnterior = parseFloat((prevRow.utilidad_disp || "0").toString().replace(/,/g, ''));
-            }
-
-            const utilidadDisp = utilidadAnterior + utilidadP - gastosFD;
-            modalSelector.find('#utilidad_disp').val(utilidadDisp.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+        if (isEmpty || isNotNumber) {
+            toast.error(`El campo numérico '${title}' no puede estar vacío ni contener texto no numérico.`);
+            return false;
         }
 
-        // Evento cuando se abre el modal de edición o adición
-        $(document).on("alteditor:edit_dialog_opened alteditor:add_dialog_opened", function (e) {
-            const modalSelector = $(".modal").last();
-            const isEdit = e.type === "alteditor:edit_dialog_opened";
+        return true;
+    }
 
-            calcularTotales(modalSelector, isEdit);
+    // Helper functions
+    function parseNumber(value) {
+        const num = parseFloat(String(value).replace(/,/g, '').trim());
+        return isNaN(num) ? 0 : num;
+    }
 
-            const campos = [
-                "gastos_f_d", "gastos_diarios", "venta_efec",
-                "venta_transf", "venta_ntar", "ingreso_platfs"
-            ];
-            campos.forEach(key => {
-                modalSelector.find(`#${key}`).off("input").on("input", function () {
-                    calcularTotales(modalSelector, isEdit);
-                });
+    function calculateVentaTarjeta(row) {
+        return parseNumber(row.ventNetTar) * 0.9651;
+    }
+
+    function calculateTotalIngresos(row, ventaTarjeta) {
+        return parseNumber(row.ventTransf) + ventaTarjeta + parseNumber(row.ventEfect);
+    }
+
+    function calculateUtilidadPiso(totalIngresos, row) {
+        return totalIngresos + parseNumber(row.depPlatf);
+    }
+
+    function calculateUtilidadNetaPlataforma(row) {
+        return (parseNumber(row.ub) + parseNumber(row.did) + parseNumber(row.rap)) / 2;
+    }
+
+    function calculateTotalEgresos(row, gastosDiarios) {
+        return parseNumber(row.totGF) + gastosDiarios;
+    }
+
+    function calculateTotalPlataformas(row) {
+        return parseNumber(row.ub) + parseNumber(row.did) + parseNumber(row.rap);
+    }
+
+    function calculateUtilidadDisponible(utilidadPiso, utilidadAnterior, row, gastosDiarios) {
+        return (utilidadPiso + utilidadAnterior) - (parseNumber(row.reparUtil) + parseNumber(row.totGF) + gastosDiarios);
+    }
+
+    function calculateUtilidadNeta(utilidadPiso, utilidadNetPlataforma, totalEgresos) {
+        return (utilidadPiso + utilidadNetPlataforma) - totalEgresos;
+    }
+
+    function updateCalTbl() {
+        const data = inTbl.rows().data().toArray();
+        calTbl.clear();
+
+        let utilidadAnterior = 0;
+        let gastosDiarios = 3439.50;
+
+        data.forEach((row) => {
+            const ventaTarjeta = calculateVentaTarjeta(row);
+            const totalIngresos = calculateTotalIngresos(row, ventaTarjeta);
+            const utilidadPiso = calculateUtilidadPiso(totalIngresos, row);
+            const totalEgresos = calculateTotalEgresos(row, gastosDiarios);
+            const utilidadPlataforma = calculateUtilidadNetaPlataforma(row);
+
+            const utilidadNeta = calculateUtilidadNeta(utilidadPiso, utilidadPlataforma, totalEgresos);
+            const efectivoCierre = parseNumber(row.ventEfect) - parseNumber(row.gastEfect);
+            const utilidadDisponible = calculateUtilidadDisponible(utilidadPiso, utilidadAnterior, row, gastosDiarios);
+            const totalPlataformas = calculateTotalPlataformas(row);
+
+            calTbl.row.add({
+                utilidadNeta: utilidadNeta.toFixed(2),
+                totalEgresos: totalEgresos.toFixed(2),
+                efectivoCierre: efectivoCierre.toFixed(2),
+                ventaTarjeta: ventaTarjeta.toFixed(2),
+                totalIngresos: totalIngresos.toFixed(2),
+                utilidadPiso: utilidadPiso.toFixed(2),
+                utilidadDisponible: utilidadDisponible.toFixed(2),
+                total: totalPlataformas.toFixed(2),
+                utilidadPlataforma: utilidadPlataforma.toFixed(2)
             });
+
+            utilidadAnterior = utilidadDisponible;
         });
 
-        // Initialize DataTable
-        var myTable = $('#tableB').DataTable({
-            "bPaginate": true,
-            "bFilter": true,
-            "bInfo": false,
-            data: dataSet,
-            responsive: true,
-            altEditor: true,
-            columns: [
-                {
-                    data: null,
-                    type: "readonly",
-                    render: function (data, type, row, meta) {
-                        return meta.row + 1;
-                    },
-                    disabled: true,
-                    type: "hidden"
-                },
-                {
-                    data: "fecha",
-                    datetimepicker: { timepicker: false, format: "Y/m/d" }
-                },
-                { data: "gastos_f_d" },
-                { data: "gastos_diarios" },
-                {
-                    data: "total_egre",
-                    type: "readonly",
-                    disabled: true
-                },
-                { data: "venta_efec" },
-                { data: "venta_transf" },
-                { data: "venta_ntar" },
-                {
-                    data: "venta_tarjeta",
-                    type: "readonly",
-                    disabled: true
-                },
-                {
-                    data: "total_ingre",
-                    type: "readonly",
-                    disabled: true
-                },
-                {
-                    data: "utilidad_p",
-                    type: "readonly",
-                    disabled: true
-                },
-                {
-                    data: "utilidad_disp",
-                    type: "readonly",
-                    disabled: true
-                },
-                { data: "ingreso_platfs" },
-                { data: "nombre" },
-                {
-                    data: null,
-                    name: "Action",
-                    render: function () {
-                        return '<a class="delbutton fa fa-minus-square btn btn-danger" href="#"></a>';
-                    },
-                    disabled: true,
-                    type: "hidden"
-                }
-            ],
-            select: {
-                selector: 'td:not(:last-child)',
-                style: 'os',
-                toggleable: false
+        calTbl.draw();
+    }
+
+    let columInDefs = [
+        {
+            data: null,
+            title: '#',
+            type: 'hidden',
+            render: function (data, type, row, meta) {
+                return meta.row + 1;
             }
-        });
+        },
+        { data: "date", title: 'FECHA', datetimepicker: { timepicker: false, format: "Y/m/d" }, typeof: "date" },
+        { data: "gastEfect", title: 'GASTOS EN EFECTIVO', typeof: "decimal" },
+        { data: "ventEfect", title: 'VENTA EFECTIVO', typeof: "decimal" },
+        { data: "ventTransf", title: "VENTA TRANSFERENCIA", typeof: "decimal" },
+        { data: "ventNetTar", title: 'VENTA NETA TARJETA', typeof: "decimal" },
+        { data: "depPlatf", title: 'DEPÓSITOS PLATAFORMAS', typeof: "decimal" },
+        { data: "nomPlatf", title: 'NOMBRE PLATAFORMA', typeof: "string" },
+        { data: "reparUtil", title: "REPARTO UTILIDADES", typeof: "decimal" },
+        { data: "ub", title: "UBER", typeof: "decimal" },
+        { data: "did", title: "DIDI", typeof: "decimal" },
+        { data: "rap", title: "RAPPI", typeof: "decimal" },
+        { data: 'totGF', title: 'TOTAL GASTO FIJO', typeof: "decimal" }
+    ];
 
-        // Edit row
-        $('#tableB tbody').on('click', 'td', function () {
-            const cellIndex = this.cellIndex;
-            if (cellIndex === 0 || cellIndex === 17) return;
+    const inTbl = $('#inTableB').DataTable({
+        ajax: {
+            url: 'balance/fetch',
+            dataSrc: ''
+        },
+        columns: columInDefs,
+        dom: 'Bfrtip',
+        select: 'single',
+        responsive: true,
+        altEditor: true,
+        language: { url: "../../JSON/es-ES.json" },
+        buttons: [
+            { text: '➕ Añadir', name: 'add' },
+            { extend: 'selected', text: '✏️ Editar', name: 'edit' },
+            { extend: 'selected', text: '❌ Borrar', name: 'delete' },
+            {
+                text: '🔄 Generar cálculos',
+                action: function () {
+                    updateCalTbl();
+                    toast.info("¡Se han generado los cálculos en la primera tabla!");
+                }
+            }
+        ],
 
-            myTable.row(this).select();
+        onAddRow: function (datatable, rowdata, success, error) {
+            const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
+            //console.log(data);
 
-            const that = $('#tableB')[0].altEditor;
-            that._openEditModal();
+            if (!check(value, colDef.title)) return;
 
-            $('#altEditor-edit-form-' + that.random_id)
-                .off('submit')
-                .on('submit', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    that._editRowData();
-                    // show a successful message:
-                    toast.success("¡Registro actualizado!");
-                });
-        });
+            toast.success("Agregado correctamente");
+            updateCalTbl();
+            success(data);
+        },
 
-        // Delete row
-        $(document).on('click', '#tableB .delbutton', function (x) {
-            var that = $('#tableB')[0].altEditor;
-            that._openDeleteModal();
-            $('#altEditor-delete-form-' + that.random_id)
-                .off('submit')
-                .on('submit', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    that._deleteRow();
-                    // show a successful message:
-                    toast.success("¡Registro eliminado!");
-                });
-            x.stopPropagation();
-        });
+        onEditRow: function (datatable, rowdata, success, error) {
+            const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
+            //console.log(data);
 
-        // Add row
-        $('#addbutton').on('click', function () {
-            var that = $('#tableB')[0].altEditor;
-            that._openAddModal();
-            $('#altEditor-add-form-' + that.random_id)
-                .off('submit')
-                .on('submit', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    that._addRowData();
-                    // show a successful message:
-                    toast.success("¡Registro añadido!");
-                });
-        });
+            if (!check(value, colDef.title)) return;
 
+            inTbl.row({ selected: true }).data(data).draw();
+            toast.success("Actualizado correctamente");
+            updateCalTbl();
+            success(data);
+        },
+
+        onDeleteRow: function (datatable, rowdata, success, error) {
+            const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
+            //console.log(data);
+
+            inTbl.row({ selected: true }).remove().draw();
+            toast.success("Eliminado correctamente");
+            updateCalTbl();
+            success(data);
+        }
+    });
+
+    const calTbl = $('#calTableB').DataTable({
+        columns: [
+            {
+                data: null,
+                title: '#',
+                type: 'hidden',
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            { data: 'utilidadNeta', title: 'UTILIDAD NETA' },
+            { data: 'totalEgresos', title: 'TOTAL EGRESOS' },
+            { data: 'efectivoCierre', title: 'EFECTIVO AL CIERRE' },
+            { data: 'ventaTarjeta', title: 'VENTA TARJETA - %' },
+            { data: 'totalIngresos', title: 'TOTAL INGRESOS' },
+            { data: 'utilidadPiso', title: 'UTILIDAD PISO' },
+            { data: 'utilidadDisponible', title: 'UTILIDAD DISPONIBLE' },
+            { data: 'total', title: 'TOTAL PLATAFORMAS' },
+            { data: 'utilidadPlataforma', title: 'UTILIDAD NETA PLATAFORMA' }
+        ],
+        dom: 'Bfrtip',
+        responsive: true,
+        altEditor: false,
+        language: { url: "../../JSON/es-ES.json" },
+        buttons: [
+            { extend: 'print', exportOptions: { columns: ':visible' } },
+            'colvis'
+        ]
     });
 });

@@ -2,51 +2,54 @@
 
 namespace App\Libraries;
 
+use App\Controllers\Dashboard;
+use App\Controllers\Errors;
+
 class Core
 {
-    protected $controllerActual = 'App\\Controllers\\Main';
-    protected $methodActual = 'index';
-    protected $parameters = [];
+    // Main page Dashboard controller
+    protected string $controllerClass = Dashboard::class;
+    protected object $controllerActual;
+    protected string $methodActual = 'index';
+    protected array $parameters = [];
 
     public function __construct()
     {
         $url = $this->getUrl();
 
-        // Get controller
+        // Controller resolution
         if (!empty($url)) {
             $controllerName = 'App\\Controllers\\' . ucfirst($url[0]);
 
             if (class_exists($controllerName)) {
-                $this->controllerActual = $controllerName;
+                $this->controllerClass = $controllerName;
                 unset($url[0]);
             } else {
-                $this->loadErrorPage();
-                return;
+                return $this->loadErrorPage();
             }
         }
 
         // Instantiate controller
-        $this->controllerActual = new $this->controllerActual;
+        $this->controllerActual = new $this->controllerClass;
 
-        // Get method
+        // Method resolution
         if (isset($url[1])) {
             if (method_exists($this->controllerActual, $url[1])) {
                 $this->methodActual = $url[1];
                 unset($url[1]);
             } else {
-                $this->loadErrorPage();
-                return;
+                return $this->loadErrorPage();
             }
         }
 
-        // Get parameters
+        // Parameters
         $this->parameters = $url ? array_values($url) : [];
 
-        // Call the method with parameters
+        // Call the method
         call_user_func_array([$this->controllerActual, $this->methodActual], $this->parameters);
     }
 
-    public function getUrl()
+    private function getUrl(): array
     {
         if (isset($_GET['url'])) {
             $url = rtrim($_GET['url'], '/');
@@ -56,10 +59,9 @@ class Core
         return [];
     }
 
-    private function loadErrorPage()
+    private function loadErrorPage(): void
     {
-        // Use a controller to show the 404 view
-        $errorController = new \App\Controllers\Errors();
+        $errorController = new Errors();
         $errorController->notFound();
     }
 }

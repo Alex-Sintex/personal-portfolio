@@ -6,5 +6,8 @@ use Exception;
 
 class ModelNotFoundException extends Exception
 {
-    // Custom exception for missing models
+    public function __construct(string $modelClass)
+    {
+        parent::__construct("Model $modelClass not found");
+    }
 }

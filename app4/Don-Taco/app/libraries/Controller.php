@@ -13,7 +13,7 @@ class Controller
         if (class_exists($modelClass)) {
             return new $modelClass();
         } else {
-            throw new ModelNotFoundException("Model $modelClass not found");
+            throw new ModelNotFoundException($modelClass);
         }
     }
 

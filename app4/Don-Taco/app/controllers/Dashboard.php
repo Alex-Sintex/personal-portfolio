@@ -5,7 +5,7 @@ namespace App\controllers;
 
 use App\Libraries\Controller;
 
-class Main extends Controller
+class Dashboard extends Controller
 {
     private $productModel;
 

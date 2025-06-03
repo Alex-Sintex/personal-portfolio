@@ -239,14 +239,14 @@ a.dt-button:focus:not(.disabled) {
     transition: background-position 300ms ease-in-out, color 300ms ease-in-out;
 }
 
-/* Only apply hover if button is enabled */
+/* Hover effect only if enabled */
 .buttonDT:enabled:hover,
 .buttonDT:enabled:focus {
     background-position: 0;
     color: #fff;
 }
 
-/* Disabled button style (no highlight, no animation) */
+/* Disabled button style */
 .buttonDT:disabled {
     cursor: not-allowed;
     opacity: 0.5;
@@ -254,6 +254,27 @@ a.dt-button:focus:not(.disabled) {
     border-color: #ccc;
     color: #aaa;
 }
+
+/* ACTIVE/SELECTED STATE */
+.buttonDT.active {
+    background-color: #000;
+    color: #fff;
+    animation: pulse 0.3s ease-in-out;
+}
+
+/* Pulse animation on click */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.07);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 
 /* ------------------------------------------------------------------- */
 .dt-button embed {

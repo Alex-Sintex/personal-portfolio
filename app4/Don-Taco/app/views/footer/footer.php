@@ -69,6 +69,8 @@ $loadCharts = $data['loadCharts'] ?? false;
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.responsive.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/jquery.datetimepicker.full.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.altEditor.js"></script>
+    <script src="<?= PATH_URL ?>js/DataTable/buttons.print.min.js"></script>
+    <script src="<?= PATH_URL ?>js/DataTable/buttons.colVis.min.js"></script>
 
     <?php if (!empty($loadDataTablesProduct)): ?>
         <script src="<?= PATH_URL ?>js/product/product.js"></script>

@@ -126,6 +126,7 @@ $(document).ready(function () {
                 }
             });
         },
+        // Edit record
         onEditRow: function (datatable, rowdata, success, error) {
             $.ajax({
                 url: 'product/update/' + rowdata.id,
@@ -158,7 +159,7 @@ $(document).ready(function () {
                 }
             });
         },
-
+        // Delete record
         onDeleteRow: function (datatable, rowdata, success, error) {
 
             const id = rowdata[0]?.id;
