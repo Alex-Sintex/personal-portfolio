@@ -38,8 +38,6 @@ $loadStyles = $data['loadStyles'] ?? false;
         <link rel="stylesheet" href="<?= PATH_URL ?>css/DataTable/select2.dataTables.css" type="text/css" />
         <link rel="stylesheet" href="<?= PATH_URL ?>css/DataTable/responsive.dataTables.css" type="text/css" />
         <link rel="stylesheet" href="<?= PATH_URL ?>css/DataTable/jquery.datetimepicker.css" type="text/css" />
-        <link rel="stylesheet" href="<?= PATH_URL ?>css/DataTable/semantic.min.css" type="text/css" />
-        <link rel="stylesheet" href="<?= PATH_URL ?>css/DataTable/dataTables.semanticui.css" type="text/css" />
     <?php endif; ?>
 
     <?php if ($loadToastStyle): ?>

@@ -67,6 +67,7 @@ class Auth extends Controller
                 session_start();
                 $_SESSION['user_id'] = $user->id;
                 $_SESSION['user_name'] = $user->username;
+                $_SESSION['user_type'] = $user->role;
 
                 echo json_encode([
                     'success' => true,

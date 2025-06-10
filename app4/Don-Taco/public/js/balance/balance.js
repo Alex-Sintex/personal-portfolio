@@ -137,9 +137,16 @@ $(document).ready(function () {
 
         onAddRow: function (datatable, rowdata, success, error) {
             const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
-            //console.log(data);
 
-            if (!check(value, colDef.title)) return;
+            for (let colDef of columInDefs) {
+                if (colDef.typeof === "decimal") {
+                    const value = data[colDef.data];
+                    if (!check(value, colDef.title)) {
+                        error(); // you can call error callback
+                        return;
+                    }
+                }
+            }
 
             toast.success("Agregado correctamente");
             updateCalTbl();
@@ -148,9 +155,16 @@ $(document).ready(function () {
 
         onEditRow: function (datatable, rowdata, success, error) {
             const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
-            //console.log(data);
 
-            if (!check(value, colDef.title)) return;
+            for (let colDef of columInDefs) {
+                if (colDef.typeof === "decimal") {
+                    const value = data[colDef.data];
+                    if (!check(value, colDef.title)) {
+                        error();
+                        return;
+                    }
+                }
+            }
 
             inTbl.row({ selected: true }).data(data).draw();
             toast.success("Actualizado correctamente");

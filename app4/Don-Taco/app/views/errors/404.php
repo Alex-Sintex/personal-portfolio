@@ -31,7 +31,7 @@
                                 <div class="content">
                                     <h1>404</h1>
                                     <h2>Página no encontrada</h2>
-                                    <a class="back" href="<?= PATH_URL; ?>/">
+                                    <a class="back" href="<?= PATH_URL; ?>">
                                         Regresar a inicio
                                     </a>
                                 </div>
