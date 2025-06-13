@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    /*
+      $.getJSON('../../json/data.json', function (dataSet) {});
+    */
 
     // Initialize the Toasty library
     const toast = new Toasty();
@@ -89,7 +92,7 @@ $(document).ready(function () {
                 text: '🔄 Refrescar',
                 action: function (e, dt) {
                     table.ajax.reload(null, false);
-                    toast.info("¡Tabla actualizada!");
+                    toast.info("Se ha refrescado la tabla!");
                 }
             }
         ],
@@ -110,10 +113,6 @@ $(document).ready(function () {
                         table.ajax.reload(null, false);
                         toast.success(res.message);
                         success(res); // Only call success
-                    } else {
-                        // Only call error if status is not success
-                        toast.error(res.message || "¡Error al agregar!");
-                        error(res);
                     }
                 },
                 error: function (xhr) {

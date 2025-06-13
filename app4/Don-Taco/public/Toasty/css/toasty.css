@@ -5,7 +5,6 @@
   position: fixed;
   z-index: 999999;
   pointer-events: none;
-  line-height: normal;
   line-height: initial;
   -webkit-transition: all 1s ease-in-out;
   -o-transition: all 1s ease-in-out;
@@ -442,6 +441,99 @@
 .toast.pinItDown-hide {
   top: 100%;
   opacity: 0;
+}
+
+/* TRANSITION 12 - a [centerTopFade] transition: */
+.toast-container--centerTopFade {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  right: auto;
+  bottom: auto;
+}
+
+.toast-container--centerTopFade .toast-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.toast.centerTopFade-init {
+  top: -100%;
+  opacity: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+.toast.centerTopFade-show {
+  top: 0%;
+  opacity: 1;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+.toast.centerTopFade-hide {
+  top: -100%;
+  opacity: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+/* TRANSITION 13 - a [bounceUpFade] transition: */
+/* Container for the bounceUpFade transition */
+.toast-container--bounceUpFade {
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Wrapper for layout */
+.toast-container--bounceUpFade .toast-wrapper {
+  display: inline-block;
+}
+
+/* Initial hidden state */
+.toast.bounceUpFade-init {
+  opacity: 0;
+  transform: translateY(100px) scale(0.8);
+}
+
+/* Show with bounce-up effect */
+.toast.bounceUpFade-show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: bounceUp 0.6s ease-out;
+}
+
+/* Hide smoothly with fade and drop */
+.toast.bounceUpFade-hide {
+  opacity: 0;
+  transform: translateY(100px);
+  transition: all 0.4s ease-in;
+}
+
+/* Bounce keyframes */
+@keyframes bounceUp {
+  0% {
+    transform: translateY(100px) scale(0.8);
+    opacity: 0;
+  }
+
+  60% {
+    transform: translateY(-10px) scale(1.05);
+    opacity: 1;
+  }
+
+  80% {
+    transform: translateY(5px) scale(0.97);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ------------------------------------------------------------------------- */

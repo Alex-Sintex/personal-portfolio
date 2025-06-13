@@ -45,3 +45,5 @@ $loadStyles = $data['loadStyles'] ?? false;
         <link rel="stylesheet" href="<?= PATH_URL ?>Toasty/css/toasty.css">
     <?php endif; ?>
 </head>
+
+<body>

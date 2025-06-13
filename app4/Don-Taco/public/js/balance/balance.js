@@ -1,6 +1,7 @@
 $(document).ready(function () {
     const toast = new Toasty();
 
+    // Check if value is either string or empty
     function check(value, title) {
         const isEmpty = typeof value === 'string' && value.trim() === '';
         const isNotNumber = isNaN(parseFloat(value));
@@ -91,24 +92,24 @@ $(document).ready(function () {
     let columInDefs = [
         {
             data: null,
-            title: '#',
+            title: "#",
             type: 'hidden',
             render: function (data, type, row, meta) {
                 return meta.row + 1;
             }
         },
-        { data: "date", title: 'FECHA', datetimepicker: { timepicker: false, format: "Y/m/d" }, typeof: "date" },
-        { data: "gastEfect", title: 'GASTOS EN EFECTIVO', typeof: "decimal" },
-        { data: "ventEfect", title: 'VENTA EFECTIVO', typeof: "decimal" },
+        { data: "date", title: "FECHA", datetimepicker: { timepicker: false, format: "Y/m/d" }, typeof: "date" },
+        { data: "gastEfect", title: "GASTOS EN EFECTIVO", typeof: "decimal" },
+        { data: "ventEfect", title: "VENTA EFECTIVO", typeof: "decimal" },
         { data: "ventTransf", title: "VENTA TRANSFERENCIA", typeof: "decimal" },
-        { data: "ventNetTar", title: 'VENTA NETA TARJETA', typeof: "decimal" },
-        { data: "depPlatf", title: 'DEPÓSITOS PLATAFORMAS', typeof: "decimal" },
-        { data: "nomPlatf", title: 'NOMBRE PLATAFORMA', typeof: "string" },
+        { data: "ventNetTar", title: "VENTA NETA TARJETA", typeof: "decimal" },
+        { data: "depPlatf", title: "DEPÓSITOS PLATAFORMAS", typeof: "decimal" },
+        { data: "nomPlatf", title: "NOMBRE PLATAFORMA", typeof: "string" },
         { data: "reparUtil", title: "REPARTO UTILIDADES", typeof: "decimal" },
         { data: "ub", title: "UBER", typeof: "decimal" },
         { data: "did", title: "DIDI", typeof: "decimal" },
         { data: "rap", title: "RAPPI", typeof: "decimal" },
-        { data: 'totGF', title: 'TOTAL GASTO FIJO', typeof: "decimal" }
+        { data: "totGF", title: "TOTAL GASTO FIJO", typeof: "decimal" }
     ];
 
     const inTbl = $('#inTableB').DataTable({
@@ -142,7 +143,7 @@ $(document).ready(function () {
                 if (colDef.typeof === "decimal") {
                     const value = data[colDef.data];
                     if (!check(value, colDef.title)) {
-                        error(); // you can call error callback
+                        error(data);
                         return;
                     }
                 }
@@ -160,7 +161,7 @@ $(document).ready(function () {
                 if (colDef.typeof === "decimal") {
                     const value = data[colDef.data];
                     if (!check(value, colDef.title)) {
-                        error();
+                        error(data);
                         return;
                     }
                 }

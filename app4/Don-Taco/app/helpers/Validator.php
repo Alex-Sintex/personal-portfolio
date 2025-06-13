@@ -80,7 +80,66 @@ class Validator
             'int' => is_int($value),
             'float' => is_float($value),
             'bool' => is_bool($value),
+            'decimal' => is_numeric($value),
+            'date' => $this->validateDate($value),
             default => false,
         };
+    }
+
+    // Helper: validate date format (Y-m-d)
+    protected function validateDate(string $date): bool
+    {
+        $d = \DateTime::createFromFormat('Y-m-d', $date);
+        return $d && $d->format('Y-m-d') === $date;
+    }
+
+    /**
+     * Casts input values to their expected data types based on validation rules.
+     * 
+     * This ensures that values like 'decimal', 'int', or 'bool' are correctly converted
+     * to their native PHP types (e.g., string "12.50" → float 12.5), matching what the database expects.
+     *
+     * @param array $data  Input data to be cast.
+     * @param array $rules Validation rules with type definitions.
+     * @return array Casted data.
+     */
+    public function cast(array $data, array $rules): array
+    {
+        foreach ($rules as $field => $constraints) {
+            if (!isset($data[$field])) continue;
+
+            $type = $constraints['type'] ?? null;
+            switch ($type) {
+                case 'decimal':
+                case 'float':
+                    $data[$field] = (float)$data[$field];
+                    break;
+                case 'int':
+                    $data[$field] = (int)$data[$field];
+                    break;
+                case 'bool':
+                    $data[$field] = (bool)$data[$field];
+                    break;
+                case 'date':
+                    // Convert formats like 2025/06/12 or other to 2025-06-12
+                    $data[$field] = date('Y-m-d', strtotime($data[$field]));
+                    break;
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Sanitize and cast input data in one step for cleaner usage.
+     * 
+     * @param array $data  Input data.
+     * @param array $rules Validation rules.
+     * @return array Sanitized and casted data.
+     */
+    public function sanitizeAndCast(array $data, array $rules): array
+    {
+        $cleanData = $this->sanitize($data);
+        return $this->cast($cleanData, $rules);
     }
 }

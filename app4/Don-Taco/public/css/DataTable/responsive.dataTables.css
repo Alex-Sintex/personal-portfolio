@@ -92,10 +92,13 @@ table.dataTable > tbody > tr.child:hover {
   background: transparent !important;
 }
 table.dataTable > tbody > tr.child ul.dtr-details {
-  display: inline-block;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+
 }
 table.dataTable > tbody > tr.child ul.dtr-details > li {
   border-bottom: 1px solid #efefef;

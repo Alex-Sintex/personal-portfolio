@@ -4,54 +4,63 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Resumen Financiero</h1>
+                <h1 class="mt-4">RESUMEN FINANCIERO</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
                 <div class="row">
                     <div class="col-xl-3 col-md-6">
                         <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">Producto</div>
+                            <div class="card-body">PRODUCTO</div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="product">Abrir módulo</a>
+                                <a class="small text-white stretched-link" href="product">VER MÓDULO</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
                         <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">Balance</div>
+                            <div class="card-body">BALANCE</div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="balance">Abrir módulo</a>
+                                <a class="small text-white stretched-link" href="balance">VER MÓDULO</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
                         <div class="card bg-success text-white mb-4">
-                            <div class="card-body">Gasto</div>
+                            <div class="card-body">GASTOS DIARIOS</div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="gastosd">Abrir módulo</a>
+                                <a class="small text-white stretched-link" href="gastosd">VER MÓDULO</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
                     </div>
-                    <!--<div class="col-xl-3 col-md-6">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-secondary text-white mb-4">
+                            <div class="card-body">GASTOS FIJOS DIARIOS</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="#">VER MÓDULO</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
                         <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">Danger Card</div>
+                            <div class="card-body">TARJETA KLAR</div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
+                                <a class="small text-white stretched-link" href="#">VER MÓDULO</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
                     </div>
-                </div>-->
+                </div>
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-area me-1"></i>
-                                Total ingresos
+                                TOTAL INGRESOS
                             </div>
                             <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                         </div>
@@ -60,7 +69,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-bar me-1"></i>
-                                Total gastos diarios
+                                TOTAL GASTOS DIARIOS
                             </div>
                             <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                         </div>
@@ -69,7 +78,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        Productos
+                        PRODUCTOS
                     </div>
                     <div class="card-body">
                         <table id="datatablesSimple">

@@ -15,13 +15,14 @@ class Product extends Controller
         $this->modelProduct = $this->model('ProductModel');
     }
 
-    // Load balance view with required resources
+    // Load product view with required resources
     public function index()
     {
         $data = [
             'loadJQueryLibrary' => true,    // JS
+            'loadScriptSideBar' => true,    // JS
             'loadDataTables' => true,       // JS
-            'loadDataTablesProduct' => true, // JS
+            'loadDataTablesProduct' => true,// JS
             'loadToasty' => true,           // JS
             'loadStyles' => true,           // CSS
             'loadDataTableStyles' => true,  // CSS

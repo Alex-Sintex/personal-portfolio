@@ -7,7 +7,7 @@
                     document.querySelector('.text-muted').innerHTML = `Copyright &copy; Don-Taco ${new Date().getFullYear()}`
                 </script>
             </div>
-            <div>
+            <div class="footer-terms">
                 <a href="#">Privacy Policy</a>
                 &middot;
                 <a href="#">Terms &amp; Conditions</a>
@@ -18,10 +18,14 @@
 </div>
 </div>
 
-<!-- SCRIPT LOADER -->
 <?php
+/* 
+SCRIPTS LOADER 
+*/
 // Load JQuery Library
 $loadJQueryLibrary = $data['loadJQueryLibrary'] ?? false;
+// Load Script for dropdown sidebar
+$loadScriptSideBar = $data['loadScriptSideBar'] ?? false;
 // Load JS for Auth page
 $loadJSLogin = $data['loadJSLogin'] ?? false;
 // Load DataTable Simple scripts
@@ -41,7 +45,10 @@ $loadCharts = $data['loadCharts'] ?? false;
 
 <!-- Core JS -->
 <script src="<?= PATH_URL ?>js/Main/bootstrap.bundle.min.js"></script>
-<script src="<?= PATH_URL ?>js/Main/scripts.js"></script>
+<?php if ($loadScriptSideBar): ?>
+    <!-- Load Script for dropdown sidebar -->
+    <script src="<?= PATH_URL ?>js/Main/scripts.js"></script>
+<?php endif; ?>
 <script src="<?= PATH_URL ?>js/Main/all.js"></script>
 
 <!-- Load JQuery Library -->

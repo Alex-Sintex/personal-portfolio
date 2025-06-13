@@ -21,11 +21,11 @@ class Dashboard extends Controller
 
         $data = [
             'loadJQueryLibrary' => true,    // JS
+            'loadScriptSideBar' => true,    // JS
             'loadCharts' => true,           // JS
             'loadDataTablesSimple' => true, // JS
             'loadDataTableStyles' => true,  // CSS
             'loadStyles' => true,           // CSS
-            'user_name' => $_SESSION['user_name'],
             'products' => $products
         ];
         $this->view('home/dashboard', $data);

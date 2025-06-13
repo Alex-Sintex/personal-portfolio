@@ -64,7 +64,7 @@ class ProductModel
 
     public function updateProduct($id, $data)
     {
-        $this->db->query("UPDATE input_products SET 
+        $this->db->query("UPDATE input_products SET
         in_product_name = :name,
         unit_price_product = :price,
         unit_measure_id = :unit_measure_id,

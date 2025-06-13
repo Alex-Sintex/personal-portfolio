@@ -11,6 +11,7 @@ class Balance extends Controller
 
     public function __construct()
     {
+        requireLogin();
         $this->modelBalance = $this->model('BalanceModel');
     }
 
@@ -19,8 +20,9 @@ class Balance extends Controller
     {
         $data = [
             'loadJQueryLibrary' => true,    // JS
+            'loadScriptSideBar' => true,    // JS
             'loadDataTables' => true,       // JS
-            'loadDataTablesBalance' => true, // JS
+            'loadDataTablesBalance' => true,// JS
             'loadToasty' => true,           // JS
             'loadStyles' => true,           // CSS
             'loadDataTableStyles' => true,  // CSS

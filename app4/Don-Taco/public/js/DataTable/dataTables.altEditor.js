@@ -303,7 +303,7 @@
                     this.language.add = this.language.add || {};
                     this.language.add = {
                         title: this.language.add.title || 'Añadir registro',
-                        button: this.language.add.button || 'Añadir'
+                        button: this.language.add.button || 'Guardar'
                     };
                     this.language.deleteMessage =
                         this.language.deleteMessage ||
@@ -312,7 +312,7 @@
                     this.language.error = this.language.error || {};
                     this.language.error = {
                         message: this.language.error.message || '¡Hubo un error desconocido!',
-                        label: this.language.error.label || 'Error!',
+                        label: this.language.error.label || '¡Advertencia!',
                         responseCode: this.language.error.responseCode || 'Response code: ',
                         required: this.language.error.required || 'Se requiere campo',
                         unique: this.language.error.unique || 'Campo duplicado'
@@ -852,7 +852,7 @@
                     if (this.closeModalOnSuccess) {
                         this.internalCloseDialog(selector);
                     } else {
-                        var message = '<div class="alert alert-success" role="alert">' +
+                        var message = '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
                             '<strong>' + this.language.success + '</strong>' +
                             '</div>';
                         $(selector + ' .modal-body').append(message);
@@ -952,9 +952,10 @@
                         errstr = (error.status == null) ? "" : this.language.error.responseCode + error.status;
                     }
 
-                    var message = '<div class="alert alert-danger" role="alert">' +
-                        '<strong>' + this.language.error.label + '</strong>'
-                        + (errstr ? '<br />' + errstr : '') +
+                    var message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">' +
+                        '<strong>' + this.language.error.label + '</strong>' +
+                        (errstr ? '<br />' + errstr : '') +
+                        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
                         '</div>';
 
                     $(selector + ' .modal-body').append(message);
