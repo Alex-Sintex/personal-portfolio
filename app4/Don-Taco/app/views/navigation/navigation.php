@@ -87,7 +87,7 @@
                                             <a class="nav-link" href="balance">Balance</a>
                                         </li>
                                         <li>
-                                            <a class="nav-link" href="gastosd">Gastos</a>
+                                            <a class="nav-link" href="gastosd">Gastos diarios</a>
                                         </li>
                                     </ul>
                                 </div>

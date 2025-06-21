@@ -86,11 +86,17 @@ class Validator
         };
     }
 
-    // Helper: validate date format (Y-m-d)
+    // Helper: validate date format (Y/m/d) like (2025/06/19)
     protected function validateDate(string $date): bool
     {
-        $d = \DateTime::createFromFormat('Y-m-d', $date);
-        return $d && $d->format('Y-m-d') === $date;
+        // Accept both Y-m-d and Y/m/d formats
+        foreach (['Y-m-d', 'Y/m/d'] as $format) {
+            $d = \DateTime::createFromFormat($format, $date);
+            if ($d && $d->format($format) === $date) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

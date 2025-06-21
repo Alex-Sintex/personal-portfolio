@@ -1,93 +1,7 @@
+import { currencyRender, checkAllDecimalFields, parseNumber } from '../helper/helpers.js';
+
 $(document).ready(function () {
     const toast = new Toasty();
-
-    // Check if value is either string or empty
-    function check(value, title) {
-        const isEmpty = typeof value === 'string' && value.trim() === '';
-        const isNotNumber = isNaN(parseFloat(value));
-
-        if (isEmpty || isNotNumber) {
-            toast.error(`El campo numérico '${title}' no puede estar vacío ni contener texto no numérico.`);
-            return false;
-        }
-
-        return true;
-    }
-
-    // Helper functions
-    function parseNumber(value) {
-        const num = parseFloat(String(value).replace(/,/g, '').trim());
-        return isNaN(num) ? 0 : num;
-    }
-
-    function calculateVentaTarjeta(row) {
-        return parseNumber(row.ventNetTar) * 0.9651;
-    }
-
-    function calculateTotalIngresos(row, ventaTarjeta) {
-        return parseNumber(row.ventTransf) + ventaTarjeta + parseNumber(row.ventEfect);
-    }
-
-    function calculateUtilidadPiso(totalIngresos, row) {
-        return totalIngresos + parseNumber(row.depPlatf);
-    }
-
-    function calculateUtilidadNetaPlataforma(row) {
-        return (parseNumber(row.ub) + parseNumber(row.did) + parseNumber(row.rap)) / 2;
-    }
-
-    function calculateTotalEgresos(row, gastosDiarios) {
-        return parseNumber(row.totGF) + gastosDiarios;
-    }
-
-    function calculateTotalPlataformas(row) {
-        return parseNumber(row.ub) + parseNumber(row.did) + parseNumber(row.rap);
-    }
-
-    function calculateUtilidadDisponible(utilidadPiso, utilidadAnterior, row, gastosDiarios) {
-        return (utilidadPiso + utilidadAnterior) - (parseNumber(row.reparUtil) + parseNumber(row.totGF) + gastosDiarios);
-    }
-
-    function calculateUtilidadNeta(utilidadPiso, utilidadNetPlataforma, totalEgresos) {
-        return (utilidadPiso + utilidadNetPlataforma) - totalEgresos;
-    }
-
-    function updateCalTbl() {
-        const data = inTbl.rows().data().toArray();
-        calTbl.clear();
-
-        let utilidadAnterior = 0;
-        let gastosDiarios = 3439.50;
-
-        data.forEach((row) => {
-            const ventaTarjeta = calculateVentaTarjeta(row);
-            const totalIngresos = calculateTotalIngresos(row, ventaTarjeta);
-            const utilidadPiso = calculateUtilidadPiso(totalIngresos, row);
-            const totalEgresos = calculateTotalEgresos(row, gastosDiarios);
-            const utilidadPlataforma = calculateUtilidadNetaPlataforma(row);
-
-            const utilidadNeta = calculateUtilidadNeta(utilidadPiso, utilidadPlataforma, totalEgresos);
-            const efectivoCierre = parseNumber(row.ventEfect) - parseNumber(row.gastEfect);
-            const utilidadDisponible = calculateUtilidadDisponible(utilidadPiso, utilidadAnterior, row, gastosDiarios);
-            const totalPlataformas = calculateTotalPlataformas(row);
-
-            calTbl.row.add({
-                utilidadNeta: utilidadNeta.toFixed(2),
-                totalEgresos: totalEgresos.toFixed(2),
-                efectivoCierre: efectivoCierre.toFixed(2),
-                ventaTarjeta: ventaTarjeta.toFixed(2),
-                totalIngresos: totalIngresos.toFixed(2),
-                utilidadPiso: utilidadPiso.toFixed(2),
-                utilidadDisponible: utilidadDisponible.toFixed(2),
-                total: totalPlataformas.toFixed(2),
-                utilidadPlataforma: utilidadPlataforma.toFixed(2)
-            });
-
-            utilidadAnterior = utilidadDisponible;
-        });
-
-        calTbl.draw();
-    }
 
     let columInDefs = [
         {
@@ -99,17 +13,17 @@ $(document).ready(function () {
             }
         },
         { data: "date", title: "FECHA", datetimepicker: { timepicker: false, format: "Y/m/d" }, typeof: "date" },
-        { data: "gastEfect", title: "GASTOS EN EFECTIVO", typeof: "decimal" },
-        { data: "ventEfect", title: "VENTA EFECTIVO", typeof: "decimal" },
-        { data: "ventTransf", title: "VENTA TRANSFERENCIA", typeof: "decimal" },
-        { data: "ventNetTar", title: "VENTA NETA TARJETA", typeof: "decimal" },
-        { data: "depPlatf", title: "DEPÓSITOS PLATAFORMAS", typeof: "decimal" },
+        { data: "gastEfect", title: "GASTOS EN EFECTIVO", typeof: "decimal", render: currencyRender },
+        { data: "ventEfect", title: "VENTA EFECTIVO", typeof: "decimal", render: currencyRender },
+        { data: "ventTransf", title: "VENTA TRANSFERENCIA", typeof: "decimal", render: currencyRender },
+        { data: "ventNetTar", title: "VENTA NETA TARJETA", typeof: "decimal", render: currencyRender },
+        { data: "depPlatf", title: "DEPÓSITOS PLATAFORMAS", typeof: "decimal", render: currencyRender },
         { data: "nomPlatf", title: "NOMBRE PLATAFORMA", typeof: "string" },
-        { data: "reparUtil", title: "REPARTO UTILIDADES", typeof: "decimal" },
-        { data: "ub", title: "UBER", typeof: "decimal" },
-        { data: "did", title: "DIDI", typeof: "decimal" },
-        { data: "rap", title: "RAPPI", typeof: "decimal" },
-        { data: "totGF", title: "TOTAL GASTO FIJO", typeof: "decimal" }
+        { data: "reparUtil", title: "REPARTO UTILIDADES", typeof: "decimal", render: currencyRender },
+        { data: "ub", title: "UBER", typeof: "decimal", render: currencyRender },
+        { data: "did", title: "DIDI", typeof: "decimal", render: currencyRender },
+        { data: "rap", title: "RAPPI", typeof: "decimal", render: currencyRender },
+        { data: "totGF", title: "TOTAL GASTO FIJO", typeof: "decimal", render: currencyRender }
     ];
 
     const inTbl = $('#inTableB').DataTable({
@@ -126,46 +40,49 @@ $(document).ready(function () {
         buttons: [
             { text: '➕ Añadir', name: 'add' },
             { extend: 'selected', text: '✏️ Editar', name: 'edit' },
-            { extend: 'selected', text: '❌ Borrar', name: 'delete' },
-            {
-                text: '🔄 Generar cálculos',
-                action: function () {
-                    updateCalTbl();
-                    toast.info("¡Se han generado los cálculos en la primera tabla!");
-                }
-            }
+            { extend: 'selected', text: '❌ Borrar', name: 'delete' }
         ],
 
         onAddRow: function (datatable, rowdata, success, error) {
             const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-            for (let colDef of columInDefs) {
-                if (colDef.typeof === "decimal") {
-                    const value = data[colDef.data];
-                    if (!check(value, colDef.title)) {
-                        error(data);
-                        return;
-                    }
-                }
-            }
+            if (!checkAllDecimalFields(data, columInDefs, error, toast)) return;
 
-            toast.success("Agregado correctamente");
-            updateCalTbl();
-            success(data);
+            $.ajax({
+                url: 'balance/insert',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(data),
+                success: function (res) {
+                    //console.log('AJAX success:', res);
+                    if (res.status === 'success') {
+                        inTbl.ajax.reload(() => {
+                            updateCalTbl(); // only update after reload
+                        }, false);
+                        toast.success(res.message);
+                        success(res);
+                    } else {
+                        toast.error(res.message || 'Error desconocido');
+                        error(res);
+                    }
+                },
+                error: function (xhr) {
+                    let message = "Error en el servidor";
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        message = xhr.responseJSON.message;
+                        console.log("⚠️ Mensaje del sistema:", message)
+                    }
+                    toast.error(message);
+                    error(xhr);
+                }
+            });
         },
 
         onEditRow: function (datatable, rowdata, success, error) {
             const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-            for (let colDef of columInDefs) {
-                if (colDef.typeof === "decimal") {
-                    const value = data[colDef.data];
-                    if (!check(value, colDef.title)) {
-                        error(data);
-                        return;
-                    }
-                }
-            }
+            if (!checkAllDecimalFields(data, columInDefs, error, toast)) return;
 
             inTbl.row({ selected: true }).data(data).draw();
             toast.success("Actualizado correctamente");
@@ -184,32 +101,93 @@ $(document).ready(function () {
         }
     });
 
-    const calTbl = $('#calTableB').DataTable({
-        columns: [
-            {
-                data: null,
-                title: '#',
-                type: 'hidden',
-                render: function (data, type, row, meta) {
-                    return meta.row + 1;
-                }
-            },
-            { data: 'utilidadNeta', title: 'UTILIDAD NETA' },
-            { data: 'totalEgresos', title: 'TOTAL EGRESOS' },
-            { data: 'efectivoCierre', title: 'EFECTIVO AL CIERRE' },
-            { data: 'ventaTarjeta', title: 'VENTA TARJETA - %' },
-            { data: 'totalIngresos', title: 'TOTAL INGRESOS' },
-            { data: 'utilidadPiso', title: 'UTILIDAD PISO' },
-            { data: 'utilidadDisponible', title: 'UTILIDAD DISPONIBLE' },
-            { data: 'total', title: 'TOTAL PLATAFORMAS' },
-            { data: 'utilidadPlataforma', title: 'UTILIDAD NETA PLATAFORMA' }
-        ],
+    let columCalDefs = [
+        {
+            data: null,
+            title: '#',
+            type: 'hidden',
+            render: function (data, type, row, meta) {
+                return meta.row + 1;
+            }
+        },
+        { data: 'utilidadNeta', title: 'UTILIDAD NETA', render: currencyRender },
+        { data: 'totalEgresos', title: 'TOTAL EGRESOS', render: currencyRender },
+        { data: 'efectivoCierre', title: 'EFECTIVO AL CIERRE', render: currencyRender },
+        { data: 'ventaTarjeta', title: 'VENTA TARJETA - %', render: currencyRender },
+        { data: 'totalIngresos', title: 'TOTAL INGRESOS', render: currencyRender },
+        { data: 'utilidadPiso', title: 'UTILIDAD PISO', render: currencyRender },
+        { data: 'utilidadDisponible', title: 'UTILIDAD DISPONIBLE', render: currencyRender },
+        { data: 'total', title: 'TOTAL', render: currencyRender },
+        { data: 'utilidadPlataforma', title: 'UTILIDAD NETA PLATAFORMA', render: currencyRender }
+    ];
+
+    $('#calTableB').DataTable({
+        ajax: {
+            url: 'balance/fetch_cal',
+            dataSrc: ''
+        },
+        columns: columCalDefs,
         dom: 'Bfrtip',
         responsive: true,
         altEditor: false,
         language: { url: "../../JSON/es-ES.json" },
         buttons: [
-            { extend: 'print', exportOptions: { columns: ':visible' } },
+            {
+                extend: 'print',
+                title: 'Reporte',
+                exportOptions: {
+                    columns: ':visible'
+                },
+                customize: function (win) {
+                    // Basic print styles
+                    $(win.document.body).css({
+                        'font-family': 'Arial, sans-serif',
+                        'font-size': '10pt',
+                        'position': 'relative',
+                    });
+
+                    // Add watermark logo behind table
+                    $(win.document.body).prepend(`
+                        <img src="https://localhost/img/Logo/Logo.png"
+                            style="
+                                position: fixed;
+                                top: 35%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+                                opacity: 0.5;
+                                width: 50%;
+                                z-index: -1;
+                            "
+                        />
+                    `);
+
+                    // Report title
+                    $(win.document.body).prepend(`
+                        <div style="text-align: center; margin-bottom: 30px;">
+                            <h2 style="margin: 0;">DON TACO</h2>
+                            <h3 style="margin: 0;">Balance Diario</h3>
+                        </div>
+                    `);
+
+                    // Header styling
+                    $(win.document.body).find('table thead th').css({
+                        'background-color': '#f2f2f2',
+                        'font-weight': 'bold'
+                    });
+
+                    // Table borders
+                    $(win.document.body).find('table').css({
+                        'border-collapse': 'collapse',
+                        'width': '100%'
+                    });
+
+                    $(win.document.body).find('table th, table td').css({
+                        'border': '1px solid #444',
+                        'padding': '8px',
+                        'text-align': 'center'
+                    });
+                }
+            },
             'colvis'
         ]
     });

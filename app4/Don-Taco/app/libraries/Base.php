@@ -150,4 +150,9 @@ class Base
         }
         return $this->record();
     }
+
+    public function lastInsertId()
+    {
+        return $this->dbh->lastInsertId();
+    }
 }

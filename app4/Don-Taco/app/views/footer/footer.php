@@ -41,19 +41,22 @@ $loadDataTablesGD = $data['loadDataTablesGD'] ?? false;
 $loadToasty = $data['loadToasty'] ?? false;
 // Load assets for Charts
 $loadCharts = $data['loadCharts'] ?? false;
+
+// Load assets for Currency Format
+$loadJShelpers = $data['loadJShelpers'] ?? false;
 ?>
 
 <!-- Core JS -->
-<script src="<?= PATH_URL ?>js/Main/bootstrap.bundle.min.js"></script>
+<script src="<?= PATH_URL ?>js/main/bootstrap.bundle.min.js"></script>
 <?php if ($loadScriptSideBar): ?>
     <!-- Load Script for dropdown sidebar -->
-    <script src="<?= PATH_URL ?>js/Main/scripts.js"></script>
+    <script src="<?= PATH_URL ?>js/main/scripts.js"></script>
 <?php endif; ?>
-<script src="<?= PATH_URL ?>js/Main/all.js"></script>
+<script src="<?= PATH_URL ?>js/main/all.js"></script>
 
 <!-- Load JQuery Library -->
 <?php if ($loadJQueryLibrary): ?>
-    <script src="<?= PATH_URL ?>js/Main/jquery-3.7.1.min.js"></script>
+    <script src="<?= PATH_URL ?>js/main/jquery-3.7.1.min.js"></script>
 <?php endif; ?>
 
 <?php if (!empty($loadJSLogin)): ?>
@@ -80,15 +83,15 @@ $loadCharts = $data['loadCharts'] ?? false;
     <script src="<?= PATH_URL ?>js/DataTable/buttons.colVis.min.js"></script>
 
     <?php if (!empty($loadDataTablesProduct)): ?>
-        <script src="<?= PATH_URL ?>js/product/product.js"></script>
+        <script type="module" src="<?= PATH_URL ?>js/product/product.js"></script>
     <?php endif; ?>
 
     <?php if (!empty($loadDataTablesBalance)): ?>
-        <script src="<?= PATH_URL ?>js/balance/balance.js"></script>
+        <script type="module" src="<?= PATH_URL ?>js/balance/balance.js"></script>
     <?php endif; ?>
 
     <?php if (!empty($loadDataTablesGD)): ?>
-        <script src="<?= PATH_URL ?>js/expense/daily_expenses.js"></script>
+        <script type="module" src="<?= PATH_URL ?>js/expense/daily_expenses.js"></script>
     <?php endif; ?>
 <?php endif; ?>
 

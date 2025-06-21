@@ -1,19 +1,21 @@
 <?php
-// Class GastosD extends the main controller
 
 namespace App\controllers;
 
 use App\Libraries\Controller;
 use App\helpers\Validator;
+use App\Helpers\BalanceHelper;
 
 class GastosD extends Controller
 {
     private $modelGastosD;
+    private $balanceModel;
 
     public function __construct()
     {
         requireLogin();
         $this->modelGastosD = $this->model('GastosDModel');
+        $this->balanceModel = $this->model('BalanceModel');
     }
 
     public function index()
@@ -80,7 +82,7 @@ class GastosD extends Controller
     // Insert new record
     public function insert()
     {
-        header('Content-Type: application/json'); // ✅ Asegura salida JSON
+        header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
@@ -89,7 +91,6 @@ class GastosD extends Controller
         }
 
         $data = json_decode(file_get_contents('php://input'), true);
-
         $validator = new Validator();
 
         $rules = [
@@ -113,7 +114,7 @@ class GastosD extends Controller
         ];
 
         if (!$validator->validate($data, $rules)) {
-            http_response_code(422); // Unprocessable Entity
+            http_response_code(422);
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Error de validación',
@@ -122,43 +123,71 @@ class GastosD extends Controller
             return;
         }
 
-        $cleanData = $validator->sanitize($data);
-        $cleanData = $validator->cast($cleanData, $rules); // Automatic type casting
-
-        // ✅ Calculate totalGD from provided fields
+        $cleanData = $validator->sanitizeAndCast($data, $rules);
         $totalGD = $this->calculateTotalGD($cleanData);
 
-        // ✅ Prepare insert data
+        // ✅ Get the latest balance record
+        $lastBalance = $this->balanceModel->getLastBalance();
+
+        if (!$lastBalance) {
+            http_response_code(400);
+            echo json_encode(['status' => 'error', 'message' => 'No hay balances disponibles para asociar este gasto.']);
+            return;
+        }
+
+        // ✅ Prevent duplicate expense per balance
+        if ($this->modelGastosD->existsExpenseForBalance($lastBalance->id)) {
+            http_response_code(409);
+            echo json_encode(['status' => 'error', 'message' => 'Ya existe un gasto diario asociado a este balance.']);
+            return;
+        }
+
+        // ✅ Insert expense
         $insertData = [
-            // Left side values are table name columns
-            'carne'              => $cleanData['carne'],
-            'queso'              => $cleanData['queso'],
-            'tortilla_maiz'      => $cleanData['tortilla_maiz'],
-            'tortilla_h_gde'     => $cleanData['tortilla_hna_gde'],
-            'longaniza'          => $cleanData['longaniza'],
-            'pan'                => $cleanData['pan'],
-            'vinagre'            => $cleanData['vinagre'],
-            'bodegon'            => $cleanData['bodegon'],
-            'ad_marcos'          => $cleanData['adel_marcos'],
-            'transp_marcos'      => $cleanData['trans_marcos'],
-            'nomina'             => $cleanData['nomina'],
-            'nom_weekend'        => $cleanData['nomina_weekend'],
-            'mundi_novi'         => $cleanData['mundi_novi'],
-            'color'              => $cleanData['color'],
-            'otros'              => $cleanData['otros'],
-            'obs'                => $cleanData['observaciones'],
-            'tot_gto_diarios'    => $totalGD
+            'carne'           => $cleanData['carne'],
+            'queso'           => $cleanData['queso'],
+            'tortilla_maiz'   => $cleanData['tortilla_maiz'],
+            'tortilla_h_gde'  => $cleanData['tortilla_hna_gde'],
+            'longaniza'       => $cleanData['longaniza'],
+            'pan'             => $cleanData['pan'],
+            'vinagre'         => $cleanData['vinagre'],
+            'bodegon'         => $cleanData['bodegon'],
+            'ad_marcos'       => $cleanData['adel_marcos'],
+            'transp_marcos'   => $cleanData['trans_marcos'],
+            'nomina'          => $cleanData['nomina'],
+            'nom_weekend'     => $cleanData['nomina_weekend'],
+            'mundi_novi'      => $cleanData['mundi_novi'],
+            'color'           => $cleanData['color'],
+            'otros'           => $cleanData['otros'],
+            'obs'             => $cleanData['observaciones'],
+            'tot_gto_diarios' => $totalGD,
+            'balance_id'      => $lastBalance->id
         ];
 
-        // ✅ Insert into DB
         $result = $this->modelGastosD->addDailyExp($insertData);
 
         if ($result) {
+            // Recalculate updated values using BalanceHelper
+            $rawBalanceData = (array) $lastBalance;
+            $updatedCalculations = BalanceHelper::calculate($rawBalanceData);
+
+            // Add the balance ID for update WHERE clause
+            $updatedCalculations['id'] = $lastBalance->id;
+
+            // Update the balance record with new calculations
+            $updateSuccess = $this->balanceModel->updateBalanceCalculations($updatedCalculations);
+
+            if (!$updateSuccess) {
+                http_response_code(500);
+                echo json_encode(['status' => 'error', 'message' => 'Error al actualizar el balance con los nuevos cálculos']);
+                return;
+            }
+
             http_response_code(200);
-            echo json_encode(['status' => 'success', 'message' => '¡Registro añadido!']);
+            echo json_encode(['status' => 'success', 'message' => '¡Registro de gasto añadido y balance actualizado!']);
         } else {
             http_response_code(500);
-            echo json_encode(['status' => 'error', 'message' => '¡Error al añadir el registro!']);
+            echo json_encode(['status' => 'error', 'message' => '¡Error al añadir el gasto!']);
         }
     }
 

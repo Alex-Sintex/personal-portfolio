@@ -312,7 +312,7 @@
                     this.language.error = this.language.error || {};
                     this.language.error = {
                         message: this.language.error.message || '¡Hubo un error desconocido!',
-                        label: this.language.error.label || '¡Advertencia!',
+                        label: this.language.error.label || '¡Alerta!',
                         responseCode: this.language.error.responseCode || 'Response code: ',
                         required: this.language.error.required || 'Se requiere campo',
                         unique: this.language.error.unique || 'Campo duplicado'

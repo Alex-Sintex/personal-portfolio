@@ -37,7 +37,7 @@
         // .... re-stylized the plug-in and default toast styles, including CSS3 transitions are lost.
         classname: "toast",
         // STRING: name of the CSS transition that will be used to show and hide all toast by default:
-        transition: "centerTopFade",
+        transition: "bounceUpFade",
         // BOOLEAN: specifies the way in which the toasts will be inserted in the HTML code:
         // .... Set to BOOLEAN TRUE and the toast messages will be inserted before those already generated toasts.
         // .... Set to BOOLEAN FALSE otherwise.
@@ -54,7 +54,7 @@
         // BOOLEAN: enable or disable auto hiding on toast messages:
         // .... Set to BOOLEAN TRUE  - to enable auto hiding.
         // .... Set to BOOLEAN FALSE - disable auto hiding. Instead the user must click on toast message to close it.
-        autoClose: false,
+        autoClose: true,
         // BOOLEAN: enable or disable the progressbar:
         // .... Set to BOOLEAN TRUE  - enable the progressbar only if the autoClose option value is set to BOOLEAN TRUE.
         // .... Set to BOOLEAN FALSE - disable the progressbar. 

@@ -1,27 +1,9 @@
+import { currencyRender, checkAllDecimalFields } from '../helper/helpers.js';
+
 $(document).ready(function () {
 
   // Initialize the Toasty library
   const toast = new Toasty();
-
-  // Checking validation of the fields
-  function checkAllDecimalFields(data, columnDefs, errorCallback) {
-    for (let colDef of columnDefs) {
-      if (colDef.typeof === "decimal") {
-        const value = data[colDef.data];
-        const title = colDef.title;
-
-        const isEmpty = typeof value === 'string' && value.trim() === '';
-        const isNotNumber = isNaN(parseFloat(value));
-
-        if (isEmpty || isNotNumber) {
-          toast.error(`El campo numérico '${title}' no puede estar vacío ni contener texto no numérico.`);
-          if (typeof errorCallback === "function") errorCallback(data);
-          return false;
-        }
-      }
-    }
-    return true;
-  }
 
   // Declare an array of values to be added
   const keysToSum = [
@@ -78,17 +60,6 @@ $(document).ready(function () {
     { data: "totalGD", title: "Total Gastos Diarios", type: "readonly", render: currencyRender }
   ];
 
-  // Common function to format values as currency for display only
-  function currencyRender(data, type, row) {
-    if ((type === 'display' || type === 'filter') && !isNaN(data)) {
-      return parseFloat(data).toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD'
-      });
-    }
-    return data;
-  }
-
   // Initialize DataTable
   const tbl = $('#tableGD').DataTable({
     ajax: {
@@ -117,7 +88,7 @@ $(document).ready(function () {
     onAddRow: function (datatable, rowdata, success, error) {
       const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-      if (!checkAllDecimalFields(data, columDefs, error)) return;
+      if (!checkAllDecimalFields(data, columDefs, error, toast)) return;
 
       $.ajax({
         url: 'gastosd/insert',
@@ -146,7 +117,7 @@ $(document).ready(function () {
     onEditRow: function (datatable, rowdata, success, error) {
       const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-      if (!checkAllDecimalFields(data, columDefs, error)) return;
+      if (!checkAllDecimalFields(data, columDefs, error, toast)) return;
 
       $.ajax({
         url: 'gastosd/update/' + rowdata.id,
