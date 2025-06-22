@@ -78,6 +78,7 @@ class Balance extends Controller
         echo json_encode($cleaned);
     }
 
+    // Insert method for balance
     public function insert()
     {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -167,10 +168,10 @@ class Balance extends Controller
         ]);
     }
 
-    // Update record
+    // Update record for balance
     public function update($id)
     {
-        header('Content-Type: application/json'); // ✅ Asegura salida JSON
+        header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
             http_response_code(405);
@@ -180,62 +181,72 @@ class Balance extends Controller
 
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $data['measure_n'] = $data['measure_n'] ?? '';
-        $data['provider_n'] = $data['provider_n'] ?? '';
-
         $validator = new Validator();
 
         $rules = [
-            'name'       => ['required' => true, 'type' => 'string', 'max' => 100],
-            'price'      => ['required' => true, 'type' => 'numeric'],
-            'measure_n'  => ['required' => true, 'type' => 'string', 'max' => 50],
-            'provider_n' => ['required' => true, 'type' => 'string', 'max' => 100]
+            'date'       => ['required' => true, 'type' => 'date'],
+            'gastEfect'  => ['required' => true, 'type' => 'decimal'],
+            'ventEfect'  => ['required' => true, 'type' => 'decimal'],
+            'ventTransf' => ['required' => true, 'type' => 'decimal'],
+            'ventNetTar' => ['required' => true, 'type' => 'decimal'],
+            'depPlatf'   => ['required' => true, 'type' => 'decimal'],
+            'nomPlatf'   => ['required' => false, 'type' => 'string'],
+            'reparUtil'  => ['required' => true, 'type' => 'decimal'],
+            'ub'         => ['required' => true, 'type' => 'decimal'],
+            'did'        => ['required' => true, 'type' => 'decimal'],
+            'rap'        => ['required' => true, 'type' => 'decimal'],
+            'totGF'      => ['required' => true, 'type' => 'decimal'],
         ];
 
         if (!$validator->validate($data, $rules)) {
-            http_response_code(422); // Unprocessable Entity
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Error de validación',
-                'errors' => $validator->errors()
-            ]);
+            http_response_code(422);
+            echo json_encode(['status' => 'error', 'message' => 'Error de validación', 'errors' => $validator->errors()]);
             return;
         }
 
-        $cleanData = $validator->sanitize($data);
+        $cleanData = $validator->sanitizeAndCast($data, $rules);
 
-        // 🔍 Get unit_measure_id
-        $measure = $this->modelBalance->getMeasureIdByName($cleanData['measure_n']);
-        if (!$measure) {
-            http_response_code(404);
-            echo json_encode(['status' => 'error', 'message' => 'Unidad de medida no encontrada']);
-            return;
-        }
-
-        // 🔍 Get provider_id
-        $provider = $this->modelBalance->getProviderIdByName($cleanData['provider_n']);
-        if (!$provider) {
-            http_response_code(404);
-            echo json_encode(['status' => 'error', 'message' => 'Proveedor no encontrado']);
-            return;
-        }
-
-        $insertData = [
-            'name'            => $cleanData['name'],
-            'price'           => $cleanData['price'],
-            'unit_measure_id' => $measure->unit_measure_id,
-            'provider_id'     => $provider->provider_id
+        // Prepara datos para cálculos
+        $inputForCalc = [
+            'cash_expenses'     => $cleanData['gastEfect'],
+            'cash_sales'        => $cleanData['ventEfect'],
+            'transfer_sales'    => $cleanData['ventTransf'],
+            'net_card_sales'    => $cleanData['ventNetTar'],
+            'platform_deposits' => $cleanData['depPlatf'],
+            'profit_sharing'    => $cleanData['reparUtil'],
+            'uber'              => $cleanData['ub'],
+            'didi'              => $cleanData['did'],
+            'rappi'             => $cleanData['rap'],
+            'tot_fixed_exp'     => $cleanData['totGF'],
         ];
 
-        $result = $this->modelBalance->updateProduct($id, $insertData);
+        $calculations = BalanceHelper::calculate($inputForCalc);
 
-        if ($result) {
-            http_response_code(200);
-            echo json_encode(['status' => 'success', 'message' => '¡Registro actualizado!']);
-        } else {
-            http_response_code(500);
-            echo json_encode(['status' => 'error', 'message' => '¡Error al actualizar el registro!']);
-        }
+        $updateData = array_merge(
+            [
+                'id'               => $id,
+                'date'             => $cleanData['date'],
+                'cash_expenses'    => $cleanData['gastEfect'],
+                'cash_sales'       => $cleanData['ventEfect'],
+                'transfer_sales'   => $cleanData['ventTransf'],
+                'net_card_sales'   => $cleanData['ventNetTar'],
+                'platform_deposits' => $cleanData['depPlatf'],
+                'platform_name'    => $cleanData['nomPlatf'],
+                'profit_sharing'   => $cleanData['reparUtil'],
+                'uber'             => $cleanData['ub'],
+                'didi'             => $cleanData['did'],
+                'rappi'            => $cleanData['rap'],
+                'tot_fixed_exp'    => $cleanData['totGF']
+            ],
+            $calculations
+        );
+
+        $result = $this->modelBalance->updateBalance($updateData);
+
+        echo json_encode([
+            'status'  => $result ? 'success' : 'error',
+            'message' => $result ? '¡Balance actualizado correctamente!' : '¡Error al actualizar el balance!'
+        ]);
     }
 
     // Delete record
@@ -245,18 +256,15 @@ class Balance extends Controller
 
         if (!is_numeric($id)) {
             http_response_code(400);
-            echo json_encode(['status' => 'error', 'message' => 'Invalid ID']);
+            echo json_encode(['status' => 'error', 'message' => 'ID inválido']);
             return;
         }
 
-        $result = $this->modelBalance->deleteProduct($id);
+        $result = $this->modelBalance->deleteBalance($id);
 
-        if ($result) {
-            http_response_code(200);
-            echo json_encode(['status' => 'success', 'message' => '¡Registro eliminado!']);
-        } else {
-            http_response_code(500);
-            echo json_encode(['status' => 'error', 'message' => '¡Error al eliminar el registro!']);
-        }
+        echo json_encode([
+            'status'  => $result ? 'success' : 'error',
+            'message' => $result ? '¡Balance eliminado correctamente!' : '¡Error al eliminar el balance!'
+        ]);
     }
 }

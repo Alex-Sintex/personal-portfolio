@@ -1,6 +1,8 @@
-import { currencyRender, checkAllDecimalFields, parseNumber } from '../helper/helpers.js';
+import { currencyRender, checkAllDecimalFields } from '../helper/helpers.js';
+import { attachInfoToAltEditorModal } from '../helper/modalHelpers.js';
 
 $(document).ready(function () {
+
     const toast = new Toasty();
 
     let columInDefs = [
@@ -11,6 +13,12 @@ $(document).ready(function () {
             render: function (data, type, row, meta) {
                 return meta.row + 1;
             }
+        },
+        {
+            data: 'id',
+            title: 'ID',
+            visible: false,
+            type: 'hidden'
         },
         { data: "date", title: "FECHA", datetimepicker: { timepicker: false, format: "Y/m/d" }, typeof: "date" },
         { data: "gastEfect", title: "GASTOS EN EFECTIVO", typeof: "decimal", render: currencyRender },
@@ -36,6 +44,7 @@ $(document).ready(function () {
         select: 'single',
         responsive: true,
         altEditor: true,
+        altEditor: true,
         language: { url: "../../JSON/es-ES.json" },
         buttons: [
             { text: '➕ Añadir', name: 'add' },
@@ -57,9 +66,8 @@ $(document).ready(function () {
                 success: function (res) {
                     //console.log('AJAX success:', res);
                     if (res.status === 'success') {
-                        inTbl.ajax.reload(() => {
-                            updateCalTbl(); // only update after reload
-                        }, false);
+                        inTbl.ajax.reload(null, false);
+                        calTbl.ajax.reload(null, false);
                         toast.success(res.message);
                         success(res);
                     } else {
@@ -71,7 +79,7 @@ $(document).ready(function () {
                     let message = "Error en el servidor";
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         message = xhr.responseJSON.message;
-                        console.log("⚠️ Mensaje del sistema:", message)
+                        console.log("⚠️ Mensaje del sistema:", message);
                     }
                     toast.error(message);
                     error(xhr);
@@ -84,21 +92,72 @@ $(document).ready(function () {
 
             if (!checkAllDecimalFields(data, columInDefs, error, toast)) return;
 
-            inTbl.row({ selected: true }).data(data).draw();
-            toast.success("Actualizado correctamente");
-            updateCalTbl();
-            success(data);
+            $.ajax({
+                url: 'balance/update/' + rowdata.id,
+                type: 'PUT',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(data),
+                success: function (res) {
+                    if (res.status === 'success') {
+                        inTbl.ajax.reload(null, false);
+                        calTbl.ajax.reload(null, false);
+                        toast.success(res.message);
+                        success(res);
+                    } else {
+                        toast.error(res.message || 'Error desconocido');
+                        error(res);
+                    }
+                },
+                error: function (xhr) {
+                    let message = "Error en el servidor";
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        message = xhr.responseJSON.message;
+                        console.log("⚠️ Mensaje del sistema:", message);
+                    }
+                    toast.error(message);
+                    error(xhr);
+                }
+            });
         },
 
         onDeleteRow: function (datatable, rowdata, success, error) {
-            const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
-            //console.log(data);
 
-            inTbl.row({ selected: true }).remove().draw();
-            toast.success("Eliminado correctamente");
-            updateCalTbl();
-            success(data);
+            const id = rowdata[0]?.id;
+
+            $.ajax({
+                url: 'balance/delete/' + id,
+                type: 'DELETE',
+                success: function (res) {
+                    if (res.status === 'success') {
+                        inTbl.ajax.reload(null, false);
+                        calTbl.ajax.reload(null, false);
+                        toast.success(res.message);
+                        success(res);
+                    } else {
+                        // Only call error if status is not success
+                        toast.error(res.message || "Error al eliminar");
+                        error(res);
+                    }
+                },
+                error: function (xhr) {
+                    let message = "Error en el servidor";
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        message = xhr.responseJSON.message;
+                        console.log("⚠️ Mensaje del sistema:", message);
+                    }
+                    toast.error(message);
+                    error(xhr);
+                }
+            });
         }
+    });
+
+    attachInfoToAltEditorModal({
+        message: `Para ver reflejado correctamente algunos cálculos,
+                  debe insertar un nuevo registro en el módulo de <strong>Gastos Diarios</strong>.`,
+        fieldAfterId: 'alteditor-row-totGF', // form-group container ID to insert message after
+        alertId: 'alert-info-gastos'         // Unique ID for the alert block
     });
 
     let columCalDefs = [
@@ -121,7 +180,7 @@ $(document).ready(function () {
         { data: 'utilidadPlataforma', title: 'UTILIDAD NETA PLATAFORMA', render: currencyRender }
     ];
 
-    $('#calTableB').DataTable({
+    const calTbl = $('#calTableB').DataTable({
         ajax: {
             url: 'balance/fetch_cal',
             dataSrc: ''

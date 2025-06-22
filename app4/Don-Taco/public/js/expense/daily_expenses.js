@@ -75,14 +75,7 @@ $(document).ready(function () {
     buttons: [
       { text: '➕ Añadir', name: 'add' },
       { extend: 'selected', text: '✏️ Editar', name: 'edit' },
-      { extend: 'selected', text: '❌ Borrar', name: 'delete' },
-      {
-        text: '🔄 Refrescar',
-        action: function () {
-          tbl.ajax.reload(null, false);
-          toast.info("¡Se ha refrescado la tabla!");
-        }
-      }
+      { extend: 'selected', text: '❌ Borrar', name: 'delete' }
     ],
 
     onAddRow: function (datatable, rowdata, success, error) {

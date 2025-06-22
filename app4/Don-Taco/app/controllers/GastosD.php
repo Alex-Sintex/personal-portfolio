@@ -79,7 +79,7 @@ class GastosD extends Controller
         return $total;
     }
 
-    // Insert new record
+    // Insert new record for daily expense
     public function insert()
     {
         header('Content-Type: application/json');
@@ -191,10 +191,10 @@ class GastosD extends Controller
         }
     }
 
-    // Update record
+    // Update record for daily expense
     public function update($id)
     {
-        header('Content-Type: application/json'); // ✅ Asegura salida JSON
+        header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
             http_response_code(405);
@@ -203,7 +203,6 @@ class GastosD extends Controller
         }
 
         $data = json_decode(file_get_contents('php://input'), true);
-
         $validator = new Validator();
 
         $rules = [
@@ -227,24 +226,15 @@ class GastosD extends Controller
         ];
 
         if (!$validator->validate($data, $rules)) {
-            http_response_code(422); // Unprocessable Entity
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Error de validación',
-                'errors' => $validator->errors()
-            ]);
+            http_response_code(422);
+            echo json_encode(['status' => 'error', 'message' => 'Error de validación', 'errors' => $validator->errors()]);
             return;
         }
 
-        $cleanData = $validator->sanitize($data);
-        $cleanData = $validator->cast($cleanData, $rules);
-
-        // ✅ Calculate totalGD from provided fields
+        $cleanData = $validator->sanitizeAndCast($data, $rules);
         $totalGD = $this->calculateTotalGD($cleanData);
 
-        // ✅ Prepare insert data
         $insertData = [
-            // Left side values are table name columns
             'id'                 => $id,
             'carne'              => $cleanData['carne'],
             'queso'              => $cleanData['queso'],
@@ -268,15 +258,23 @@ class GastosD extends Controller
         $result = $this->modelGastosD->updateDailyExp($insertData);
 
         if ($result) {
+            // ✅ Recalcular balance asociado
+            $previousBalance = $this->balanceModel->getLastBalance();
+            if ($previousBalance) {
+                $updated = BalanceHelper::calculate((array) $previousBalance);
+                $updated['id'] = $previousBalance->id;
+                $this->balanceModel->updateBalanceCalculations($updated);
+            }
+
             http_response_code(200);
-            echo json_encode(['status' => 'success', 'message' => '¡Registro actualizado!']);
+            echo json_encode(['status' => 'success', 'message' => '¡Registro actualizado y balance recalculado!']);
         } else {
             http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => '¡Error al actualizar el registro!']);
         }
     }
 
-    // Delete record
+    // Delete record for daily expense
     public function delete($id)
     {
         header('Content-Type: application/json');
@@ -287,11 +285,21 @@ class GastosD extends Controller
             return;
         }
 
+        // ✅ Get balance before deletion
+        $balance = $this->balanceModel->getLastBalance();
+
         $result = $this->modelGastosD->deleteDailyExp($id);
 
         if ($result) {
+            // ✅ Recalcular balance si existe
+            if ($balance) {
+                $recalculated = BalanceHelper::calculate((array) $balance);
+                $recalculated['id'] = $balance->id;
+                $this->balanceModel->updateBalanceCalculations($recalculated);
+            }
+
             http_response_code(200);
-            echo json_encode(['status' => 'success', 'message' => '¡Registro eliminado!']);
+            echo json_encode(['status' => 'success', 'message' => '¡Registro eliminado y balance actualizado!']);
         } else {
             http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => '¡Error al eliminar el registro!']);

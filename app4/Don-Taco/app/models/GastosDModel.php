@@ -47,6 +47,12 @@ class GastosDModel
     // ✅ Needed by BalanceHelper
     public function getLastRecord()
     {
+        $this->db->query("SELECT * FROM daily_balance ORDER BY id DESC LIMIT 1");
+        return $this->db->record();
+    }
+
+    public function getPreviousBalance()
+    {
         $this->db->query("SELECT * FROM daily_balance ORDER BY id DESC LIMIT 1 OFFSET 1");
         return $this->db->record();
     }

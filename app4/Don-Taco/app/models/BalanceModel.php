@@ -74,6 +74,46 @@ class BalanceModel
         return $this->db->execute();
     }
 
+    public function updateBalance($data)
+    {
+        $sql = "UPDATE daily_balance SET 
+        date = :date,
+        cash_expenses = :cash_expenses,
+        cash_sales = :cash_sales,
+        transfer_sales = :transfer_sales,
+        net_card_sales = :net_card_sales,
+        platform_deposits = :platform_deposits,
+        platform_name = :platform_name,
+        profit_sharing = :profit_sharing,
+        uber = :uber,
+        didi = :didi,
+        rappi = :rappi,
+        tot_fixed_exp = :tot_fixed_exp,
+        total_expenses = :total_expenses,
+        card_sales_percent = :card_sales_percent,
+        total_income = :total_income,
+        floor_profit = :floor_profit,
+        platform_net_profit = :platform_net_profit,
+        net_profit = :net_profit,
+        closing_cash = :closing_cash,
+        available_profit = :available_profit,
+        total_platforms = :total_platforms
+        WHERE id = :id";
+
+        $this->db->query($sql);
+
+        foreach ($data as $key => $val) {
+            $this->db->bind(":" . $key, $val);
+        }
+
+        return $this->db->execute();
+    }
+
+    public function deleteBalance($id)
+    {
+        return $this->db->delete('daily_balance', 'id = :id', ['id' => $id]);
+    }
+
     public function getLastBalance()
     {
         $this->db->query("SELECT * FROM daily_balance ORDER BY id DESC LIMIT 1");

@@ -12,20 +12,19 @@ class BalanceHelper
      */
     public static function calculate(array $data): array
     {
-        // Instantiate model to fetch needed values
         $expModel = new GastosDModel();
 
-        // Get last balance record (for available profit)
-        $lastRecord = $expModel->getLastRecord();
-        $utilidadDisponibleAnt = $lastRecord?->available_profit ?? 0;
+        // ✅ Obtener el balance anterior (OFFSET 1)
+        $prevBalance = $expModel->getPreviousBalance(); // nuevo método
+        $utilidadDisponibleAnt = $prevBalance?->available_profit ?? 0;
 
-        // Get gastos diarios (totGD)
-        $totGD = 0;
-        if (isset($lastRecord->id)) {
-            $totGD = $expModel->getTotalGDByBalanceId($lastRecord->id);
-        }
+        // ✅ Obtener el balance actual (último) para el cálculo del gasto diario
+        $lastBalance = $expModel->getLastRecord();
+        $totGD = $lastBalance?->id
+            ? $expModel->getTotalGDByBalanceId($lastBalance->id)
+            : 0;
 
-        // Extract input values
+        // Extracción de datos como ya tenías
         $cashExpenses     = (float) ($data['cash_expenses']     ?? 0);
         $cashSales        = (float) ($data['cash_sales']        ?? 0);
         $netCardSales     = (float) ($data['net_card_sales']    ?? 0);
@@ -37,7 +36,7 @@ class BalanceHelper
         $rappi            = (float) ($data['rappi']             ?? 0);
         $totFixedExp      = (float) ($data['tot_fixed_exp']     ?? 0);
 
-        // Calculations
+        // Cálculos
         $ventaTarjeta       = $netCardSales * 0.9651;
         $totalIngresos      = $transferSales + $ventaTarjeta + $cashSales;
         $utilidadPiso       = $totalIngresos + $platformDeposits;
@@ -48,7 +47,6 @@ class BalanceHelper
         $utilidadDisponible = ($utilidadPiso + $utilidadDisponibleAnt) - ($profitSharing + $totFixedExp + $totGD);
         $totalPlataformas   = $uber + $didi + $rappi;
 
-        // Return result
         return [
             'total_expenses'       => round($totalEgresos, 2),
             'card_sales_percent'   => round($ventaTarjeta, 2),
