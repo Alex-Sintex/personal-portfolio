@@ -13,6 +13,24 @@ class BalanceModel
         $this->db = new Base();
     }
 
+    // ✅ Retorna resumen semanal de ingresos (últimas 5 semanas)
+    public function getWeeklyIncomeSummary()
+    {
+        $this->db->query("
+        SELECT 
+            YEAR(date) AS year,
+            WEEK(date, 1) AS week_number,
+            date AS end_of_week,
+            total_income
+        FROM daily_balance
+        WHERE total_income IS NOT NULL
+        ORDER BY date ASC
+        LIMIT 5
+    ");
+
+        return $this->db->records();
+    }
+
     public function getBalanceInfo()
     {
         $this->db->query("SELECT * FROM daily_balance");

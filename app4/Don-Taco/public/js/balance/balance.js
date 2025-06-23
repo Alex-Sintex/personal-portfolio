@@ -247,7 +247,8 @@ $(document).ready(function () {
                     });
                 }
             },
-            'colvis'
+            'colvis',
+            { extend: 'excel', text: '📄 Excel', title: 'Balance Diario', exportOptions: { columns: ':visible' } }
         ]
     });
 });

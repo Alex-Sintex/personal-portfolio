@@ -74,6 +74,8 @@ $loadJShelpers = $data['loadJShelpers'] ?? false;
     <!-- DataTables -->
     <script src="<?= PATH_URL ?>js/DataTable/jquery.dataTables.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.buttons.js"></script>
+    <script src="<?= PATH_URL ?>js/DataTable/jszip.min.js"></script>
+    <script src="<?= PATH_URL ?>js/DataTable/buttons.html5.min.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.select.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.select2.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/dataTables.responsive.js"></script>
@@ -103,9 +105,9 @@ $loadJShelpers = $data['loadJShelpers'] ?? false;
 
 <?php if ($loadCharts): ?>
     <!-- Chart -->
-    <script src="<?= PATH_URL ?>js/Chart/Chart.min.js"></script>
-    <script src="<?= PATH_URL ?>js/Chart/chart-area-demo.js"></script>
-    <script src="<?= PATH_URL ?>js/Chart/chart-bar-demo.js"></script>
+    <script src="<?= PATH_URL ?>js/Charts/Chart.min.js"></script>
+    <script type="module" src="<?= PATH_URL ?>js/Charts/incomesChart.js"></script>
+    <script type="module" src="<?= PATH_URL ?>js/Charts/outcomesChart.js"></script>
 <?php endif; ?>
 <!-- SCRIPTS -->
 

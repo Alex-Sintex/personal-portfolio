@@ -13,6 +13,25 @@ class GastosDModel
         $this->db = new Base();
     }
 
+    // Get weekly expense sums for last 5 weeks, grouping by year and week number
+    public function getWeeklyExpenseSummary()
+    {
+        $this->db->query("
+        SELECT 
+            YEAR(db.date) AS year,
+            WEEK(db.date, 1) AS week_number,
+            db.date AS end_of_week,
+            de.tot_gto_diarios AS total_expense
+        FROM daily_expense de
+        INNER JOIN daily_balance db ON de.balance_id = db.id
+        WHERE de.tot_gto_diarios IS NOT NULL
+        ORDER BY db.date ASC
+        LIMIT 5
+    ");
+
+        return $this->db->records();
+    }
+
     public function getDailyExpensesWithDate()
     {
         return $this->db->rawSelect("

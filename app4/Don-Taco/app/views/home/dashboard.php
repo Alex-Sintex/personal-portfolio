@@ -62,7 +62,7 @@
                                 <i class="fas fa-chart-area me-1"></i>
                                 TOTAL INGRESOS
                             </div>
-                            <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                            <div class="card-body"><canvas id="incomesChart" width="100%" height="40"></canvas></div>
                         </div>
                     </div>
                     <div class="col-xl-6">
@@ -71,7 +71,7 @@
                                 <i class="fas fa-chart-bar me-1"></i>
                                 TOTAL GASTOS DIARIOS
                             </div>
-                            <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                            <div class="card-body"><canvas id="outcomesChart" width="100%" height="40"></canvas></div>
                         </div>
                     </div>
                 </div>
