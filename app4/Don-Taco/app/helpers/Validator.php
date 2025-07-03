@@ -77,8 +77,8 @@ class Validator
         return match ($type) {
             'string' => is_string($value),
             'numeric' => is_numeric($value),
-            'int' => is_int($value),
-            'float' => is_float($value),
+            'int' => is_int($value) || (is_string($value) && ctype_digit($value)),
+            'float' => is_float($value) || is_numeric($value),
             'bool' => is_bool($value),
             'decimal' => is_numeric($value),
             'date' => $this->validateDate($value),

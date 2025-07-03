@@ -22,7 +22,7 @@ class Balance extends Controller
             'loadJQueryLibrary'     => true,
             'loadScriptSideBar'     => true,
             'loadDataTables'        => true,
-            'loadDataTablesBalance' => true,
+            'loadDataTableBalance'  => true,
             'loadToasty'            => true,
             'loadStyles'            => true,
             'loadDataTableStyles'   => true,
@@ -86,17 +86,17 @@ class Balance extends Controller
         // Reglas de validación
         $rules = [
             'date'       => ['required' => true, 'type' => 'date'],
-            'gastEfect'  => ['required' => true, 'type' => 'decimal'],
-            'ventEfect'  => ['required' => true, 'type' => 'decimal'],
-            'ventTransf' => ['required' => true, 'type' => 'decimal'],
-            'ventNetTar' => ['required' => true, 'type' => 'decimal'],
-            'depPlatf'   => ['required' => true, 'type' => 'decimal'],
+            'gastEfect'  => ['required' => false, 'type' => 'decimal'],
+            'ventEfect'  => ['required' => false, 'type' => 'decimal'],
+            'ventTransf' => ['required' => false, 'type' => 'decimal'],
+            'ventNetTar' => ['required' => false, 'type' => 'decimal'],
+            'depPlatf'   => ['required' => false, 'type' => 'decimal'],
             'nomPlatf'   => ['required' => false, 'type' => 'string'],
-            'reparUtil'  => ['required' => true, 'type' => 'decimal'],
-            'ub'         => ['required' => true, 'type' => 'decimal'],
-            'did'        => ['required' => true, 'type' => 'decimal'],
-            'rap'        => ['required' => true, 'type' => 'decimal'],
-            'totGF'      => ['required' => true, 'type' => 'decimal'],
+            'reparUtil'  => ['required' => false, 'type' => 'decimal'],
+            'ub'         => ['required' => false, 'type' => 'decimal'],
+            'did'        => ['required' => false, 'type' => 'decimal'],
+            'rap'        => ['required' => false, 'type' => 'decimal'],
+            'totGF'      => ['required' => false, 'type' => 'decimal'],
         ];
 
         // ✅ Validación de datos
@@ -185,17 +185,17 @@ class Balance extends Controller
 
         $rules = [
             'date'       => ['required' => true, 'type' => 'date'],
-            'gastEfect'  => ['required' => true, 'type' => 'decimal'],
-            'ventEfect'  => ['required' => true, 'type' => 'decimal'],
-            'ventTransf' => ['required' => true, 'type' => 'decimal'],
-            'ventNetTar' => ['required' => true, 'type' => 'decimal'],
-            'depPlatf'   => ['required' => true, 'type' => 'decimal'],
+            'gastEfect'  => ['required' => false, 'type' => 'decimal'],
+            'ventEfect'  => ['required' => false, 'type' => 'decimal'],
+            'ventTransf' => ['required' => false, 'type' => 'decimal'],
+            'ventNetTar' => ['required' => false, 'type' => 'decimal'],
+            'depPlatf'   => ['required' => false, 'type' => 'decimal'],
             'nomPlatf'   => ['required' => false, 'type' => 'string'],
-            'reparUtil'  => ['required' => true, 'type' => 'decimal'],
-            'ub'         => ['required' => true, 'type' => 'decimal'],
-            'did'        => ['required' => true, 'type' => 'decimal'],
-            'rap'        => ['required' => true, 'type' => 'decimal'],
-            'totGF'      => ['required' => true, 'type' => 'decimal'],
+            'reparUtil'  => ['required' => false, 'type' => 'decimal'],
+            'ub'         => ['required' => false, 'type' => 'decimal'],
+            'did'        => ['required' => false, 'type' => 'decimal'],
+            'rap'        => ['required' => false, 'type' => 'decimal'],
+            'totGF'      => ['required' => false, 'type' => 'decimal'],
         ];
 
         if (!$validator->validate($data, $rules)) {

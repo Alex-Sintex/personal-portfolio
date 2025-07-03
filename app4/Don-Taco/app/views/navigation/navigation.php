@@ -87,7 +87,13 @@
                                             <a class="nav-link" href="balance">Balance</a>
                                         </li>
                                         <li>
+                                            <a class="nav-link" href="gastosfd">Gastos fijos diarios</a>
+                                        </li>
+                                        <li>
                                             <a class="nav-link" href="gastosd">Gastos diarios</a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link" href="funds">Fondos</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -102,7 +108,7 @@
                                 <div class="sidebar-submenu">
                                     <ul>
                                         <li>
-                                            <a href="javascript:void(0)">Usuarios</a>
+                                            <a href="users">Usuarios</a>
                                         </li>
                                     </ul>
                                 </div>

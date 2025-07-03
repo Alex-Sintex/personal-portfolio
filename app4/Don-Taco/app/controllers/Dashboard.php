@@ -40,32 +40,62 @@ class Dashboard extends Controller
     {
         header('Content-Type: application/json');
 
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            http_response_code(405);
+            echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
+            return;
+        }
+
         try {
             $results = $this->balanceModel->getWeeklyIncomeSummary();
+
+            if (empty($results)) {
+                echo json_encode([
+                    'status' => 'no_data',
+                    'message' => 'No hay ingresos registrados para mostrar en la gráfica.'
+                ]);
+                return;
+            }
+
             echo json_encode($results);
         } catch (\Throwable $e) {
             http_response_code(500);
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Error fetching weekly income data',
+                'message' => 'Error al obtener los ingresos semanales.',
                 'error' => $e->getMessage()
             ]);
         }
     }
 
-    // New API endpoint for weekly expenses chart (tot_gto_diarios)
+    // API endpoint for weekly expenses chart
     public function getWeeklyExpenses()
     {
         header('Content-Type: application/json');
 
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            http_response_code(405);
+            echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
+            return;
+        }
+
         try {
             $results = $this->expenseModel->getWeeklyExpenseSummary();
+
+            if (empty($results)) {
+                echo json_encode([
+                    'status' => 'no_data',
+                    'message' => 'No hay gastos registrados para mostrar en la gráfica.'
+                ]);
+                return;
+            }
+
             echo json_encode($results);
         } catch (\Throwable $e) {
             http_response_code(500);
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Error fetching weekly expense data',
+                'message' => 'Error al obtener los gastos semanales.',
                 'error' => $e->getMessage()
             ]);
         }

@@ -33,9 +33,11 @@ $loadDataTablesSimple = $data['loadDataTablesSimple'] ?? false;
 $loadDataTables = $data['loadDataTables'] ?? false;
 
 // Load DataTables for each main page
-$loadDataTablesProduct = $data['loadDataTablesProduct'] ?? false;
-$loadDataTablesBalance = $data['loadDataTablesBalance'] ?? false;
-$loadDataTablesGD = $data['loadDataTablesGD'] ?? false;
+$loadDataTableProduct = $data['loadDataTableProduct'] ?? false;
+$loadDataTableBalance = $data['loadDataTableBalance'] ?? false;
+$loadDataTableGFD = $data['loadDataTableGFD'] ?? false;
+$loadDataTableGD = $data['loadDataTableGD'] ?? false;
+$loadDataTableF = $data['loadDataTableF'] ?? false;
 
 // Load assets for Toasty
 $loadToasty = $data['loadToasty'] ?? false;
@@ -84,16 +86,24 @@ $loadJShelpers = $data['loadJShelpers'] ?? false;
     <script src="<?= PATH_URL ?>js/DataTable/buttons.print.min.js"></script>
     <script src="<?= PATH_URL ?>js/DataTable/buttons.colVis.min.js"></script>
 
-    <?php if (!empty($loadDataTablesProduct)): ?>
+    <?php if (!empty($loadDataTableProduct)): ?>
         <script type="module" src="<?= PATH_URL ?>js/product/product.js"></script>
     <?php endif; ?>
 
-    <?php if (!empty($loadDataTablesBalance)): ?>
+    <?php if (!empty($loadDataTableBalance)): ?>
         <script type="module" src="<?= PATH_URL ?>js/balance/balance.js"></script>
     <?php endif; ?>
 
-    <?php if (!empty($loadDataTablesGD)): ?>
+    <?php if (!empty($loadDataTableGFD)): ?>
+        <script type="module" src="<?= PATH_URL ?>js/expense/fix_exp.js"></script>
+    <?php endif; ?>
+
+    <?php if (!empty($loadDataTableGD)): ?>
         <script type="module" src="<?= PATH_URL ?>js/expense/daily_expenses.js"></script>
+    <?php endif; ?>
+
+    <?php if (!empty($loadDataTableF)): ?>
+        <script type="module" src="<?= PATH_URL ?>js/funds/funds.js"></script>
     <?php endif; ?>
 <?php endif; ?>
 

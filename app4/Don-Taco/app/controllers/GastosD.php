@@ -21,14 +21,14 @@ class GastosD extends Controller
     public function index()
     {
         $data = [
-            'loadJQueryLibrary' => true,    // JS
-            'loadScriptSideBar' => true,    // JS
-            'loadDataTables' => true,       // JS
-            'loadDataTablesGD' => true,     // JS
-            'loadToasty' => true,           // JS
-            'loadStyles' => true,           // CSS
-            'loadDataTableStyles' => true,  // CSS
-            'loadToastStyle' => true        // CSS
+            'loadJQueryLibrary'   => true, // JS
+            'loadScriptSideBar'   => true, // JS
+            'loadDataTables'      => true, // JS
+            'loadDataTableGD'     => true, // JS
+            'loadToasty'          => true, // JS
+            'loadStyles'          => true, // CSS
+            'loadDataTableStyles' => true, // CSS
+            'loadToastStyle'      => true  // CSS
         ];
         $this->view('modules/gastos_diarios', $data);
     }
@@ -94,23 +94,23 @@ class GastosD extends Controller
         $validator = new Validator();
 
         $rules = [
-            'carne'              => ['required' => true, 'type' => 'decimal'],
-            'queso'              => ['required' => true, 'type' => 'decimal'],
-            'tortilla_maiz'      => ['required' => true, 'type' => 'decimal'],
-            'tortilla_hna_gde'   => ['required' => true, 'type' => 'decimal'],
-            'longaniza'          => ['required' => true, 'type' => 'decimal'],
-            'pan'                => ['required' => true, 'type' => 'decimal'],
-            'vinagre'            => ['required' => true, 'type' => 'decimal'],
-            'bodegon'            => ['required' => true, 'type' => 'decimal'],
-            'adel_marcos'        => ['required' => true, 'type' => 'decimal'],
-            'trans_marcos'       => ['required' => true, 'type' => 'decimal'],
-            'nomina'             => ['required' => true, 'type' => 'decimal'],
-            'nomina_weekend'     => ['required' => true, 'type' => 'decimal'],
-            'mundi_novi'         => ['required' => true, 'type' => 'decimal'],
-            'color'              => ['required' => true, 'type' => 'decimal'],
-            'otros'              => ['required' => true, 'type' => 'decimal'],
+            'carne'              => ['required' => false, 'type' => 'decimal'],
+            'queso'              => ['required' => false, 'type' => 'decimal'],
+            'tortilla_maiz'      => ['required' => false, 'type' => 'decimal'],
+            'tortilla_hna_gde'   => ['required' => false, 'type' => 'decimal'],
+            'longaniza'          => ['required' => false, 'type' => 'decimal'],
+            'pan'                => ['required' => false, 'type' => 'decimal'],
+            'vinagre'            => ['required' => false, 'type' => 'decimal'],
+            'bodegon'            => ['required' => false, 'type' => 'decimal'],
+            'adel_marcos'        => ['required' => false, 'type' => 'decimal'],
+            'trans_marcos'       => ['required' => false, 'type' => 'decimal'],
+            'nomina'             => ['required' => false, 'type' => 'decimal'],
+            'nomina_weekend'     => ['required' => false, 'type' => 'decimal'],
+            'mundi_novi'         => ['required' => false, 'type' => 'decimal'],
+            'color'              => ['required' => false, 'type' => 'decimal'],
+            'otros'              => ['required' => false, 'type' => 'decimal'],
             'observaciones'      => ['required' => false, 'type' => 'string', 'max' => 100],
-            'totalGD'            => ['required' => true, 'type' => 'decimal']
+            'totalGD'            => ['required' => false, 'type' => 'decimal']
         ];
 
         if (!$validator->validate($data, $rules)) {
@@ -206,23 +206,23 @@ class GastosD extends Controller
         $validator = new Validator();
 
         $rules = [
-            'carne'              => ['required' => true, 'type' => 'decimal'],
-            'queso'              => ['required' => true, 'type' => 'decimal'],
-            'tortilla_maiz'      => ['required' => true, 'type' => 'decimal'],
-            'tortilla_hna_gde'   => ['required' => true, 'type' => 'decimal'],
-            'longaniza'          => ['required' => true, 'type' => 'decimal'],
-            'pan'                => ['required' => true, 'type' => 'decimal'],
-            'vinagre'            => ['required' => true, 'type' => 'decimal'],
-            'bodegon'            => ['required' => true, 'type' => 'decimal'],
-            'adel_marcos'        => ['required' => true, 'type' => 'decimal'],
-            'trans_marcos'       => ['required' => true, 'type' => 'decimal'],
-            'nomina'             => ['required' => true, 'type' => 'decimal'],
-            'nomina_weekend'     => ['required' => true, 'type' => 'decimal'],
-            'mundi_novi'         => ['required' => true, 'type' => 'decimal'],
-            'color'              => ['required' => true, 'type' => 'decimal'],
-            'otros'              => ['required' => true, 'type' => 'decimal'],
+            'carne'              => ['required' => false, 'type' => 'decimal'],
+            'queso'              => ['required' => false, 'type' => 'decimal'],
+            'tortilla_maiz'      => ['required' => false, 'type' => 'decimal'],
+            'tortilla_hna_gde'   => ['required' => false, 'type' => 'decimal'],
+            'longaniza'          => ['required' => false, 'type' => 'decimal'],
+            'pan'                => ['required' => false, 'type' => 'decimal'],
+            'vinagre'            => ['required' => false, 'type' => 'decimal'],
+            'bodegon'            => ['required' => false, 'type' => 'decimal'],
+            'adel_marcos'        => ['required' => false, 'type' => 'decimal'],
+            'trans_marcos'       => ['required' => false, 'type' => 'decimal'],
+            'nomina'             => ['required' => false, 'type' => 'decimal'],
+            'nomina_weekend'     => ['required' => false, 'type' => 'decimal'],
+            'mundi_novi'         => ['required' => false, 'type' => 'decimal'],
+            'color'              => ['required' => false, 'type' => 'decimal'],
+            'otros'              => ['required' => false, 'type' => 'decimal'],
             'observaciones'      => ['required' => false, 'type' => 'string', 'max' => 100],
-            'totalGD'            => ['required' => true, 'type' => 'decimal']
+            'totalGD'            => ['required' => false, 'type' => 'decimal']
         ];
 
         if (!$validator->validate($data, $rules)) {

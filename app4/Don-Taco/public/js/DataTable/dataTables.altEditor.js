@@ -311,7 +311,7 @@
                     this.language.success = this.language.success || '¡Éxito!';
                     this.language.error = this.language.error || {};
                     this.language.error = {
-                        message: this.language.error.message || '¡Hubo un error desconocido!',
+                        message: this.language.error.message || 'Lo siento, algo salió mal. ¡Por favor, inténtalo de nuevo!',
                         label: this.language.error.label || '¡Alerta!',
                         responseCode: this.language.error.responseCode || 'Response code: ',
                         required: this.language.error.required || 'Se requiere campo',

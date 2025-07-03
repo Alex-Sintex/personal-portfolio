@@ -89,18 +89,6 @@ class Auth extends Controller
         ]);
     }
 
-    // Stub: register user
-    /*public function register()
-    {
-        // To be implemented
-    }*/
-
-    // Stub: forgot password logic
-    /*public function forgotPassword()
-    {
-        // To be implemented
-    }*/
-
     // Log out and redirect
     public function logout()
     {

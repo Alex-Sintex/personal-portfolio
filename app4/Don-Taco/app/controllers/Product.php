@@ -19,14 +19,14 @@ class Product extends Controller
     public function index()
     {
         $data = [
-            'loadJQueryLibrary' => true,    // JS
-            'loadScriptSideBar' => true,    // JS
-            'loadDataTables' => true,       // JS
-            'loadDataTablesProduct' => true,// JS
-            'loadToasty' => true,           // JS
-            'loadStyles' => true,           // CSS
-            'loadDataTableStyles' => true,  // CSS
-            'loadToastStyle' => true        // CSS
+            'loadJQueryLibrary'    => true, // JS
+            'loadScriptSideBar'    => true, // JS
+            'loadDataTables'       => true, // JS
+            'loadDataTableProduct' => true, // JS
+            'loadToasty'           => true, // JS
+            'loadStyles'           => true, // CSS
+            'loadDataTableStyles'  => true, // CSS
+            'loadToastStyle'       => true  // CSS
         ];
         $this->view('modules/product', $data);
     }

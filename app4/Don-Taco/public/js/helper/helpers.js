@@ -19,6 +19,10 @@ export function currencyRender(data, type, row) {
 export function checkAllDecimalFields(data, columnDefs, errorCallback, toast) {
   for (let colDef of columnDefs) {
     if (colDef.typeof === "decimal") {
+
+      // Skip validating 'SALDO KLAR' because it's auto-calculated in backend
+      if (colDef.title === "SALDO KLAR") continue;
+
       const value = data[colDef.data];
       const title = colDef.title;
 
@@ -29,7 +33,6 @@ export function checkAllDecimalFields(data, columnDefs, errorCallback, toast) {
         const msg = `El campo numérico '${title}' no puede estar vacío ni contener texto no numérico.`;
         toast.error(msg);
 
-        // Call altEditor error callback to trigger modal error
         if (typeof errorCallback === "function") {
           errorCallback({
             responseJSON: {

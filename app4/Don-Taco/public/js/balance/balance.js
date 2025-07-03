@@ -64,7 +64,6 @@ $(document).ready(function () {
                 dataType: 'json',
                 data: JSON.stringify(data),
                 success: function (res) {
-                    //console.log('AJAX success:', res);
                     if (res.status === 'success') {
                         inTbl.ajax.reload(null, false);
                         calTbl.ajax.reload(null, false);
@@ -207,7 +206,7 @@ $(document).ready(function () {
 
                     // Add watermark logo behind table
                     $(win.document.body).prepend(`
-                        <img src="https://localhost/img/Logo/Logo.png"
+                        <img src="../../img/Logo/Logo.png" alt="logo"
                             style="
                                 position: fixed;
                                 top: 35%;
@@ -248,7 +247,7 @@ $(document).ready(function () {
                 }
             },
             'colvis',
-            { extend: 'excel', text: '📄 Excel', title: 'Balance Diario', exportOptions: { columns: ':visible' } }
+            { extend: 'excel', text: 'Excel', title: 'Balance Diario', exportOptions: { columns: ':visible' } }
         ]
     });
 });
