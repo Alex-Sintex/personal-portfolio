@@ -26,7 +26,7 @@ class ProductModel
         pr.provider_name
     FROM input_products ip
     LEFT JOIN unit_measure um ON ip.unit_measure_id = um.unit_measure_id
-    LEFT JOIN providers pr ON ip.provider_id = pr.provider_id;
+    LEFT JOIN suppliers pr ON ip.provider_id = pr.provider_id;
     ");
         return $this->db->records();
     }
@@ -40,7 +40,7 @@ class ProductModel
 
     public function getProviderIdByName($name)
     {
-        $this->db->query("SELECT provider_id FROM providers WHERE provider_name = :name LIMIT 1");
+        $this->db->query("SELECT provider_id FROM suppliers WHERE provider_name = :name LIMIT 1");
         $this->db->bind(':name', $name);
         return $this->db->record(); // returns assoc array or false
     }

@@ -17,13 +17,15 @@ class Users extends Controller
     // Show login view
     public function index()
     {
-        /*
         $data = [
-            'loadStyleforAuth' => true, // CSS
-            'loadJSLogin' => true       // JS
-        ];*/
+            'loadJQueryLibrary'     => true,
+            'loadScriptSideBar'     => true,
+            'loadToasty'            => true,
+            'loadStyles'            => true,
+            'loadToastStyle'        => true
+        ];
 
-        $this->view('modules/users');
+        $this->view('modules/users', $data);
     }
 
     // Stub: register user

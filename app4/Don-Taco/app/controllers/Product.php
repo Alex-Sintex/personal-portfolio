@@ -85,7 +85,7 @@ class Product extends Controller
             return;
         }
 
-        $cleanData = $validator->sanitize($data);
+        $cleanData = $validator->sanitizeAndCast($data, $rules);
 
         // 🔍 Get unit_measure_id
         $measure = $this->modelProduct->getMeasureIdByName($cleanData['measure_n']);

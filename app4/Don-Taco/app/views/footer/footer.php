@@ -38,6 +38,8 @@ $loadDataTableBalance = $data['loadDataTableBalance'] ?? false;
 $loadDataTableGFD = $data['loadDataTableGFD'] ?? false;
 $loadDataTableGD = $data['loadDataTableGD'] ?? false;
 $loadDataTableF = $data['loadDataTableF'] ?? false;
+$loadDataTableSupp = $data['loadDataTableSupp'] ?? false;
+$loadDataTableUnitoms = $data['loadDataTableUnitoms'] ?? false;
 
 // Load assets for Toasty
 $loadToasty = $data['loadToasty'] ?? false;
@@ -104,6 +106,14 @@ $loadJShelpers = $data['loadJShelpers'] ?? false;
 
     <?php if (!empty($loadDataTableF)): ?>
         <script type="module" src="<?= PATH_URL ?>js/funds/funds.js"></script>
+    <?php endif; ?>
+
+    <?php if (!empty($loadDataTableSupp)): ?>
+        <script src="<?= PATH_URL ?>js/supplier/supplier.js"></script>
+    <?php endif; ?>
+
+    <?php if (!empty($loadDataTableUnitoms)): ?>
+        <script src="<?= PATH_URL ?>js/measures/unit_m.js"></script>
     <?php endif; ?>
 <?php endif; ?>
 

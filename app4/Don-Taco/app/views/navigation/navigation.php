@@ -33,7 +33,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content">
                     <div class="sidebar-brand">
-                        <a href="<?php echo PATH_URL; ?>">Don Taco</a>
+                        <a href="#">Don Taco</a>
                     </div>
                     <div class="sidebar-header">
                         <div class="user-pic">
@@ -81,10 +81,10 @@
                                 <div class="sidebar-submenu">
                                     <ul>
                                         <li>
-                                            <a class="nav-link" href="product">Producto</a>
+                                            <a class="nav-link" href="balance">Balance</a>
                                         </li>
                                         <li>
-                                            <a class="nav-link" href="balance">Balance</a>
+                                            <a class="nav-link" href="funds">Fondos</a>
                                         </li>
                                         <li>
                                             <a class="nav-link" href="gastosfd">Gastos fijos diarios</a>
@@ -93,7 +93,13 @@
                                             <a class="nav-link" href="gastosd">Gastos diarios</a>
                                         </li>
                                         <li>
-                                            <a class="nav-link" href="funds">Fondos</a>
+                                            <a class="nav-link" href="product">Productos</a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link" href="suppliers">Proveedores</a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link" href="unitoms">Unidades de medida</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -133,10 +139,6 @@
                     <a href="javascript:void(0)">
                         <i class="fa fa-bell"></i>
                         <span class="badge badge-pill badge-warning notification">3</span>
-                    </a>
-                    <a href="javascript:void(0)">
-                        <i class="fa fa-envelope"></i>
-                        <span class="badge badge-pill badge-success notification">7</span>
                     </a>
                     <a href="javascript:void(0)">
                         <i class="fa fa-cog"></i>
