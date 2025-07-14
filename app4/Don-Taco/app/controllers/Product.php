@@ -19,14 +19,14 @@ class Product extends Controller
     public function index()
     {
         $data = [
+            'loadStyles'           => true, // CSS
+            'loadDataTableStyles'  => true, // CSS
+            'loadToastStyle'       => true, // CSS
             'loadJQueryLibrary'    => true, // JS
             'loadScriptSideBar'    => true, // JS
             'loadDataTables'       => true, // JS
             'loadDataTableProduct' => true, // JS
-            'loadToasty'           => true, // JS
-            'loadStyles'           => true, // CSS
-            'loadDataTableStyles'  => true, // CSS
-            'loadToastStyle'       => true  // CSS
+            'loadToasty'           => true  // JS
         ];
         $this->view('modules/product', $data);
     }
@@ -56,7 +56,6 @@ class Product extends Controller
         header('Content-Type: application/json'); // ✅ Asegura salida JSON
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            http_response_code(405);
             echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
             return;
         }
@@ -76,7 +75,6 @@ class Product extends Controller
         ];
 
         if (!$validator->validate($data, $rules)) {
-            http_response_code(422); // Unprocessable Entity
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Error de validación',
@@ -90,7 +88,6 @@ class Product extends Controller
         // 🔍 Get unit_measure_id
         $measure = $this->modelProduct->getMeasureIdByName($cleanData['measure_n']);
         if (!$measure) {
-            http_response_code(404);
             echo json_encode(['status' => 'error', 'message' => 'Unidad de medida no encontrada']);
             return;
         }
@@ -98,7 +95,6 @@ class Product extends Controller
         // 🔍 Get provider_id
         $provider = $this->modelProduct->getProviderIdByName($cleanData['provider_n']);
         if (!$provider) {
-            http_response_code(404);
             echo json_encode(['status' => 'error', 'message' => 'Proveedor no encontrado']);
             return;
         }
@@ -113,10 +109,8 @@ class Product extends Controller
         $result = $this->modelProduct->addProduct($insertData);
 
         if ($result) {
-            http_response_code(200);
             echo json_encode(['status' => 'success', 'message' => '¡Registro añadido!']);
         } else {
-            http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => '¡Error al añadir el registro!']);
         }
     }
@@ -127,7 +121,6 @@ class Product extends Controller
         header('Content-Type: application/json'); // ✅ Asegura salida JSON
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
-            http_response_code(405);
             echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
             return;
         }
@@ -147,7 +140,6 @@ class Product extends Controller
         ];
 
         if (!$validator->validate($data, $rules)) {
-            http_response_code(422); // Unprocessable Entity
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Error de validación',
@@ -161,7 +153,6 @@ class Product extends Controller
         // 🔍 Get unit_measure_id
         $measure = $this->modelProduct->getMeasureIdByName($cleanData['measure_n']);
         if (!$measure) {
-            http_response_code(404);
             echo json_encode(['status' => 'error', 'message' => 'Unidad de medida no encontrada']);
             return;
         }
@@ -169,7 +160,6 @@ class Product extends Controller
         // 🔍 Get provider_id
         $provider = $this->modelProduct->getProviderIdByName($cleanData['provider_n']);
         if (!$provider) {
-            http_response_code(404);
             echo json_encode(['status' => 'error', 'message' => 'Proveedor no encontrado']);
             return;
         }
@@ -184,10 +174,8 @@ class Product extends Controller
         $result = $this->modelProduct->updateProduct($id, $insertData);
 
         if ($result) {
-            http_response_code(200);
             echo json_encode(['status' => 'success', 'message' => '¡Registro actualizado!']);
         } else {
-            http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => '¡Error al actualizar el registro!']);
         }
     }
@@ -198,7 +186,6 @@ class Product extends Controller
         header('Content-Type: application/json');
 
         if (!is_numeric($id)) {
-            http_response_code(400);
             echo json_encode(['status' => 'error', 'message' => 'Invalid ID']);
             return;
         }
@@ -206,10 +193,8 @@ class Product extends Controller
         $result = $this->modelProduct->deleteProduct($id);
 
         if ($result) {
-            http_response_code(200);
             echo json_encode(['status' => 'success', 'message' => '¡Registro eliminado!']);
         } else {
-            http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => '¡Error al eliminar el registro!']);
         }
     }

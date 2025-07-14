@@ -314,7 +314,7 @@
                         message: this.language.error.message || 'Lo siento, algo salió mal. ¡Por favor, inténtalo de nuevo!',
                         label: this.language.error.label || '¡Alerta!',
                         responseCode: this.language.error.responseCode || 'Response code: ',
-                        required: this.language.error.required || 'Se requiere campo',
+                        //required: this.language.error.required || 'Se requiere campo',
                         unique: this.language.error.unique || 'Campo duplicado'
                     };
                 },
@@ -581,7 +581,7 @@
                             options: (obj.options ? obj.options : []),
                             readonly: (obj.readonly ? obj.readonly : false),
                             disabled: (obj.disabled ? obj.disabled : false),
-                            required: (obj.required ? obj.required : false),
+                            //required: (obj.required ? obj.required : false),
                             hoverMsg: (obj.hoverMsg ? obj.hoverMsg : ''),
                             pattern: (obj.pattern ? obj.pattern : '.*'),
                             accept: (obj.accept ? obj.accept : ''),
@@ -931,32 +931,37 @@
                 /**
                  * Called after AJAX server returned an error
                  */
-                _errorCallback: function (response, status, more) {
-                    var error = response;
+                _errorCallback: function (error, status, more) {
+                    //console.log("💥 Error received in _errorCallback:", error);
+
                     var selector = this.modal_selector;
                     $(selector + ' .modal-body .alert').remove();
 
                     var errstr = this.language.error.message;
+
                     if (error.responseJSON) {
+                        //console.log("✅ Found responseJSON:", error.responseJSON);
+
                         if (error.responseJSON.errors) {
                             errstr = "";
                             for (var key in error.responseJSON.errors) {
-                                errstr += error.responseJSON.errors[key][0];
+                                errstr += error.responseJSON.errors[key][0] + "<br>";
                             }
+                        } else if (error.responseJSON.message) {
+                            errstr = error.responseJSON.message;
                         }
-                    }
-                    else if (error.responseText) {
+                    } else if (error.responseText) {
                         errstr = error.responseText;
-                    }
-                    else {
+                    } else {
                         errstr = (error.status == null) ? "" : this.language.error.responseCode + error.status;
                     }
 
-                    var message = '<div class="alert alert-warning alert-dismissible fade show" role="alert">' +
-                        '<strong>' + this.language.error.label + '</strong>' +
-                        (errstr ? '<br />' + errstr : '') +
-                        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-                        '</div>';
+                    const message = `
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>${this.language.error.label}</strong>
+                            <br>${errstr}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`;
 
                     $(selector + ' .modal-body').append(message);
                 },

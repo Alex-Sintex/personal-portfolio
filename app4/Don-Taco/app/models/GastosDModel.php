@@ -17,7 +17,7 @@ class GastosDModel
     public function getWeeklyExpenseSummary()
     {
         $this->db->query("
-        SELECT 
+        SELECT
             YEAR(db.date) AS year,
             WEEK(db.date, 1) AS week_number,
             db.date AS end_of_week,
@@ -32,13 +32,10 @@ class GastosDModel
         return $this->db->records();
     }
 
-    public function getDailyExpensesWithDate()
+    public function getDailyExpInfo()
     {
-        return $this->db->rawSelect("
-            SELECT de.*, db.date
-            FROM daily_expense de
-            LEFT JOIN daily_balance db ON de.balance_id = db.id
-        ");
+        $this->db->query("SELECT * FROM daily_expense");
+        return $this->db->records();
     }
 
     public function addDailyExp($data)

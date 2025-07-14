@@ -3,20 +3,20 @@
 namespace App\controllers;
 
 use App\Libraries\Controller;
-use App\helpers\Validator;
+use App\Helpers\Validator;
+use App\Helpers\DataHelper;
+use App\Helpers\RecordHelper;
 
 class Funds extends Controller
 {
     private $modelFunds;
     private $balanceModel;
-    private $modelGastosD;
 
     public function __construct()
     {
         requireLogin();
         $this->modelFunds = $this->model('FundsModel');
         $this->balanceModel = $this->model('BalanceModel');
-        $this->modelGastosD = $this->model('GastosDModel');
     }
 
     public function index()
@@ -43,7 +43,7 @@ class Funds extends Controller
         foreach ($funds as $row) {
             $cleaned[] = [
                 'id'       => $row->id,
-                'date'     => $row->date ?? date('Y-m-d'),
+                'date'     => $row->date,
                 'card'     => $row->card_name ?? 'KLAR',
                 'saldo'    => $row->saldo,
                 'pagos'    => $row->pagos,
@@ -59,7 +59,7 @@ class Funds extends Controller
     // Insert new record for funds
     public function insert()
     {
-        header('Content-Type: application/json');
+        $data = json_decode(file_get_contents('php://input'), true);
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
@@ -67,18 +67,18 @@ class Funds extends Controller
             return;
         }
 
-        $data = json_decode(file_get_contents('php://input'), true);
-        $validator = new Validator();
-
         $rules = [
+            'date'     => ['required' => true, 'type' => 'date'],
             'pagos'    => ['required' => false, 'type' => 'decimal'],
             'concepto' => ['required' => false, 'type' => 'string'],
             'observa'  => ['required' => false, 'type' => 'string'],
             // no 'card_id' here because we set it manually below
         ];
 
+        // ✅ Validación de datos
+        $validator = new Validator();
+
         if (!$validator->validate($data, $rules)) {
-            http_response_code(422);
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Error de validación',
@@ -88,6 +88,16 @@ class Funds extends Controller
         }
 
         $cleanData = $validator->sanitizeAndCast($data, $rules);
+        $cleanData = DataHelper::setDecimalDefaults($cleanData, $rules);
+
+        // Check for duplicate date
+        if (RecordHelper::exists('funds', 'date', $cleanData['date'])) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Ya existe un fondo con esa fecha'
+            ]);
+            return;
+        }
 
         // Set card_id manually as 1 (KLAR)
         $cleanData['card_id'] = 1;
@@ -109,24 +119,23 @@ class Funds extends Controller
         $calculatedSaldo = ($totFixedExp + $prevSaldo) - $pagos;
 
         $insertData = [
+            'balance_id'      => $balanceId,
+            'date'            => $cleanData['date'],
+            'card_id'         => 1,
             'saldo'           => $calculatedSaldo,
             'pagos'           => $pagos,
             'concepto_pagos'  => $cleanData['concepto'],
-            'observaciones'   => $cleanData['observa'],
-            'balance_id'      => $balanceId,
-            'card_id'         => 1
+            'observaciones'   => $cleanData['observa']
         ];
 
         $result = $this->modelFunds->addFund($insertData);
 
         if ($result) {
-            http_response_code(200);
             echo json_encode([
                 'status' => 'success',
                 'message' => '¡Registro de fondo añadido!',
             ]);
         } else {
-            http_response_code(500);
             echo json_encode([
                 'status' => 'error',
                 'message' => '¡Error al añadir el fondo!'
@@ -149,6 +158,7 @@ class Funds extends Controller
         $validator = new Validator();
 
         $rules = [
+            'date'     => ['required' => true, 'type' => 'date'],
             'pagos'    => ['required' => false, 'type' => 'decimal'],
             'concepto' => ['required' => false, 'type' => 'string'],
             'observa'  => ['required' => false, 'type' => 'string'],
@@ -166,6 +176,16 @@ class Funds extends Controller
         }
 
         $cleanData = $validator->sanitizeAndCast($data, $rules);
+        $cleanData = DataHelper::setDecimalDefaults($cleanData, $rules);
+
+        // Check for duplicate date
+        if (RecordHelper::exists('funds', 'date', $cleanData['date'], $id)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Ya existe un fondo con esa fecha'
+            ]);
+            return;
+        }
 
         // get last balance
         $lastBalance = $this->balanceModel->getLastBalance();
@@ -184,6 +204,7 @@ class Funds extends Controller
         $calculatedSaldo = ($totFixedExp + $prevSaldo) - $pagos;
 
         $updateData = [
+            'date'            => $cleanData['date'],
             'saldo'           => $calculatedSaldo,
             'pagos'           => $pagos,
             'concepto_pagos'  => $cleanData['concepto'],
@@ -195,7 +216,6 @@ class Funds extends Controller
         $result = $this->modelFunds->updateFund($id, $updateData);
 
         if ($result) {
-            http_response_code(200);
             echo json_encode([
                 'status' => 'success',
                 'message' => '¡Registro de fondo actualizado!'
@@ -223,13 +243,11 @@ class Funds extends Controller
         $result = $this->modelFunds->deleteFund($id);
 
         if ($result) {
-            http_response_code(200);
             echo json_encode([
                 'status' => 'success',
                 'message' => '¡Registro eliminado!'
             ]);
         } else {
-            http_response_code(500);
             echo json_encode([
                 'status' => 'error',
                 'message' => '¡Error al eliminar el registro!'

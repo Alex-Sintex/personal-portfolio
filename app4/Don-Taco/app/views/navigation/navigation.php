@@ -16,8 +16,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Ajustes</a></li>
-                    <li><a class="dropdown-item" href="#!">Chat</a></li>
+                    <li><a class="dropdown-item" href="account">Ajustes</a></li>
+                    <li><a class="dropdown-item" href="chat">Chat</a></li>
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
@@ -48,10 +48,31 @@
                             <span class="user-role">
                                 <?= ucfirst(strtok(htmlspecialchars($_SESSION['user_type'] ?? 'Estándar'), ' ')) ?>
                             </span>
-                            <span class="user-status">
-                                <i class="fa fa-circle"></i>
-                                <span>Online</span>
-                            </span>
+                            <!-- Bootstrap Dropdown -->
+                            <div class="dropdown position-static">
+                                <span class="user-status dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <?php
+                                    $status = $_SESSION['user_status'] ?? 'online';
+
+                                    $map = [
+                                        'online' => ['text' => 'Online',  'color' => '#198754'],
+                                        'busy'   => ['text' => 'Busy',    'color' => '#ffc107'],
+                                        'offline' => ['text' => 'Offline', 'color' => '#dc3545'],
+                                    ];
+
+                                    $label = $map[$status]['text'];
+                                    $color = $map[$status]['color'];
+                                    ?>
+                                    <i class="fas fa-circle" id="status-icon" style="color: <?= $color ?>;"></i>
+                                    <span id="status-label"><?= $label ?></span>
+                                </span>
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item status-option" data-status="online">🟢 Online</a></li>
+                                    <li><a class="dropdown-item status-option" data-status="busy">🟠 Busy</a></li>
+                                    <li><a class="dropdown-item status-option" data-status="offline">🔴 Offline</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <!-- sidebar-header  -->
@@ -107,9 +128,8 @@
 
                             <li class="sidebar-dropdown">
                                 <a href="javascript:void(0)">
-                                    <i class="fa fa-user-circle"></i>
+                                    <i class="fa fa-users"></i>
                                     <span>Cuentas</span>
-                                    <span class="badge badge-pill badge-primary">Pendiente</span>
                                 </a>
                                 <div class="sidebar-submenu">
                                     <ul>
@@ -124,10 +144,15 @@
                                 <span>Extra</span>
                             </li>
                             <li>
-                                <a href="javascript:void(0)">
+                                <a href="account">
+                                    <i class="fa fa-user"></i>
+                                    <span>Perfil</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="chat">
                                     <i class="fa fa-comments"></i>
                                     <span>Chat</span>
-                                    <span class="badge badge-pill badge-primary">Pendiente</span>
                                 </a>
                             </li>
                         </ul>
@@ -140,7 +165,7 @@
                         <i class="fa fa-bell"></i>
                         <span class="badge badge-pill badge-warning notification">3</span>
                     </a>
-                    <a href="javascript:void(0)">
+                    <a href="account">
                         <i class="fa fa-cog"></i>
                     </a>
                     <a href="<?= PATH_URL ?>auth/logout">

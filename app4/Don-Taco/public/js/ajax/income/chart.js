@@ -1,11 +1,12 @@
-import { createWeeklyAreaChart } from '../Charts/chartHelpers.js';
+import { createWeeklyAreaChart } from '../helper/chartHelpers.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const ctx = document.getElementById('incomesChart').getContext('2d');
 
     $.ajax({
         url: 'dashboard/getWeeklyIncomes',
-        method: 'GET',
+        type: 'GET',
+        contentType: 'application/json',
         dataType: 'json',
         success: function (rawData) {
             if (!Array.isArray(rawData)) {

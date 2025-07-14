@@ -1,37 +1,44 @@
-import { currencyRender, checkAllDecimalFields } from '../helper/helpers.js';
-import { attachInfoToAltEditorModal } from '../helper/modalHelpers.js';
+import { checkRequiredFields } from '../helper/helpers.js';
 
 $(document).ready(function () {
 
     // Initialize the Toasty library
     const toast = new Toasty();
 
-    let columDefs = [
+    const columnDefs = [
         {
-            data: null, title: "#", type: "hidden",
+            data: null,
+            title: "#",
+            type: 'hidden',
             render: function (data, type, row, meta) {
                 return meta.row + 1;
             }
         },
         { data: 'id', title: 'ID', visible: false, type: 'hidden' },
-        { data: "date", title: "FECHA", type: "hidden" },
-        { data: "rent", title: "RENTA", typeof: "decimal", render: currencyRender },
-        { data: "luz", title: "LUZ", typeof: "decimal", render: currencyRender },
-        { data: "gas_rich", title: "GASOLINA RICARDO", typeof: "decimal", render: currencyRender },
-        { data: "gas_milt", title: "GASOLINA MILTON", typeof: "decimal", render: currencyRender },
-        { data: "gas", title: "GAS", typeof: "decimal", render: currencyRender },
-        { data: "refrsco", title: "REFRESCO", typeof: "decimal", render: currencyRender },
-        { data: "ver_sem", title: "VERDURAS SEMANAL", typeof: "decimal", render: currencyRender },
-        { data: "fond_ta", title: "FONDO TAQUERÍA", typeof: "decimal", render: currencyRender }
+        { data: "date", title: "FECHA", type: 'hidden' },
+        { data: "username", title: "NOMBRE DE USUARIO", typeof: "string", required: true },
+        { data: "email", title: "CORREO", typeof: "email", required: false },
+        { data: "passwd", title: "CONTRASEÑA", typeof: "password", type: 'password', visible: false, required: false },
+        {
+            data: "role",
+            title: "TIPO DE USUARIO",
+            type: 'select',
+            typeof: "string",
+            options: ['admin', 'regular'],
+            select2: {
+                placeholder: 'Selecciona una opción',
+                width: '100%'
+            },
+            required: true
+        }
     ];
 
-    // Initialize DataTable
-    const tbl = $('#tableGFD').DataTable({
+    const tbl = $('#usrTbl').DataTable({
         ajax: {
-            url: 'gastosfd/fetch',
+            url: 'users/fetch',
             dataSrc: ''
         },
-        columns: columDefs,
+        columns: columnDefs,
         dom: 'Bfrtip',
         select: 'single',
         responsive: true,
@@ -46,31 +53,35 @@ $(document).ready(function () {
         onAddRow: function (datatable, rowdata, success, error) {
             const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-            if (!checkAllDecimalFields(data, columDefs, error, toast)) return;
-
-            // set current date if empty
-            if (!data.date || data.date === "") {
-                const today = new Date().toISOString().slice(0, 10);
-                data.date = today;
+            // Solo para agregar: obligar contraseña
+            if (!data.passwd || data.passwd.trim() === "") {
+                toast.error("La contraseña es obligatoria");
+                return;
             }
 
+            if (!checkRequiredFields(data, columnDefs, error, toast)) return;
+
             $.ajax({
-                url: 'gastosfd/insert',
+                url: 'users/register',
                 type: 'POST',
                 contentType: 'application/json',
+                dataType: 'json',
                 data: JSON.stringify(data),
                 success: function (res) {
                     if (res.status === 'success') {
                         tbl.ajax.reload(null, false);
                         toast.success(res.message);
                         success(res);
+                    } else {
+                        toast.error(res.message || 'Error al agregar');
+                        error({ responseJSON: res });
                     }
                 },
                 error: function (xhr) {
                     let message = "Error en el servidor";
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         message = xhr.responseJSON.message;
-                        console.log("⚠️ Error de validación:", message);
+                        console.log("⚠️ Mensaje del sistema:", message);
                     }
                     toast.error(message);
                     error(xhr);
@@ -81,64 +92,66 @@ $(document).ready(function () {
         onEditRow: function (datatable, rowdata, success, error) {
             const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-            if (!checkAllDecimalFields(data, columDefs, error, toast)) return;
+            // Validar campos requeridos, excepto la contraseña
+            const filteredCols = columnDefs.filter(col => col.data !== "passwd");
+            if (!checkRequiredFields(data, filteredCols, error, toast)) return;
 
             $.ajax({
-                url: 'gastosfd/update/' + rowdata.id,
+                url: 'users/update/' + rowdata.id,
                 type: 'PUT',
                 contentType: 'application/json',
+                dataType: 'json',
                 data: JSON.stringify(data),
                 success: function (res) {
                     if (res.status === 'success') {
                         tbl.ajax.reload(null, false);
                         toast.success(res.message);
                         success(res);
+                    } else {
+                        toast.error(res.message || 'Error al editar');
+                        error({ responseJSON: res });
                     }
                 },
                 error: function (xhr) {
                     let message = "Error en el servidor";
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         message = xhr.responseJSON.message;
-                        console.log("⚠️ Error de validación:", message);
+                        console.log("⚠️ Mensaje del sistema:", message);
                     }
                     toast.error(message);
                     error(xhr);
                 }
             });
         },
-        // Delete record
+
         onDeleteRow: function (datatable, rowdata, success, error) {
 
             const id = rowdata[0]?.id;
 
             $.ajax({
-                url: 'gastosfd/delete/' + id,
+                url: 'users/delete/' + id,
                 type: 'DELETE',
                 success: function (res) {
                     if (res.status === 'success') {
                         tbl.ajax.reload(null, false);
                         toast.success(res.message);
                         success(res);
+                    } else {
+                        // Only call error if status is not success
+                        toast.error(res.message || "Error al eliminar");
+                        error({ responseJSON: res });
                     }
                 },
                 error: function (xhr) {
                     let message = "Error en el servidor";
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         message = xhr.responseJSON.message;
-                        console.log("⚠️ Error de validación:", message);
+                        console.log("⚠️ Mensaje del sistema:", message);
                     }
                     toast.error(message);
                     error(xhr);
                 }
             });
         }
-    });
-
-    attachInfoToAltEditorModal({
-        message: `Para ver reflejado correctamente la fecha,
-                  debe insertar un nuevo registro en el módulo de <strong>Balance</strong>, de lo contrario, 
-                  se mostrará temporalmente la fecha actual del registro.`,
-        fieldAfterId: 'alteditor-row-fond_ta', // form-group container ID to insert message after
-        alertId: 'alert-info-message-unique'   // Unique ID for the alert block
     });
 });

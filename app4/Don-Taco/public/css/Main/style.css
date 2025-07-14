@@ -90,6 +90,28 @@ body {
     background-color: var(--bs-body-bg);
 }
 
+.password-icon {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    right: 1.2rem;
+    transform: translateY(-50%);
+    width: 1.2rem;
+    color: #000;
+    transition: color 0.2s;
+}
+
+.password-icon .feather-eye-off {
+    display: none;
+}
+
+.password-icon:hover {
+    cursor: pointer;
+    color: #ff4754;
+
+}
+
 hr {
     margin: 1rem 0px;
     color: inherit;
@@ -478,7 +500,6 @@ legend+* {
     font-style: inherit;
     font-variant-caps: inherit;
     font-weight: inherit;
-    font-width: inherit;
     font-size: inherit;
     line-height: inherit;
     font-family: inherit;
@@ -5927,7 +5948,7 @@ fieldset:disabled .btn {
 .btn-close:disabled,
 .btn-close.disabled {
     pointer-events: none;
-    -webkit-user-select: none;
+    user-select: none;
     opacity: 0.25;
 }
 
@@ -9121,28 +9142,40 @@ fieldset:disabled .btn {
     --bs-text-opacity: 1;
 }
 
+.toggle-password {
+    float: right;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: -26px;
+}
+
 .bg-primary {
-  position: relative;
-  background-image: url("../../img/bg/background.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden;
+    position: relative;
+    background-image: url("../../img/bg/background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
 }
 
 .bg-primary::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.04); /* DARK OVERLAY */
-  top: 0; left: 0; right: 0; bottom: 0; /* BLUR EFFECT */
-  backdrop-filter: blur(3px);
-  z-index: 0;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.04);
+    /* DARK OVERLAY */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* BLUR EFFECT */
+    backdrop-filter: blur(3px);
+    z-index: 0;
 }
 
-.bg-primary > * {
-  position: relative;
-  z-index: 1;
+.bg-primary>* {
+    position: relative;
+    z-index: 1;
 }
 
 .bg-secondary {

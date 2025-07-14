@@ -15,15 +15,11 @@ class FundsModel
 
     public function getFunds()
     {
-        return $this->db->rawSelect("
-            SELECT f.*, db.date, c.name AS card_name
-            FROM funds f
-            LEFT JOIN daily_balance db ON f.balance_id = db.id
-            LEFT JOIN cards c ON f.card_id = c.id
-        ");
+        $this->db->query("SELECT * FROM funds");
+        return $this->db->records();
     }
 
-    public function addFund(array $data)
+    public function addFund($data)
     {
         return $this->db->insert('funds', $data);
     }

@@ -5,6 +5,8 @@ namespace App\controllers;
 use App\Libraries\Controller;
 use App\Helpers\Validator;
 use App\Helpers\BalanceHelper;
+use App\Helpers\DataHelper;
+use App\Helpers\RecordHelper;
 
 class Balance extends Controller
 {
@@ -19,14 +21,14 @@ class Balance extends Controller
     public function index()
     {
         $this->view('modules/balance', [
-            'loadJQueryLibrary'     => true,
-            'loadScriptSideBar'     => true,
-            'loadDataTables'        => true,
-            'loadDataTableBalance'  => true,
-            'loadToasty'            => true,
-            'loadStyles'            => true,
-            'loadDataTableStyles'   => true,
-            'loadToastStyle'        => true
+            'loadStyles'            => true, // CSS
+            'loadDataTableStyles'   => true, // CSS
+            'loadToastStyle'        => true, // CSS
+            'loadJQueryLibrary'     => true, // JS
+            'loadScriptSideBar'     => true, // JS
+            'loadDataTables'        => true, // JS
+            'loadDataTableBalance'  => true, // JS
+            'loadToasty'            => true  // JS
         ]);
     }
 
@@ -37,19 +39,20 @@ class Balance extends Controller
 
         foreach ($balance as $row) {
             $cleaned[] = [
-                'id'         => $row->id,
-                'date'       => $row->date,
-                'gastEfect'  => $row->cash_expenses,
-                'ventEfect'  => $row->cash_sales,
-                'ventTransf' => $row->transfer_sales,
-                'ventNetTar' => $row->net_card_sales,
-                'depPlatf'   => $row->platform_deposits,
-                'nomPlatf'   => $row->platform_name,
-                'reparUtil'  => $row->profit_sharing,
-                'ub'         => $row->uber,
-                'did'        => $row->didi,
-                'rap'        => $row->rappi,
-                'totGF'      => $row->tot_fixed_exp
+                'id'             => $row->id,
+                'date'           => $row->date,
+                'efectivoCierre' => $row->closing_cash,
+                'gastEfect'      => $row->cash_expenses,
+                'ventEfect'      => $row->cash_sales,
+                'ventTransf'     => $row->transfer_sales,
+                'ventNetTar'     => $row->net_card_sales,
+                'depPlatf'       => $row->platform_deposits,
+                'nomPlatf'       => $row->platform_name,
+                'reparUtil'      => $row->profit_sharing,
+                'ub'             => $row->uber,
+                'did'            => $row->didi,
+                'rap'            => $row->rappi,
+                'totGF'          => $row->tot_fixed_exp
             ];
         }
 
@@ -65,7 +68,6 @@ class Balance extends Controller
             $cleaned[] = [
                 'utilidadNeta'        => $row->net_profit,
                 'totalEgresos'        => $row->total_expenses,
-                'efectivoCierre'      => $row->closing_cash,
                 'ventaTarjeta'        => $row->card_sales_percent,
                 'totalIngresos'       => $row->total_income,
                 'utilidadPiso'        => $row->floor_profit,
@@ -83,20 +85,26 @@ class Balance extends Controller
     {
         $data = json_decode(file_get_contents('php://input'), true);
 
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
+            return;
+        }
+
         // Reglas de validación
         $rules = [
-            'date'       => ['required' => true, 'type' => 'date'],
-            'gastEfect'  => ['required' => false, 'type' => 'decimal'],
-            'ventEfect'  => ['required' => false, 'type' => 'decimal'],
-            'ventTransf' => ['required' => false, 'type' => 'decimal'],
-            'ventNetTar' => ['required' => false, 'type' => 'decimal'],
-            'depPlatf'   => ['required' => false, 'type' => 'decimal'],
-            'nomPlatf'   => ['required' => false, 'type' => 'string'],
-            'reparUtil'  => ['required' => false, 'type' => 'decimal'],
-            'ub'         => ['required' => false, 'type' => 'decimal'],
-            'did'        => ['required' => false, 'type' => 'decimal'],
-            'rap'        => ['required' => false, 'type' => 'decimal'],
-            'totGF'      => ['required' => false, 'type' => 'decimal'],
+            'date'           => ['required' => true, 'type' => 'date'],
+            'efectivoCierre' => ['required' => false, 'type' => 'decimal'],
+            'gastEfect'      => ['required' => false, 'type' => 'decimal'],
+            'ventEfect'      => ['required' => false, 'type' => 'decimal'],
+            'ventTransf'     => ['required' => false, 'type' => 'decimal'],
+            'ventNetTar'     => ['required' => false, 'type' => 'decimal'],
+            'depPlatf'       => ['required' => false, 'type' => 'decimal'],
+            'nomPlatf'       => ['required' => false, 'type' => 'string'],
+            'reparUtil'      => ['required' => false, 'type' => 'decimal'],
+            'ub'             => ['required' => false, 'type' => 'decimal'],
+            'did'            => ['required' => false, 'type' => 'decimal'],
+            'rap'            => ['required' => false, 'type' => 'decimal'],
+            'totGF'          => ['required' => false, 'type' => 'decimal']
         ];
 
         // ✅ Validación de datos
@@ -112,20 +120,30 @@ class Balance extends Controller
         }
 
         $cleanData = $validator->sanitizeAndCast($data, $rules);
+        $cleanData = DataHelper::setDecimalDefaults($cleanData, $rules);
+
+        // Check for duplicate date
+        if (RecordHelper::exists('daily_balance', 'date', $cleanData['date'])) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Ya existe un balance con esa fecha'
+            ]);
+            return;
+        }
 
         // Prepara datos para el cálculo automático
         $inputForCalc = [
-            'gastEfect'  => $cleanData['gastEfect'],
-            'ventEfect'  => $cleanData['ventEfect'],
-            'ventTransf' => $cleanData['ventTransf'],
-            'ventNetTar' => $cleanData['ventNetTar'],
-            'depPlatf'   => $cleanData['depPlatf'],
-            'nomPlatf'   => $cleanData['nomPlatf'],
-            'reparUtil'  => $cleanData['reparUtil'],
-            'ub'         => $cleanData['ub'],
-            'did'        => $cleanData['did'],
-            'rap'        => $cleanData['rap'],
-            'totGF'      => $cleanData['totGF']
+            'gastEfect'    => $cleanData['gastEfect'],
+            'ventEfect'    => $cleanData['ventEfect'],
+            'ventTransf'   => $cleanData['ventTransf'],
+            'ventNetTar'   => $cleanData['ventNetTar'],
+            'depPlatf'     => $cleanData['depPlatf'],
+            'nomPlatf'     => $cleanData['nomPlatf'],
+            'reparUtil'    => $cleanData['reparUtil'],
+            'ub'           => $cleanData['ub'],
+            'did'          => $cleanData['did'],
+            'rap'          => $cleanData['rap'],
+            'totGF'        => $cleanData['totGF']
         ];
 
         $calculations = BalanceHelper::calculate($inputForCalc);
@@ -133,23 +151,24 @@ class Balance extends Controller
         // Combina los datos originales con los cálculos
         $insertData = array_merge(
             ['date' => $cleanData['date']],
+            ['closing_cash' => $cleanData['efectivoCierre']],
             $inputForCalc,
             $calculations
         );
 
         // Mapea nombres del frontend a nombres reales de columnas en la base de datos
         $map = [
-            'gastEfect'  => 'cash_expenses',
-            'ventEfect'  => 'cash_sales',
-            'ventTransf' => 'transfer_sales',
-            'ventNetTar' => 'net_card_sales',
-            'depPlatf'   => 'platform_deposits',
-            'nomPlatf'   => 'platform_name',
-            'reparUtil'  => 'profit_sharing',
-            'ub'         => 'uber',
-            'did'        => 'didi',
-            'rap'        => 'rappi',
-            'totGF'      => 'tot_fixed_exp'
+            'gastEfect'      => 'cash_expenses',
+            'ventEfect'      => 'cash_sales',
+            'ventTransf'     => 'transfer_sales',
+            'ventNetTar'     => 'net_card_sales',
+            'depPlatf'       => 'platform_deposits',
+            'nomPlatf'       => 'platform_name',
+            'reparUtil'      => 'profit_sharing',
+            'ub'             => 'uber',
+            'did'            => 'didi',
+            'rap'            => 'rappi',
+            'totGF'          => 'tot_fixed_exp'
         ];
 
         foreach ($map as $oldKey => $newKey) {
@@ -174,37 +193,45 @@ class Balance extends Controller
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
-            http_response_code(405);
             echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
             return;
         }
 
         $data = json_decode(file_get_contents('php://input'), true);
-
         $validator = new Validator();
 
         $rules = [
-            'date'       => ['required' => true, 'type' => 'date'],
-            'gastEfect'  => ['required' => false, 'type' => 'decimal'],
-            'ventEfect'  => ['required' => false, 'type' => 'decimal'],
-            'ventTransf' => ['required' => false, 'type' => 'decimal'],
-            'ventNetTar' => ['required' => false, 'type' => 'decimal'],
-            'depPlatf'   => ['required' => false, 'type' => 'decimal'],
-            'nomPlatf'   => ['required' => false, 'type' => 'string'],
-            'reparUtil'  => ['required' => false, 'type' => 'decimal'],
-            'ub'         => ['required' => false, 'type' => 'decimal'],
-            'did'        => ['required' => false, 'type' => 'decimal'],
-            'rap'        => ['required' => false, 'type' => 'decimal'],
-            'totGF'      => ['required' => false, 'type' => 'decimal'],
+            'date'           => ['required' => true, 'type' => 'date'],
+            'efectivoCierre' => ['required' => false, 'type' => 'decimal'],
+            'gastEfect'      => ['required' => false, 'type' => 'decimal'],
+            'ventEfect'      => ['required' => false, 'type' => 'decimal'],
+            'ventTransf'     => ['required' => false, 'type' => 'decimal'],
+            'ventNetTar'     => ['required' => false, 'type' => 'decimal'],
+            'depPlatf'       => ['required' => false, 'type' => 'decimal'],
+            'nomPlatf'       => ['required' => false, 'type' => 'string'],
+            'reparUtil'      => ['required' => false, 'type' => 'decimal'],
+            'ub'             => ['required' => false, 'type' => 'decimal'],
+            'did'            => ['required' => false, 'type' => 'decimal'],
+            'rap'            => ['required' => false, 'type' => 'decimal'],
+            'totGF'          => ['required' => false, 'type' => 'decimal']
         ];
 
         if (!$validator->validate($data, $rules)) {
-            http_response_code(422);
             echo json_encode(['status' => 'error', 'message' => 'Error de validación', 'errors' => $validator->errors()]);
             return;
         }
 
         $cleanData = $validator->sanitizeAndCast($data, $rules);
+        $cleanData = DataHelper::setDecimalDefaults($cleanData, $rules);
+
+        // Check for duplicate date (excluding current record)
+        if (RecordHelper::exists('daily_balance', 'date', $cleanData['date'], $id)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Ya existe otro balance con esa fecha'
+            ]);
+            return;
+        }
 
         // Prepara datos para cálculos
         $inputForCalc = [
@@ -224,19 +251,20 @@ class Balance extends Controller
 
         $updateData = array_merge(
             [
-                'id'               => $id,
-                'date'             => $cleanData['date'],
-                'cash_expenses'    => $cleanData['gastEfect'],
-                'cash_sales'       => $cleanData['ventEfect'],
-                'transfer_sales'   => $cleanData['ventTransf'],
-                'net_card_sales'   => $cleanData['ventNetTar'],
+                'id'                => $id,
+                'date'              => $cleanData['date'],
+                'closing_cash'      => $cleanData['efectivoCierre'],
+                'cash_expenses'     => $cleanData['gastEfect'],
+                'cash_sales'        => $cleanData['ventEfect'],
+                'transfer_sales'    => $cleanData['ventTransf'],
+                'net_card_sales'    => $cleanData['ventNetTar'],
                 'platform_deposits' => $cleanData['depPlatf'],
-                'platform_name'    => $cleanData['nomPlatf'],
-                'profit_sharing'   => $cleanData['reparUtil'],
-                'uber'             => $cleanData['ub'],
-                'didi'             => $cleanData['did'],
-                'rappi'            => $cleanData['rap'],
-                'tot_fixed_exp'    => $cleanData['totGF']
+                'platform_name'     => $cleanData['nomPlatf'],
+                'profit_sharing'    => $cleanData['reparUtil'],
+                'uber'              => $cleanData['ub'],
+                'didi'              => $cleanData['did'],
+                'rappi'             => $cleanData['rap'],
+                'tot_fixed_exp'     => $cleanData['totGF']
             ],
             $calculations
         );
@@ -254,8 +282,12 @@ class Balance extends Controller
     {
         header('Content-Type: application/json');
 
+        if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
+            echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
+            return;
+        }
+
         if (!is_numeric($id)) {
-            http_response_code(400);
             echo json_encode(['status' => 'error', 'message' => 'ID inválido']);
             return;
         }

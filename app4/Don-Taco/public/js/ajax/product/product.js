@@ -1,3 +1,5 @@
+import { checkRequiredFields } from '../helper/helpers.js';
+
 $(document).ready(function () {
     // Initialize the Toasty library
     const toast = new Toasty();
@@ -34,7 +36,7 @@ $(document).ready(function () {
                 title: 'UNIDAD DE MEDIDA',
                 type: 'select',
                 options: unitOptions,
-                select2: { width: '100%' },
+                select2: { 'placeholder': 'Selecciona una opción', width: '100%' },
                 render: function (data, type, row) {
                     return row?.measure_n ?? null;
                 }
@@ -44,7 +46,7 @@ $(document).ready(function () {
                 title: 'PROVEEDOR',
                 type: 'select',
                 options: supOptions,
-                select2: { width: '100%' },
+                select2: { 'placeholder': 'Selecciona una opción', width: '100%' },
                 render: function (data, type, row) {
                     return row?.provider_n ?? null;
                 }
@@ -61,25 +63,26 @@ $(document).ready(function () {
             select: 'single',
             responsive: true,
             altEditor: true,
-            language: {
-                url: "../../JSON/es-ES.json"
-            },
+            language: { url: "../../JSON/es-ES.json" },
             buttons: [
                 { text: '➕ Añadir', name: 'add' },
                 { extend: 'selected', text: '✏️ Editar', name: 'edit' },
                 { extend: 'selected', text: '❌ Borrar', name: 'delete' }
             ],
+
             onAddRow: function (datatable, rowdata, success, error) {
+                const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
+
+                if (!checkRequiredFields(rowdata, columnDefs, error, toast)) {
+                    return; // block submit if required fields missing
+                }
+
                 $.ajax({
                     url: 'product/insert',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({
-                        name: rowdata.name,
-                        price: rowdata.price,
-                        measure_n: rowdata.measure_n,
-                        provider_n: rowdata.provider_n
-                    }),
+                    dataType: 'json',
+                    data: JSON.stringify(data),
                     success: function (res) {
                         if (res.status === 'success') {
                             table.ajax.reload(null, false);
@@ -87,52 +90,60 @@ $(document).ready(function () {
                             success(res);
                         } else {
                             toast.error(res.message || "Error al añadir");
-                            error(res);
+                            error({ responseJSON: res });
                         }
                     },
                     error: function (xhr) {
                         let message = "Error en el servidor";
-                        if (xhr.responseJSON?.message) {
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
                             message = xhr.responseJSON.message;
+                            console.log("⚠️ Mensaje del sistema:", message);
                         }
                         toast.error(message);
                         error(xhr);
                     }
                 });
             },
+
             onEditRow: function (datatable, rowdata, success, error) {
+                const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
+
+                if (!checkRequiredFields(rowdata, columnDefs, error, toast)) {
+                    return; // block submit if required fields missing
+                }
+
                 $.ajax({
                     url: 'product/update/' + rowdata.id,
                     type: 'PUT',
                     contentType: 'application/json',
-                    data: JSON.stringify({
-                        name: rowdata.name,
-                        price: rowdata.price,
-                        measure_n: rowdata.measure_n,
-                        provider_n: rowdata.provider_n
-                    }),
+                    dataType: 'json',
+                    data: JSON.stringify(data),
                     success: function (res) {
                         if (res.status === 'success') {
                             table.ajax.reload(null, false);
                             toast.success(res.message);
                             success(res);
                         } else {
-                            toast.error(res.message || "Error al actualizar");
-                            error(res);
+                            toast.error(res.message || "Error al editar");
+                            error({ responseJSON: res });
                         }
                     },
                     error: function (xhr) {
                         let message = "Error en el servidor";
-                        if (xhr.responseJSON?.message) {
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
                             message = xhr.responseJSON.message;
+                            console.log("⚠️ Mensaje del sistema:", message);
                         }
                         toast.error(message);
                         error(xhr);
                     }
                 });
             },
+            
             onDeleteRow: function (datatable, rowdata, success, error) {
+
                 const id = rowdata[0]?.id;
+
                 $.ajax({
                     url: 'product/delete/' + id,
                     type: 'DELETE',
@@ -143,13 +154,14 @@ $(document).ready(function () {
                             success(res);
                         } else {
                             toast.error(res.message || "Error al eliminar");
-                            error(res);
+                            error({ responseJSON: res });
                         }
                     },
                     error: function (xhr) {
                         let message = "Error en el servidor";
-                        if (xhr.responseJSON?.message) {
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
                             message = xhr.responseJSON.message;
+                            console.log("⚠️ Mensaje del sistema:", message);
                         }
                         toast.error(message);
                         error(xhr);

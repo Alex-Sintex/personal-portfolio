@@ -20,7 +20,7 @@
                         TABLA DE USUARIOS CREADOS
                     </div>
                     <div class="card-body">
-                        <table id="usrsTbl" class="content-table" style="width:100%"></table>
+                        <table id="usrTbl" class="content-table" style="width:100%"></table>
                     </div>
                 </div>
             </div>

@@ -520,7 +520,7 @@ pre code {
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
-    margin-left: auto
+    margin-left: auto;
 }
 
 @media (min-width: 576px) {
@@ -4414,7 +4414,8 @@ tbody.collapse.show {
     -webkit-box-flex: 1;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    padding: 1.25rem
+    padding: 1.25rem;
+
 }
 
 .card-title {
@@ -5473,7 +5474,9 @@ button.close {
     -webkit-box-flex: 1;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    padding: 1rem
+    padding: 1rem;
+    overflow-y: scroll;
+
 }
 
 .modal-footer {

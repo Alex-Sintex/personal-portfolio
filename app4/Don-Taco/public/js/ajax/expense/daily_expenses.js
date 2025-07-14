@@ -1,4 +1,4 @@
-import { currencyRender, checkAllDecimalFields } from '../helper/helpers.js';
+import { currencyRender, checkRequiredFields } from '../helper/helpers.js';
 
 $(document).ready(function () {
 
@@ -40,23 +40,23 @@ $(document).ready(function () {
       }
     },
     { data: 'id', title: 'ID', visible: false, type: 'hidden' },
-    { data: "date", title: "Fecha", type: "hidden" },
-    { data: "carne", title: "Carne", typeof: "decimal", render: currencyRender },
-    { data: "queso", title: "Queso", typeof: "decimal", render: currencyRender },
-    { data: "tortilla_maiz", title: "Tortilla de Maíz", typeof: "decimal", render: currencyRender },
-    { data: "tortilla_hna_gde", title: "Tortilla de harina grande", typeof: "decimal", render: currencyRender },
-    { data: "longaniza", title: "Longaniza", typeof: "decimal", render: currencyRender },
-    { data: "pan", title: "Pan", typeof: "decimal", render: currencyRender },
-    { data: "vinagre", title: "Vinagre", typeof: "decimal", render: currencyRender },
-    { data: "bodegon", title: "Bodegón", typeof: "decimal", render: currencyRender },
-    { data: "adel_marcos", title: "Adelanto Marcos", typeof: "decimal", render: currencyRender },
-    { data: "trans_marcos", title: "Transporte Marcos", typeof: "decimal", render: currencyRender },
-    { data: "nomina", title: "Nómina", typeof: "decimal", render: currencyRender },
-    { data: "nomina_weekend", title: "Nómina weekend", typeof: "decimal", render: currencyRender },
-    { data: "mundi_novi", title: "Mundi Novi", typeof: "decimal", render: currencyRender },
-    { data: "color", title: "Color", typeof: "decimal", render: currencyRender },
-    { data: "otros", title: "Otros", typeof: "decimal", render: currencyRender },
-    { data: "observaciones", title: "Observaciones", type: "textarea", typeof: "string" },
+    { data: "date", title: "FECHA", datetimepicker: { timepicker: false, format: "Y/m/d" }, typeof: "date", required: true },
+    { data: "carne", title: "Carne", typeof: "decimal", required: false, render: currencyRender },
+    { data: "queso", title: "Queso", typeof: "decimal", required: false, render: currencyRender },
+    { data: "tortilla_maiz", title: "Tortilla de Maíz", typeof: "decimal", required: false, render: currencyRender },
+    { data: "tortilla_hna_gde", title: "Tortilla de harina grande", typeof: "decimal", required: false, render: currencyRender },
+    { data: "longaniza", title: "Longaniza", typeof: "decimal", required: false, render: currencyRender },
+    { data: "pan", title: "Pan", typeof: "decimal", required: false, render: currencyRender },
+    { data: "vinagre", title: "Vinagre", typeof: "decimal", required: false, render: currencyRender },
+    { data: "bodegon", title: "Bodegón", typeof: "decimal", required: false, render: currencyRender },
+    { data: "adel_marcos", title: "Adelanto Marcos", typeof: "decimal", required: false, render: currencyRender },
+    { data: "trans_marcos", title: "Transporte Marcos", typeof: "decimal", required: false, render: currencyRender },
+    { data: "nomina", title: "Nómina", typeof: "decimal", required: false, render: currencyRender },
+    { data: "nomina_weekend", title: "Nómina weekend", typeof: "decimal", required: false, render: currencyRender },
+    { data: "mundi_novi", title: "Mundi Novi", typeof: "decimal", required: false, render: currencyRender },
+    { data: "color", title: "Color", typeof: "decimal", required: false, render: currencyRender },
+    { data: "otros", title: "Otros", typeof: "decimal", required: false, render: currencyRender },
+    { data: "observaciones", title: "Observaciones", type: "textarea", typeof: "string", required: false },
     { data: "totalGD", title: "Total Gastos Diarios", type: "readonly", render: currencyRender }
   ];
 
@@ -81,7 +81,9 @@ $(document).ready(function () {
     onAddRow: function (datatable, rowdata, success, error) {
       const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-      if (!checkAllDecimalFields(data, columDefs, error, toast)) return;
+      if (!checkRequiredFields(rowdata, columDefs, error, toast)) {
+        return; // block submit if required fields missing
+      }
 
       $.ajax({
         url: 'gastosd/insert',
@@ -93,6 +95,9 @@ $(document).ready(function () {
             tbl.ajax.reload(null, false);
             toast.success(res.message);
             success(res);
+          } else {
+            toast.error(res.message || 'Error desconocido');
+            error(res);
           }
         },
         error: function (xhr) {
@@ -110,7 +115,9 @@ $(document).ready(function () {
     onEditRow: function (datatable, rowdata, success, error) {
       const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-      if (!checkAllDecimalFields(data, columDefs, error, toast)) return;
+      if (!checkRequiredFields(rowdata, columDefs, error, toast)) {
+        return; // block submit if required fields missing
+      }
 
       $.ajax({
         url: 'gastosd/update/' + rowdata.id,
@@ -122,6 +129,9 @@ $(document).ready(function () {
             tbl.ajax.reload(null, false);
             toast.success(res.message);
             success(res);
+          } else {
+            toast.error(res.message || 'Error desconocido');
+            error(res);
           }
         },
         error: function (xhr) {

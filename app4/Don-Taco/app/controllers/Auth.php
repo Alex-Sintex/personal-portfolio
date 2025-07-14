@@ -18,8 +18,10 @@ class Auth extends Controller
     public function login()
     {
         $data = [
-            'loadStyleforAuth' => true, // CSS
-            'loadJSLogin' => true       // JS
+            'loadStyleforAuth'   => true, // CSS
+            'loadJQueryLibrary'  => true, // JS
+            'loadJSLogin'        => true, // JS
+            'loadShowHidePasswd' => true  //JS
         ];
 
         $this->view('auth/login', $data);
@@ -65,9 +67,10 @@ class Auth extends Controller
 
                 // Login success
                 session_start();
-                $_SESSION['user_id'] = $user->id;
-                $_SESSION['user_name'] = $user->username;
-                $_SESSION['user_type'] = $user->role;
+                $_SESSION['user_id']     = $user->id;
+                $_SESSION['user_name']   = $user->username;
+                $_SESSION['user_type']   = $user->role;
+                $_SESSION['user_status'] = $user->status;
 
                 echo json_encode([
                     'success' => true,
@@ -88,6 +91,12 @@ class Auth extends Controller
             'errors' => $errors
         ]);
     }
+
+    // Stub: forgot password logic
+    /*public function forgotPassword()
+    {
+        // To be implemented
+    }*/
 
     // Log out and redirect
     public function logout()

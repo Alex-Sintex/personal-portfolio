@@ -40,7 +40,7 @@ class BalanceModel
     public function getBalanceCal()
     {
         $this->db->query("
-        SELECT 
+        SELECT
             net_profit,
             total_expenses,
             closing_cash,
@@ -74,7 +74,6 @@ class BalanceModel
         $sql = "UPDATE daily_balance SET 
             net_profit = :net_profit,
             total_expenses = :total_expenses,
-            closing_cash = :closing_cash,
             card_sales_percent = :card_sales_percent,
             total_income = :total_income,
             floor_profit = :floor_profit,

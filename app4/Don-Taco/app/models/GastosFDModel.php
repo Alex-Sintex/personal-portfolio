@@ -13,13 +13,10 @@ class GastosFDModel
         $this->db = new Base();
     }
 
-    public function getDailyFixExpWithDate()
+    public function getDailyFixExpInfo()
     {
-        return $this->db->rawSelect("
-            SELECT dfe.*, db.date
-            FROM daily_fixed_exp dfe
-            LEFT JOIN daily_balance db ON dfe.dfe_balance_id = db.id
-        ");
+        $this->db->query("SELECT * FROM daily_fixed_exp");
+        return $this->db->records();
     }
 
     public function existsExpenseForBalance($balanceId)

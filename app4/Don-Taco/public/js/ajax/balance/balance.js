@@ -1,8 +1,9 @@
-import { currencyRender, checkAllDecimalFields } from '../helper/helpers.js';
+import { currencyRender, checkRequiredFields } from '../helper/helpers.js';
 import { attachInfoToAltEditorModal } from '../helper/modalHelpers.js';
 
 $(document).ready(function () {
 
+    // Initialize the Toasty library
     const toast = new Toasty();
 
     let columInDefs = [
@@ -14,24 +15,20 @@ $(document).ready(function () {
                 return meta.row + 1;
             }
         },
-        {
-            data: 'id',
-            title: 'ID',
-            visible: false,
-            type: 'hidden'
-        },
-        { data: "date", title: "FECHA", datetimepicker: { timepicker: false, format: "Y/m/d" }, typeof: "date" },
-        { data: "gastEfect", title: "GASTOS EN EFECTIVO", typeof: "decimal", render: currencyRender },
-        { data: "ventEfect", title: "VENTA EFECTIVO", typeof: "decimal", render: currencyRender },
-        { data: "ventTransf", title: "VENTA TRANSFERENCIA", typeof: "decimal", render: currencyRender },
-        { data: "ventNetTar", title: "VENTA NETA TARJETA", typeof: "decimal", render: currencyRender },
-        { data: "depPlatf", title: "DEPÓSITOS PLATAFORMAS", typeof: "decimal", render: currencyRender },
-        { data: "nomPlatf", title: "NOMBRE PLATAFORMA", typeof: "string" },
-        { data: "reparUtil", title: "REPARTO UTILIDADES", typeof: "decimal", render: currencyRender },
-        { data: "ub", title: "UBER", typeof: "decimal", render: currencyRender },
-        { data: "did", title: "DIDI", typeof: "decimal", render: currencyRender },
-        { data: "rap", title: "RAPPI", typeof: "decimal", render: currencyRender },
-        { data: "totGF", title: "TOTAL GASTO FIJO", typeof: "decimal", render: currencyRender }
+        { data: 'id', title: 'ID', visible: false, type: 'hidden' },
+        { data: "date", title: "FECHA", datetimepicker: { timepicker: false, format: "Y/m/d" }, typeof: "date", required: true },
+        { data: 'efectivoCierre', title: 'EFECTIVO AL CIERRE', required: false, render: currencyRender },
+        { data: "gastEfect", title: "GASTOS EN EFECTIVO", typeof: "decimal", required: false, render: currencyRender },
+        { data: "ventEfect", title: "VENTA EFECTIVO", typeof: "decimal", required: false, render: currencyRender },
+        { data: "ventTransf", title: "VENTA TRANSFERENCIA", typeof: "decimal", required: false, render: currencyRender },
+        { data: "ventNetTar", title: "VENTA NETA TARJETA", typeof: "decimal", required: false, render: currencyRender },
+        { data: "depPlatf", title: "DEPÓSITOS PLATAFORMAS", typeof: "decimal", required: false, render: currencyRender },
+        { data: "nomPlatf", title: "NOMBRE PLATAFORMA", typeof: "string", required: false },
+        { data: "reparUtil", title: "REPARTO UTILIDADES", typeof: "decimal", required: false, render: currencyRender },
+        { data: "ub", title: "UBER", typeof: "decimal", required: false, render: currencyRender },
+        { data: "did", title: "DIDI", typeof: "decimal", required: false, render: currencyRender },
+        { data: "rap", title: "RAPPI", typeof: "decimal", required: false, render: currencyRender },
+        { data: "totGF", title: "TOTAL GASTO FIJO", typeof: "decimal", required: false, render: currencyRender }
     ];
 
     const inTbl = $('#inTableB').DataTable({
@@ -44,7 +41,6 @@ $(document).ready(function () {
         select: 'single',
         responsive: true,
         altEditor: true,
-        altEditor: true,
         language: { url: "../../JSON/es-ES.json" },
         buttons: [
             { text: '➕ Añadir', name: 'add' },
@@ -55,7 +51,9 @@ $(document).ready(function () {
         onAddRow: function (datatable, rowdata, success, error) {
             const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-            if (!checkAllDecimalFields(data, columInDefs, error, toast)) return;
+            if (!checkRequiredFields(rowdata, columInDefs, error, toast)) {
+                return; // block submit if required fields missing
+            }
 
             $.ajax({
                 url: 'balance/insert',
@@ -71,7 +69,7 @@ $(document).ready(function () {
                         success(res);
                     } else {
                         toast.error(res.message || 'Error desconocido');
-                        error(res);
+                        error({ responseJSON: res });
                     }
                 },
                 error: function (xhr) {
@@ -89,7 +87,9 @@ $(document).ready(function () {
         onEditRow: function (datatable, rowdata, success, error) {
             const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-            if (!checkAllDecimalFields(data, columInDefs, error, toast)) return;
+            if (!checkRequiredFields(rowdata, columInDefs, error, toast)) {
+                return; // block submit if required fields missing
+            }
 
             $.ajax({
                 url: 'balance/update/' + rowdata.id,
@@ -105,7 +105,7 @@ $(document).ready(function () {
                         success(res);
                     } else {
                         toast.error(res.message || 'Error desconocido');
-                        error(res);
+                        error({ responseJSON: res });
                     }
                 },
                 error: function (xhr) {
@@ -136,7 +136,7 @@ $(document).ready(function () {
                     } else {
                         // Only call error if status is not success
                         toast.error(res.message || "Error al eliminar");
-                        error(res);
+                        error({ responseJSON: res });
                     }
                 },
                 error: function (xhr) {
@@ -170,7 +170,6 @@ $(document).ready(function () {
         },
         { data: 'utilidadNeta', title: 'UTILIDAD NETA', render: currencyRender },
         { data: 'totalEgresos', title: 'TOTAL EGRESOS', render: currencyRender },
-        { data: 'efectivoCierre', title: 'EFECTIVO AL CIERRE', render: currencyRender },
         { data: 'ventaTarjeta', title: 'VENTA TARJETA - %', render: currencyRender },
         { data: 'totalIngresos', title: 'TOTAL INGRESOS', render: currencyRender },
         { data: 'utilidadPiso', title: 'UTILIDAD PISO', render: currencyRender },

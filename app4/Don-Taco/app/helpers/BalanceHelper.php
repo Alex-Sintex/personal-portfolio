@@ -43,7 +43,7 @@ class BalanceHelper
         $utilidadPlataforma = ($uber + $didi + $rappi) / 2;
         $totalEgresos       = $totFixedExp + $totGD;
         $utilidadNeta       = ($utilidadPiso + $utilidadPlataforma) - $totalEgresos;
-        $efectivoCierre     = $cashSales - $cashExpenses;
+        //$efectivoCierre     = $cashSales - $cashExpenses;
         $utilidadDisponible = ($utilidadPiso + $utilidadDisponibleAnt) - ($profitSharing + $totFixedExp + $totGD);
         $totalPlataformas   = $uber + $didi + $rappi;
 
@@ -54,7 +54,7 @@ class BalanceHelper
             'floor_profit'         => round($utilidadPiso, 2),
             'platform_net_profit'  => round($utilidadPlataforma, 2),
             'net_profit'           => round($utilidadNeta, 2),
-            'closing_cash'         => round($efectivoCierre, 2),
+            //'closing_cash'         => round($efectivoCierre, 2),
             'available_profit'     => round($utilidadDisponible, 2),
             'total_platforms'      => round($totalPlataformas, 2)
         ];

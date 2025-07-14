@@ -2,8 +2,10 @@
 
 namespace App\controllers;
 
-use App\Libraries\Controller;
+use App\libraries\Controller;
 use App\helpers\Validator;
+use App\helpers\DataHelper;
+use App\Helpers\RecordHelper;
 
 class GastosFD extends Controller
 {
@@ -20,14 +22,14 @@ class GastosFD extends Controller
     public function index()
     {
         $data = [
+            'loadStyles'          => true, // CSS
+            'loadDataTableStyles' => true, // CSS
+            'loadToastStyle'      => true, // CSS
             'loadJQueryLibrary'   => true, // JS
             'loadScriptSideBar'   => true, // JS
             'loadDataTables'      => true, // JS
             'loadDataTableGFD'    => true, // JS
-            'loadToasty'          => true, // JS
-            'loadStyles'          => true, // CSS
-            'loadDataTableStyles' => true, // CSS
-            'loadToastStyle'      => true  // CSS
+            'loadToasty'          => true  // JS
         ];
         $this->view('modules/gastos_fijos', $data);
     }
@@ -35,13 +37,13 @@ class GastosFD extends Controller
     // Fetch info
     public function fetch()
     {
-        $gastosD = $this->modelGastosFD->getDailyFixExpWithDate();
+        $gastosD = $this->modelGastosFD->getDailyFixExpInfo();
         $cleaned = [];
 
         foreach ($gastosD as $row) {
             $cleaned[] = [
                 'id' => $row->id,
-                'date' => $row->date ?? date('Y-m-d'), // fallback to current date
+                'date' => $row->date,
                 'rent' => $row->renta,
                 'luz' => $row->luz,
                 'gas_rich' => $row->gas_richard,
@@ -59,18 +61,15 @@ class GastosFD extends Controller
     // Insert new record for daily fixed expense
     public function insert()
     {
-        header('Content-Type: application/json');
+        $data = json_decode(file_get_contents('php://input'), true);
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            http_response_code(405);
             echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
             return;
         }
 
-        $data = json_decode(file_get_contents('php://input'), true);
-        $validator = new Validator();
-
         $rules = [
+            'date'     => ['required' => true, 'type' => 'date'],
             'rent'     => ['required' => false, 'type' => 'decimal'],
             'luz'      => ['required' => false, 'type' => 'decimal'],
             'gas_rich' => ['required' => false, 'type' => 'decimal'],
@@ -81,8 +80,10 @@ class GastosFD extends Controller
             'fond_ta'  => ['required' => false, 'type' => 'decimal']
         ];
 
+        // ✅ Validación de datos
+        $validator = new Validator();
+
         if (!$validator->validate($data, $rules)) {
-            http_response_code(422);
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Error de validación',
@@ -92,34 +93,39 @@ class GastosFD extends Controller
         }
 
         $cleanData = $validator->sanitizeAndCast($data, $rules);
+        $cleanData = DataHelper::setDecimalDefaults($cleanData, $rules);
+
+        // Check for duplicate date
+        if (RecordHelper::exists('daily_fixed_exp', 'date', $cleanData['date'])) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Ya existe un gasto fijo diario con esa fecha'
+            ]);
+            return;
+        }
 
         // ✅ Get the latest balance record
         $lastBalance = $this->balanceModel->getLastBalance();
 
         $balanceId = null;
-        $balanceDate = null;
 
         if ($lastBalance && isset($lastBalance->id)) {
             $balanceId = $lastBalance->id;
 
-            // only if the date exists in daily_balance
-            if (!empty($lastBalance->date)) {
-                $balanceDate = $lastBalance->date;
-            }
-
             // Check for duplicate only if balance exists
-            if ($this->modelGastosFD->existsExpenseForBalance($balanceId)) {
-                http_response_code(409);
+            /*if ($this->modelGastosFD->existsExpenseForBalance($balanceId)) {
                 echo json_encode([
                     'status' => 'error',
                     'message' => 'Ya existe un gasto fijo diario asociado a este balance.'
                 ]);
                 return;
-            }
+            }*/
         }
 
         // Insert anyway with date if available
         $insertData = [
+            'dfe_balance_id' => $balanceId,
+            'date'           => $cleanData['date'],
             'renta'          => $cleanData['rent'],
             'luz'            => $cleanData['luz'],
             'gas_richard'    => $cleanData['gas_rich'],
@@ -127,18 +133,14 @@ class GastosFD extends Controller
             'gas'            => $cleanData['gas'],
             'refresco'       => $cleanData['refrsco'],
             'verds_semanal'  => $cleanData['ver_sem'],
-            'fond_taq'       => $cleanData['fond_ta'],
-            'dfe_balance_id' => $balanceId,
-            'dfe_date'       => $balanceDate // this will be null if balance has no date
+            'fond_taq'       => $cleanData['fond_ta']
         ];
 
         $result = $this->modelGastosFD->addDailyFixedExp($insertData);
 
         if ($result) {
-            http_response_code(200);
             echo json_encode(['status' => 'success', 'message' => '¡Registro de gasto fijo añadido!']);
         } else {
-            http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => '¡Error al añadir el gasto fijo!']);
         }
     }
@@ -150,7 +152,6 @@ class GastosFD extends Controller
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
-            http_response_code(405);
             echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
             return;
         }
@@ -159,6 +160,7 @@ class GastosFD extends Controller
         $validator = new Validator();
 
         $rules = [
+            'date'     => ['required' => true, 'type' => 'date'],
             'rent'     => ['required' => false, 'type' => 'decimal'],
             'luz'      => ['required' => false, 'type' => 'decimal'],
             'gas_rich' => ['required' => false, 'type' => 'decimal'],
@@ -170,12 +172,21 @@ class GastosFD extends Controller
         ];
 
         if (!$validator->validate($data, $rules)) {
-            http_response_code(422);
             echo json_encode(['status' => 'error', 'message' => 'Error de validación', 'errors' => $validator->errors()]);
             return;
         }
 
         $cleanData = $validator->sanitizeAndCast($data, $rules);
+        $cleanData = DataHelper::setDecimalDefaults($cleanData, $rules);
+
+        // Check for duplicate date
+        if (RecordHelper::exists('daily_fixed_exp', 'date', $cleanData['date'], $id)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Ya existe un gasto fijo diario con esa fecha'
+            ]);
+            return;
+        }
 
         // ✅ Get the latest balance record
         $lastBalance = $this->balanceModel->getLastBalance();
@@ -184,25 +195,12 @@ class GastosFD extends Controller
 
         if ($lastBalance && isset($lastBalance->id)) {
             $balanceId = $lastBalance->id;
-
-            // only if the date exists in daily_balance
-            if (!empty($lastBalance->date)) {
-                $balanceDate = $lastBalance->date;
-            }
-
-            // Check for duplicate only if balance exists
-            if ($this->modelGastosFD->existsExpenseForBalance($balanceId)) {
-                http_response_code(409);
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Ya existe un gasto fijo diario asociado a este balance.'
-                ]);
-                return;
-            }
         }
 
         $insertData = [
             'id'             => $id,
+            'dfe_balance_id' => $balanceId,
+            'date'           => $cleanData['date'],
             'renta'          => $cleanData['rent'],
             'luz'            => $cleanData['luz'],
             'gas_richard'    => $cleanData['gas_rich'],
@@ -210,17 +208,14 @@ class GastosFD extends Controller
             'gas'            => $cleanData['gas'],
             'refresco'       => $cleanData['refrsco'],
             'verds_semanal'  => $cleanData['ver_sem'],
-            'fond_taq'       => $cleanData['fond_ta'],
-            'dfe_balance_id' => $balanceId
+            'fond_taq'       => $cleanData['fond_ta']
         ];
 
         $result = $this->modelGastosFD->updateDailyFixExp($insertData);
 
         if ($result) {
-            http_response_code(200);
             echo json_encode(['status' => 'success', 'message' => '¡Registro de gasto fijo actualizado!']);
         } else {
-            http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => '¡Error al actualizar el gasto fijo!']);
         }
     }
@@ -231,7 +226,6 @@ class GastosFD extends Controller
         header('Content-Type: application/json');
 
         if (!is_numeric($id)) {
-            http_response_code(400);
             echo json_encode(['status' => 'error', 'message' => 'Invalid ID']);
             return;
         }
@@ -239,10 +233,8 @@ class GastosFD extends Controller
         $result = $this->modelGastosFD->deleteDailyFixExp($id);
 
         if ($result) {
-            http_response_code(200);
             echo json_encode(['status' => 'success', 'message' => '¡Registro eliminado!']);
         } else {
-            http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => '¡Error al eliminar el registro!']);
         }
     }

@@ -40,6 +40,7 @@ $loadDataTableGD = $data['loadDataTableGD'] ?? false;
 $loadDataTableF = $data['loadDataTableF'] ?? false;
 $loadDataTableSupp = $data['loadDataTableSupp'] ?? false;
 $loadDataTableUnitoms = $data['loadDataTableUnitoms'] ?? false;
+$loadDataTableUsers = $data['loadDataTableUsers'] ?? false;
 
 // Load assets for Toasty
 $loadToasty = $data['loadToasty'] ?? false;
@@ -48,6 +49,12 @@ $loadCharts = $data['loadCharts'] ?? false;
 
 // Load assets for Currency Format
 $loadJShelpers = $data['loadJShelpers'] ?? false;
+
+// Load assets for Chat module
+$loadChatScripts = $data['loadChatScripts'] ?? false;
+
+// Load asset for Login show hide password
+$loadShowHidePasswd = $data['loadShowHidePasswd'] ?? false;
 ?>
 
 <!-- Core JS -->
@@ -65,6 +72,14 @@ $loadJShelpers = $data['loadJShelpers'] ?? false;
 
 <?php if (!empty($loadJSLogin)): ?>
     <script src="<?= PATH_URL ?>js/auth/login.js"></script>
+<?php endif; ?>
+
+<?php if (!empty($loadShowHidePasswd)): ?>
+    <script src="<?= PATH_URL ?>js/auth/feather.min.js"></script>
+    <script>
+        feather.replace();
+    </script>
+    <script src="<?= PATH_URL ?>js/auth/pass-show-hide.js"></script>
 <?php endif; ?>
 
 <?php if ($loadDataTablesSimple): ?>
@@ -89,46 +104,56 @@ $loadJShelpers = $data['loadJShelpers'] ?? false;
     <script src="<?= PATH_URL ?>js/DataTable/buttons.colVis.min.js"></script>
 
     <?php if (!empty($loadDataTableProduct)): ?>
-        <script type="module" src="<?= PATH_URL ?>js/product/product.js"></script>
+        <script type="module" src="<?= PATH_URL ?>js/ajax/product/product.js"></script>
     <?php endif; ?>
 
     <?php if (!empty($loadDataTableBalance)): ?>
-        <script type="module" src="<?= PATH_URL ?>js/balance/balance.js"></script>
+        <script type="module" src="<?= PATH_URL ?>js/ajax/balance/balance.js"></script>
     <?php endif; ?>
 
     <?php if (!empty($loadDataTableGFD)): ?>
-        <script type="module" src="<?= PATH_URL ?>js/expense/fix_exp.js"></script>
+        <script type="module" src="<?= PATH_URL ?>js/ajax/expense/fix_exp.js"></script>
     <?php endif; ?>
 
     <?php if (!empty($loadDataTableGD)): ?>
-        <script type="module" src="<?= PATH_URL ?>js/expense/daily_expenses.js"></script>
+        <script type="module" src="<?= PATH_URL ?>js/ajax/expense/daily_expenses.js"></script>
     <?php endif; ?>
 
     <?php if (!empty($loadDataTableF)): ?>
-        <script type="module" src="<?= PATH_URL ?>js/funds/funds.js"></script>
+        <script type="module" src="<?= PATH_URL ?>js/ajax/funds/funds.js"></script>
     <?php endif; ?>
 
     <?php if (!empty($loadDataTableSupp)): ?>
-        <script src="<?= PATH_URL ?>js/supplier/supplier.js"></script>
+        <script src="<?= PATH_URL ?>js/ajax/supplier/supplier.js"></script>
     <?php endif; ?>
 
     <?php if (!empty($loadDataTableUnitoms)): ?>
-        <script src="<?= PATH_URL ?>js/measures/unit_m.js"></script>
+        <script src="<?= PATH_URL ?>js/ajax/measures/unit_m.js"></script>
+    <?php endif; ?>
+
+    <?php if (!empty($loadDataTableUsers)): ?>
+        <script type="module" src="<?= PATH_URL ?>js/ajax/users/user.js"></script>
     <?php endif; ?>
 <?php endif; ?>
 
 <?php if ($loadToasty): ?>
     <!-- Toasty -->
     <script src="<?= PATH_URL ?>Toasty/js/toasty.js"></script>
-
 <?php endif; ?>
 
 <?php if ($loadCharts): ?>
     <!-- Chart -->
     <script src="<?= PATH_URL ?>js/Charts/Chart.min.js"></script>
-    <script type="module" src="<?= PATH_URL ?>js/Charts/incomesChart.js"></script>
-    <script type="module" src="<?= PATH_URL ?>js/Charts/outcomesChart.js"></script>
+    <script type="module" src="<?= PATH_URL ?>js/ajax/income/chart.js"></script>
+    <script type="module" src="<?= PATH_URL ?>js/ajax/outcome/chart.js"></script>
 <?php endif; ?>
+
+<?php if ($loadChatScripts): ?>
+    <script src="<?= PATH_URL ?>js/chat/chat.js"></script>
+<?php endif; ?>
+
+<!-- Update status JS -->
+<script src="<?= PATH_URL ?>js/main/status.js"></script>
 <!-- SCRIPTS -->
 
 </body>

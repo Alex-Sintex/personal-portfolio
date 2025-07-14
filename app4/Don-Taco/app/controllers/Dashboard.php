@@ -41,7 +41,6 @@ class Dashboard extends Controller
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-            http_response_code(405);
             echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
             return;
         }
@@ -59,7 +58,6 @@ class Dashboard extends Controller
 
             echo json_encode($results);
         } catch (\Throwable $e) {
-            http_response_code(500);
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Error al obtener los ingresos semanales.',
@@ -74,7 +72,6 @@ class Dashboard extends Controller
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-            http_response_code(405);
             echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
             return;
         }
@@ -92,7 +89,6 @@ class Dashboard extends Controller
 
             echo json_encode($results);
         } catch (\Throwable $e) {
-            http_response_code(500);
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Error al obtener los gastos semanales.',

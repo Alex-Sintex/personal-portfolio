@@ -5,6 +5,8 @@ namespace App\controllers;
 use App\Libraries\Controller;
 use App\helpers\Validator;
 use App\Helpers\BalanceHelper;
+use App\Helpers\DataHelper;
+use App\Helpers\RecordHelper;
 
 class GastosD extends Controller
 {
@@ -21,14 +23,14 @@ class GastosD extends Controller
     public function index()
     {
         $data = [
+            'loadStyles'          => true, // CSS
+            'loadDataTableStyles' => true, // CSS
+            'loadToastStyle'      => true, // CSS
             'loadJQueryLibrary'   => true, // JS
             'loadScriptSideBar'   => true, // JS
             'loadDataTables'      => true, // JS
             'loadDataTableGD'     => true, // JS
-            'loadToasty'          => true, // JS
-            'loadStyles'          => true, // CSS
-            'loadDataTableStyles' => true, // CSS
-            'loadToastStyle'      => true  // CSS
+            'loadToasty'          => true  // JS
         ];
         $this->view('modules/gastos_diarios', $data);
     }
@@ -36,13 +38,13 @@ class GastosD extends Controller
     // Fetch info
     public function fetch()
     {
-        $gastosD = $this->modelGastosD->getDailyExpensesWithDate();
+        $gastosD = $this->modelGastosD->getDailyExpInfo();
         $cleaned = [];
 
         foreach ($gastosD as $row) {
             $cleaned[] = [
                 'id' => $row->id,
-                'date' => $row->date ?? date('Y-m-d'), // fallback to current date
+                'date' => $row->date,
                 'carne' => $row->carne,
                 'queso' => $row->queso,
                 'tortilla_maiz' => $row->tortilla_maiz,
@@ -85,7 +87,6 @@ class GastosD extends Controller
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            http_response_code(405);
             echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
             return;
         }
@@ -94,6 +95,7 @@ class GastosD extends Controller
         $validator = new Validator();
 
         $rules = [
+            'date'               => ['required' => true, 'type' => 'date'],
             'carne'              => ['required' => false, 'type' => 'decimal'],
             'queso'              => ['required' => false, 'type' => 'decimal'],
             'tortilla_maiz'      => ['required' => false, 'type' => 'decimal'],
@@ -114,7 +116,6 @@ class GastosD extends Controller
         ];
 
         if (!$validator->validate($data, $rules)) {
-            http_response_code(422);
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Error de validación',
@@ -124,26 +125,36 @@ class GastosD extends Controller
         }
 
         $cleanData = $validator->sanitizeAndCast($data, $rules);
+        $cleanData = DataHelper::setDecimalDefaults($cleanData, $rules);
+
+        // Check for duplicate date
+        if (RecordHelper::exists('daily_expense', 'date', $cleanData['date'])) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Ya existe un gasto diario con esa fecha'
+            ]);
+            return;
+        }
+
         $totalGD = $this->calculateTotalGD($cleanData);
 
         // ✅ Get the latest balance record
         $lastBalance = $this->balanceModel->getLastBalance();
 
         if (!$lastBalance) {
-            http_response_code(400);
             echo json_encode(['status' => 'error', 'message' => 'No hay balances disponibles para asociar este gasto.']);
             return;
         }
 
         // ✅ Prevent duplicate expense per balance
         if ($this->modelGastosD->existsExpenseForBalance($lastBalance->id)) {
-            http_response_code(409);
             echo json_encode(['status' => 'error', 'message' => 'Ya existe un gasto diario asociado a este balance.']);
             return;
         }
 
         // ✅ Insert expense
         $insertData = [
+            'date'            => $cleanData['date'],
             'carne'           => $cleanData['carne'],
             'queso'           => $cleanData['queso'],
             'tortilla_maiz'   => $cleanData['tortilla_maiz'],
@@ -178,15 +189,12 @@ class GastosD extends Controller
             $updateSuccess = $this->balanceModel->updateBalanceCalculations($updatedCalculations);
 
             if (!$updateSuccess) {
-                http_response_code(500);
                 echo json_encode(['status' => 'error', 'message' => 'Error al actualizar el balance con los nuevos cálculos']);
                 return;
             }
 
-            http_response_code(200);
             echo json_encode(['status' => 'success', 'message' => '¡Registro de gasto añadido y balance actualizado!']);
         } else {
-            http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => '¡Error al añadir el gasto!']);
         }
     }
@@ -197,7 +205,6 @@ class GastosD extends Controller
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
-            http_response_code(405);
             echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
             return;
         }
@@ -206,6 +213,7 @@ class GastosD extends Controller
         $validator = new Validator();
 
         $rules = [
+            'date'               => ['required' => true, 'type' => 'date'],
             'carne'              => ['required' => false, 'type' => 'decimal'],
             'queso'              => ['required' => false, 'type' => 'decimal'],
             'tortilla_maiz'      => ['required' => false, 'type' => 'decimal'],
@@ -226,16 +234,27 @@ class GastosD extends Controller
         ];
 
         if (!$validator->validate($data, $rules)) {
-            http_response_code(422);
             echo json_encode(['status' => 'error', 'message' => 'Error de validación', 'errors' => $validator->errors()]);
             return;
         }
 
         $cleanData = $validator->sanitizeAndCast($data, $rules);
+        $cleanData = DataHelper::setDecimalDefaults($cleanData, $rules);
+
+        // Check for duplicate date
+        if (RecordHelper::exists('daily_expense', 'date', $cleanData['date'], $id)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Ya existe un gasto diario con esa fecha'
+            ]);
+            return;
+        }
+
         $totalGD = $this->calculateTotalGD($cleanData);
 
         $insertData = [
             'id'                 => $id,
+            'date'               => $cleanData['date'],
             'carne'              => $cleanData['carne'],
             'queso'              => $cleanData['queso'],
             'tortilla_maiz'      => $cleanData['tortilla_maiz'],
@@ -266,10 +285,8 @@ class GastosD extends Controller
                 $this->balanceModel->updateBalanceCalculations($updated);
             }
 
-            http_response_code(200);
             echo json_encode(['status' => 'success', 'message' => '¡Registro actualizado y balance recalculado!']);
         } else {
-            http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => '¡Error al actualizar el registro!']);
         }
     }
@@ -280,7 +297,6 @@ class GastosD extends Controller
         header('Content-Type: application/json');
 
         if (!is_numeric($id)) {
-            http_response_code(400);
             echo json_encode(['status' => 'error', 'message' => 'Invalid ID']);
             return;
         }
@@ -298,10 +314,8 @@ class GastosD extends Controller
                 $this->balanceModel->updateBalanceCalculations($recalculated);
             }
 
-            http_response_code(200);
             echo json_encode(['status' => 'success', 'message' => '¡Registro eliminado y balance actualizado!']);
         } else {
-            http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => '¡Error al eliminar el registro!']);
         }
     }

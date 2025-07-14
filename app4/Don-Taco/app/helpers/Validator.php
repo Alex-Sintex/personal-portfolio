@@ -14,27 +14,34 @@ class Validator
         foreach ($rules as $field => $constraints) {
             $value = $data[$field] ?? null;
 
-            // If field is required but missing or empty
             if (($constraints['required'] ?? false) && ($value === null || $this->isEmpty($value))) {
-                $this->errors[$field][] = ucfirst($field) . ' is required';
+                $this->errors[$field][] = ucfirst($field) . ' es requerido';
                 continue;
             }
 
-            // Skip validation if field not required and empty or missing
             if (!$constraints['required'] && ($value === null || $this->isEmpty($value))) {
                 continue;
             }
 
-            // Type checks
             if (isset($constraints['type'])) {
                 $type = $constraints['type'];
+
                 if (!$this->checkType($value, $type)) {
-                    $this->errors[$field][] = ucfirst($field) . " must be a $type";
+                    $this->errors[$field][] = ucfirst($field) . " debe ser $type";
                     continue;
+                }
+
+                // Extra rule: allowed email domains
+                if ($type === 'email' && !$this->isAllowedEmailDomain($value)) {
+                    $this->errors[$field][] = "Only Gmail, Hotmail, Outlook, or iCloud addresses are allowed";
+                }
+
+                // Extra rule: password strength
+                if ($type === 'password' && !$this->isStrongPassword($value)) {
+                    $this->errors[$field][] = "La contraseña debe ser de al menos 8 caracteres de largo e incluir mayúscula, minúscula, número y carácter especial";
                 }
             }
 
-            // Max length check (only for strings)
             if (isset($constraints['max']) && is_string($value)) {
                 if (strlen((string)$value) > $constraints['max']) {
                     $this->errors[$field][] = ucfirst($field) . " must be at most {$constraints['max']} characters";
@@ -82,6 +89,8 @@ class Validator
             'bool' => is_bool($value),
             'decimal' => is_numeric($value),
             'date' => $this->validateDate($value),
+            'password' => is_string($value),
+            'email' => filter_var($value, FILTER_VALIDATE_EMAIL) !== false,
             default => false,
         };
     }
@@ -97,6 +106,22 @@ class Validator
             }
         }
         return false;
+    }
+
+    protected function isAllowedEmailDomain(string $email): bool
+    {
+        $allowed = ['gmail.com', 'hotmail.com', 'outlook.com', 'icloud.com'];
+        $parts = explode('@', $email);
+        return count($parts) === 2 && in_array(strtolower($parts[1]), $allowed);
+    }
+
+    protected function isStrongPassword(string $password): bool
+    {
+        return strlen($password) >= 8 &&
+            preg_match('/[A-Z]/', $password) &&     // at least 1 uppercase
+            preg_match('/[a-z]/', $password) &&     // at least 1 lowercase
+            preg_match('/[0-9]/', $password) &&     // at least 1 digit
+            preg_match('/[\W_]/', $password);       // at least 1 special char
     }
 
     /**

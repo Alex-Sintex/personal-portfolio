@@ -4,6 +4,8 @@ $loadToastStyle = $data['loadToastStyle'] ?? false;
 $loadStyleforAuth = $data['loadStyleforAuth'] ?? false;
 $loadStyle = $data['loadStyle'] ?? false;
 $loadStyles = $data['loadStyles'] ?? false;
+$loadChatStyle = $data['loadChatStyle'] ?? false;
+$loadAccountStyle = $data['loadAccountStyle'] ?? false;
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +26,7 @@ $loadStyles = $data['loadStyles'] ?? false;
         <link rel="stylesheet" href="<?= PATH_URL; ?>css/Main/style.min.css" type="text/css" />
         <link rel="stylesheet" href="<?= PATH_URL; ?>css/Main/styles.css" type="text/css" />
         <link rel="stylesheet" href="<?= PATH_URL ?>css/Main/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="<?= PATH_URL ?>css/Main/all.min.css" type="text/css" />
     <?php endif; ?>
 
     <?php if ($loadStyleforAuth): ?>
@@ -43,6 +46,16 @@ $loadStyles = $data['loadStyles'] ?? false;
     <?php if ($loadToastStyle): ?>
         <!-- Toast styles -->
         <link rel="stylesheet" href="<?= PATH_URL ?>Toasty/css/toasty.css">
+    <?php endif; ?>
+
+    <?php if ($loadChatStyle): ?>
+        <!-- Chat styles -->
+        <link rel="stylesheet" href="<?= PATH_URL ?>css/chat/chat.css">
+    <?php endif; ?>
+
+    <?php if ($loadAccountStyle): ?>
+        <!-- Chat styles -->
+        <link rel="stylesheet" href="<?= PATH_URL ?>css/account/profile.css">
     <?php endif; ?>
 </head>
 

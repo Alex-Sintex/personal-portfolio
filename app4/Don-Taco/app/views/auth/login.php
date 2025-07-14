@@ -15,13 +15,17 @@
                                     <form id="loginForm" method="POST" novalidate>
                                         <div class="form-floating mb-3">
                                             <div class="form-group">
-                                                <input class="form-control" type="text" name="login" id="login" placeholder="Username or email" />
+                                                <input class="form-control" type="text" name="login" id="login" placeholder="Usuario o correo" />
                                             </div>
                                         </div>
 
                                         <div class="form-floating mb-3">
                                             <div class="form-group">
-                                                <input class="form-control" type="password" name="password" id="password" placeholder="Password" />
+                                                <input class="form-control" type="password" name="password" id="password" placeholder="Contraseña" />
+                                            </div>
+                                            <div class="password-icon">
+                                                <i data-feather="eye"></i>
+                                                <i data-feather="eye-off"></i>
                                             </div>
                                         </div>
 

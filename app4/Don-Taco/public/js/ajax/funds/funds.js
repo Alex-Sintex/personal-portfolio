@@ -1,4 +1,4 @@
-import { currencyRender, checkAllDecimalFields } from '../helper/helpers.js';
+import { currencyRender, checkRequiredFields } from '../helper/helpers.js';
 
 $(document).ready(function () {
     const toast = new Toasty();
@@ -11,11 +11,11 @@ $(document).ready(function () {
             render: (data, type, row, meta) => meta.row + 1
         },
         { data: 'id', title: 'ID', visible: false, type: 'hidden' },
-        { data: "date", title: "FECHA", type: "hidden" },
-        { data: "saldo", title: "SALDO KLAR", type: "hidden", render: currencyRender },
-        { data: "pagos", title: "PAGOS KLAR", typeof: "decimal", render: currencyRender },
-        { data: "concepto", title: "CONCEPTO PAGOS KLAR", typeof: "string" },
-        { data: "observa", title: "OBSERVACIONES", typeof: "string" }
+        { data: "date", title: "FECHA", datetimepicker: { timepicker: false, format: "Y/m/d" }, typeof: "date", required: true },
+        { data: "saldo", title: "SALDO KLAR", type: "readonly", required: false, render: currencyRender },
+        { data: "pagos", title: "PAGOS KLAR", typeof: "decimal", required: false, render: currencyRender },
+        { data: "concepto", title: "CONCEPTO PAGOS KLAR", typeof: "string", required: false },
+        { data: "observa", title: "OBSERVACIONES", typeof: "string", required: false }
     ];
 
     const tbl = $('#tableF').DataTable({
@@ -38,23 +38,24 @@ $(document).ready(function () {
         onAddRow: function (datatable, rowdata, success, error) {
             const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-            if (!checkAllDecimalFields(data, columnDefs, error, toast)) return;
-
-            // set date if empty
-            if (!data.date || data.date.trim() === "") {
-                data.date = new Date().toISOString().slice(0, 10);
+            if (!checkRequiredFields(rowdata, columnDefs, error, toast)) {
+                return; // block submit if required fields missing
             }
 
             $.ajax({
                 url: 'funds/insert',
                 type: 'POST',
                 contentType: 'application/json',
+                dataType: 'json',
                 data: JSON.stringify(data),
                 success: function (res) {
                     if (res.status === 'success') {
                         tbl.ajax.reload(null, false);
                         toast.success(res.message);
                         success(res);
+                    } else {
+                        toast.error(res.message || 'Error desconocido');
+                        error(res);
                     }
                 },
                 error: function (xhr) {
@@ -72,8 +73,10 @@ $(document).ready(function () {
         onEditRow: function (datatable, rowdata, success, error) {
             const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
 
-            if (!checkAllDecimalFields(data, columnDefs, error, toast)) return;
-            
+            if (!checkRequiredFields(rowdata, columnDefs, error, toast)) {
+                return; // block submit if required fields missing
+            }
+
             $.ajax({
                 url: 'funds/update/' + rowdata.id,
                 type: 'PUT',
@@ -84,6 +87,9 @@ $(document).ready(function () {
                         tbl.ajax.reload(null, false);
                         toast.success(res.message);
                         success(res);
+                    } else {
+                        toast.error(res.message || 'Error desconocido');
+                        error(res);
                     }
                 },
                 error: function (xhr) {
