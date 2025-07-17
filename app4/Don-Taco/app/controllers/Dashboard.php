@@ -25,6 +25,7 @@ class Dashboard extends Controller
         $data = [
             'loadDataTableStyles'  => true,     // CSS
             'loadStyles'           => true,     // CSS
+            'loadToastStyle'       => true,     // CSS
             'loadJQueryLibrary'    => true,     // JS
             'loadScriptSideBar'    => true,     // JS
             'loadCharts'           => true,     // JS
