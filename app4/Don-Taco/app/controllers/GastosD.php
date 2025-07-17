@@ -142,15 +142,15 @@ class GastosD extends Controller
         $lastBalance = $this->balanceModel->getLastBalance();
 
         if (!$lastBalance) {
-            echo json_encode(['status' => 'error', 'message' => 'No hay balances disponibles para asociar este gasto.']);
+            echo json_encode(['status' => 'error', 'message' => 'No hay balances disponibles para asociar este gasto']);
             return;
         }
 
-        // ✅ Prevent duplicate expense per balance
+        /*// ✅ Prevent duplicate expense per balance
         if ($this->modelGastosD->existsExpenseForBalance($lastBalance->id)) {
             echo json_encode(['status' => 'error', 'message' => 'Ya existe un gasto diario asociado a este balance.']);
             return;
-        }
+        }*/
 
         // ✅ Insert expense
         $insertData = [

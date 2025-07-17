@@ -21,7 +21,8 @@ class Auth extends Controller
             'loadStyleforAuth'   => true, // CSS
             'loadJQueryLibrary'  => true, // JS
             'loadJSLogin'        => true, // JS
-            'loadShowHidePasswd' => true  //JS
+            'loadShowHidePasswd' => true, //JS
+            'loadToasty'         => true  // JS
         ];
 
         $this->view('auth/login', $data);
@@ -65,12 +66,15 @@ class Auth extends Controller
 
             if (password_verify($password, $user->password)) {
 
-                // Login success
                 session_start();
+
                 $_SESSION['user_id']     = $user->id;
                 $_SESSION['user_name']   = $user->username;
                 $_SESSION['user_type']   = $user->role;
                 $_SESSION['user_status'] = $user->status;
+
+                // Agrega esto:
+                $_SESSION['user'] = $user;  // Guarda todo el objeto (incluyendo imagen si ya existe)
 
                 echo json_encode([
                     'success' => true,

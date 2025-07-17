@@ -55,6 +55,9 @@ $loadChatScripts = $data['loadChatScripts'] ?? false;
 
 // Load asset for Login show hide password
 $loadShowHidePasswd = $data['loadShowHidePasswd'] ?? false;
+
+// Load asset for account/settings module
+$loadAccountScripts = $data['loadAccountScripts'] ?? false;
 ?>
 
 <!-- Core JS -->
@@ -152,7 +155,12 @@ $loadShowHidePasswd = $data['loadShowHidePasswd'] ?? false;
     <script src="<?= PATH_URL ?>js/chat/chat.js"></script>
 <?php endif; ?>
 
-<!-- Update status JS -->
+<?php if ($loadAccountScripts): ?>
+    <script src="<?= PATH_URL ?>js/ajax/profile/profile.js"></script>
+    <script src="<?= PATH_URL ?>js/ajax/profile/delete.js"></script>
+<?php endif; ?>
+
+<!-- Update user status JS -->
 <script src="<?= PATH_URL ?>js/main/status.js"></script>
 <!-- SCRIPTS -->
 

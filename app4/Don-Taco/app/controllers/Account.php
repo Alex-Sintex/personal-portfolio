@@ -8,201 +8,229 @@ use App\Helpers\Validator;
 class Account extends Controller
 {
     private $accountModel;
+    private $userModel;
 
     public function __construct()
     {
         requireLogin();
         $this->accountModel = $this->model('AccountModel');
+        $this->userModel = $this->model('UserModel');
     }
 
     // Load account view with required resources
     public function index()
     {
+        $user = $this->accountModel->getUserById($_SESSION['user_id']);
+
         $data = [
-            'loadStyles'        => true, // CSS
-            'loadToastStyle'    => true, // CSS
-            'loadAccountStyle'  => true, // CSS
-            'loadJQueryLibrary' => true, // JS
-            'loadScriptSideBar' => true, // JS
-            'loadToasty'        => true  // JS
+            'loadStyles'         => true,
+            'loadToastStyle'     => true,
+            'loadAccountStyle'   => true,
+            'loadJQueryLibrary'  => true,
+            'loadScriptSideBar'  => true,
+            'loadToasty'         => true,
+            'loadAccountScripts' => true,
+            'user'               => $user
         ];
         $this->view('modules/profile', $data);
     }
 
     // Fetch all products
-    /*
     public function fetch()
     {
-        $account = $this->accountModel->getProducts();
+        $user = $this->accountModel->getUsrAccountsInfo();
         $cleaned = [];
 
-        foreach ($account as $row) {
+        foreach ($user as $row) {
             $cleaned[] = [
-                'id' => $row->in_product_id,
-                'name' => $row->in_product_name,
-                'price' => $row->unit_price_product,
-                'measure_n' => $row->measure_name,
-                'provider_n' => $row->provider_name
+                'id'       => $row->id,
+                'fname'    => $row->fname,
+                'lname'    => $row->lname,
+                'username' => $row->username,
+                'email'    => $row->email,
+                'image'    => $row->img
             ];
         }
 
         echo json_encode($cleaned);
-    }*/
-
-    // Insert new product
-    /*
-    public function insert()
-    {
-        header('Content-Type: application/json'); // ✅ Asegura salida JSON
-
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
-            return;
-        }
-
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        $data['measure_n'] = $data['measure_n'] ?? '';
-        $data['provider_n'] = $data['provider_n'] ?? '';
-
-        $validator = new Validator();
-
-        $rules = [
-            'name'       => ['required' => true, 'type' => 'string', 'max' => 100],
-            'price'      => ['required' => true, 'type' => 'numeric'],
-            'measure_n'  => ['required' => true, 'type' => 'string', 'max' => 50],
-            'provider_n' => ['required' => true, 'type' => 'string', 'max' => 100]
-        ];
-
-        if (!$validator->validate($data, $rules)) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Error de validación',
-                'errors' => $validator->errors()
-            ]);
-            return;
-        }
-
-        $cleanData = $validator->sanitizeAndCast($data, $rules);
-
-        // 🔍 Get unit_measure_id
-        $measure = $this->modelProduct->getMeasureIdByName($cleanData['measure_n']);
-        if (!$measure) {
-            echo json_encode(['status' => 'error', 'message' => 'Unidad de medida no encontrada']);
-            return;
-        }
-
-        // 🔍 Get provider_id
-        $provider = $this->modelProduct->getProviderIdByName($cleanData['provider_n']);
-        if (!$provider) {
-            echo json_encode(['status' => 'error', 'message' => 'Proveedor no encontrado']);
-            return;
-        }
-
-        $insertData = [
-            'name'            => $cleanData['name'],
-            'price'           => $cleanData['price'],
-            'unit_measure_id' => $measure->unit_measure_id,
-            'provider_id'     => $provider->provider_id
-        ];
-
-        $result = $this->modelProduct->addProduct($insertData);
-
-        if ($result) {
-            echo json_encode(['status' => 'success', 'message' => '¡Registro añadido!']);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => '¡Error al añadir el registro!']);
-        }
     }
-    */
 
-    // Update product
-    /*
-    public function update($id)
-    {
-        header('Content-Type: application/json'); // ✅ Asegura salida JSON
-
-        if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
-            echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
-            return;
-        }
-
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        $data['measure_n'] = $data['measure_n'] ?? '';
-        $data['provider_n'] = $data['provider_n'] ?? '';
-
-        $validator = new Validator();
-
-        $rules = [
-            'name'       => ['required' => true, 'type' => 'string', 'max' => 100],
-            'price'      => ['required' => true, 'type' => 'numeric'],
-            'measure_n'  => ['required' => true, 'type' => 'string', 'max' => 50],
-            'provider_n' => ['required' => true, 'type' => 'string', 'max' => 100]
-        ];
-
-        if (!$validator->validate($data, $rules)) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Error de validación',
-                'errors' => $validator->errors()
-            ]);
-            return;
-        }
-
-        $cleanData = $validator->sanitize($data);
-
-        // 🔍 Get unit_measure_id
-        $measure = $this->modelProduct->getMeasureIdByName($cleanData['measure_n']);
-        if (!$measure) {
-            echo json_encode(['status' => 'error', 'message' => 'Unidad de medida no encontrada']);
-            return;
-        }
-
-        // 🔍 Get provider_id
-        $provider = $this->modelProduct->getProviderIdByName($cleanData['provider_n']);
-        if (!$provider) {
-            echo json_encode(['status' => 'error', 'message' => 'Proveedor no encontrado']);
-            return;
-        }
-
-        $insertData = [
-            'name'            => $cleanData['name'],
-            'price'           => $cleanData['price'],
-            'unit_measure_id' => $measure->unit_measure_id,
-            'provider_id'     => $provider->provider_id
-        ];
-
-        $result = $this->modelProduct->updateProduct($id, $insertData);
-
-        if ($result) {
-            echo json_encode(['status' => 'success', 'message' => '¡Registro actualizado!']);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => '¡Error al actualizar el registro!']);
-        }
-    }
-    */
-
-    // Delete product
-    /*
-    public function delete($id)
+    // Update profile user
+    public function update()
     {
         header('Content-Type: application/json');
 
-        if (!is_numeric($id)) {
-            echo json_encode(['status' => 'error', 'message' => 'Invalid ID']);
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
             return;
         }
 
-        $result = $this->modelProduct->deleteProduct($id);
+        $data = $_POST;
+        $validator = new Validator();
 
-        if ($result) {
-            echo json_encode(['status' => 'success', 'message' => '¡Registro eliminado!']);
+        $rules = [
+            'firstname'   => ['required' => false, 'type' => 'string'],
+            'lastname'    => ['required' => false, 'type' => 'string'],
+            'email'       => ['required' => false, 'type' => 'email'],
+            'phone'       => ['required' => false, 'type' => 'string'],
+            'username'    => ['required' => false, 'type' => 'username'],
+            'newPass'     => ['required' => false, 'type' => 'password'],
+            'currentPass' => ['required' => true, 'type' => 'string']
+        ];
+
+        if (!$validator->validate($data, $rules)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Validación fallida',
+                'errors' => $validator->errors()
+            ]);
+            return;
+        }
+
+        $data = $validator->sanitize($data);
+        $userId = $_SESSION['user_id'];
+        $user = $this->accountModel->getUserById($userId);
+
+        if (!$user) {
+            echo json_encode(['status' => 'error', 'message' => 'Usuario no encontrado']);
+            return;
+        }
+
+        if (!password_verify($data['currentPass'], $user->password)) {
+            echo json_encode(['status' => 'error', 'message' => 'Contraseña actual incorrecta']);
+            return;
+        }
+
+        // Verificación de email único
+        if (!empty($data['email']) && strtolower($data['email']) !== strtolower($user->email)) {
+            if ($this->userModel->userExists($data['email'], $user->username, $userId)) {
+                echo json_encode(['status' => 'error', 'message' => 'Correo ya en uso']);
+                return;
+            }
+        }
+
+        // Verificación de username único
+        if (!empty($data['username']) && strtolower($data['username']) !== strtolower($user->username)) {
+            if ($this->userModel->userExists($user->email, $data['username'], $userId)) {
+                echo json_encode(['status' => 'error', 'message' => 'Nombre de usuario ya en uso']);
+                return;
+            }
+        }
+
+        // Construir datos a actualizar
+        $updateData = [];
+        if (!empty($data['firstname'])) $updateData['fname'] = $data['firstname'];
+        if (!empty($data['lastname'])) $updateData['lname'] = $data['lastname'];
+        if (!empty($data['email'])) $updateData['email'] = $data['email'];
+        if (!empty($data['phone'])) $updateData['phone'] = $data['phone'];
+        if (!empty($data['username'])) $updateData['username'] = $data['username'];
+
+        // Nueva contraseña
+        if (!empty($data['newPass'])) {
+            $updateData['password'] = password_hash($data['newPass'], PASSWORD_DEFAULT);
+        }
+
+        // Subir imagen
+        if (isset($_FILES['profile_img']) && $_FILES['profile_img']['error'] === UPLOAD_ERR_OK) {
+            $file = $_FILES['profile_img'];
+            $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            $maxSize = 1024 * 1024;
+
+            $fileType = mime_content_type($file['tmp_name']);
+            if (!in_array($fileType, $allowedTypes)) {
+                echo json_encode(['status' => 'error', 'message' => 'Solo se permiten imágenes JPG o PNG']);
+                return;
+            }
+
+            if ($file['size'] > $maxSize) {
+                echo json_encode(['status' => 'error', 'message' => 'La imagen debe pesar menos de 1MB']);
+                return;
+            }
+
+            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $fileName = 'profile.' . strtolower($ext);
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/users/{$userId}";
+
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+
+            $filePath = $uploadDir . '/' . $fileName;
+            if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+                echo json_encode(['status' => 'error', 'message' => 'No se pudo guardar la imagen']);
+                return;
+            }
+
+            $updateData['img'] = $fileName;
+            $_SESSION['user']->img = $fileName;
+        }
+
+        $result = $this->accountModel->updateProfile($userId, $updateData);
+
+        echo json_encode([
+            'status' => $result ? 'success' : 'error',
+            'message' => $result ? 'Perfil actualizado correctamente' : 'No se realizaron cambios'
+        ]);
+    }
+
+    // Delete account permanently
+    public function delete()
+    {
+        header('Content-Type: application/json');
+
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        if (empty($_SESSION['user_id'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Usuario no autenticado']);
+            return;
+        }
+
+        // Obtener input JSON
+        $input = json_decode(file_get_contents('php://input'), true);
+        $password = trim($input['password'] ?? '');
+
+        if (empty($password)) {
+            echo json_encode(['status' => 'error', 'message' => 'La contraseña es obligatoria']);
+            return;
+        }
+
+        $userId = $_SESSION['user_id'];
+        $user = $this->accountModel->getUserById($userId);
+
+        if (!$user || !password_verify($password, $user->password)) {
+            echo json_encode(['status' => 'error', 'message' => 'Contraseña incorrecta']);
+            return;
+        }
+
+        // Eliminar carpeta de imágenes
+        $userDir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/users/{$userId}";
+        if (is_dir($userDir)) $this->deleteDirectory($userDir);
+
+        // Eliminar cuenta
+        if ($this->accountModel->deleteUserById($userId)) {
+            session_unset();
+            session_destroy();
+            echo json_encode(['status' => 'success', 'message' => '¡Cuenta eliminada correctamente!']);
         } else {
-            echo json_encode(['status' => 'error', 'message' => '¡Error al eliminar el registro!']);
+            echo json_encode(['status' => 'error', 'message' => 'Error al eliminar la cuenta']);
         }
     }
-    */
+
+    private function deleteDirectory($dir)
+    {
+        if (!file_exists($dir)) return true;
+
+        foreach (scandir($dir) as $item) {
+            if ($item == '.' || $item == '..') continue;
+
+            $path = $dir . DIRECTORY_SEPARATOR . $item;
+            if (is_dir($path)) {
+                $this->deleteDirectory($path);
+            } else {
+                unlink($path);
+            }
+        }
+
+        return rmdir($dir);
+    }
 
     // Update user status
     public function update_status()

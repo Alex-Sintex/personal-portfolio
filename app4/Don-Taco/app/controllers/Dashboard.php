@@ -23,13 +23,14 @@ class Dashboard extends Controller
         $products = $this->productModel->getProducts();
 
         $data = [
-            'loadJQueryLibrary' => true,
-            'loadScriptSideBar' => true,
-            'loadCharts' => true,
-            'loadDataTablesSimple' => true,
-            'loadDataTableStyles' => true,
-            'loadStyles' => true,
-            'products' => $products
+            'loadDataTableStyles'  => true,     // CSS
+            'loadStyles'           => true,     // CSS
+            'loadJQueryLibrary'    => true,     // JS
+            'loadScriptSideBar'    => true,     // JS
+            'loadCharts'           => true,     // JS
+            'loadDataTablesSimple' => true,     // JS
+            'loadToasty'           => true,     // JS
+            'products'             => $products // data
         ];
 
         $this->view('home/dashboard', $data);

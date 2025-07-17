@@ -27,13 +27,21 @@ class Validator
                 $type = $constraints['type'];
 
                 if (!$this->checkType($value, $type)) {
-                    $this->errors[$field][] = ucfirst($field) . " debe ser $type";
+                    if ($type === 'username') {
+                        $this->errors[$field][] = ucfirst($field) . " solo puede contener letras y números, sin espacios ni símbolos (3-20 caracteres)";
+                    } else {
+                        $this->errors[$field][] = ucfirst($field) . " debe ser $type";
+                    }
                     continue;
                 }
 
                 // Extra rule: allowed email domains
                 if ($type === 'email' && !$this->isAllowedEmailDomain($value)) {
                     $this->errors[$field][] = "Only Gmail, Hotmail, Outlook, or iCloud addresses are allowed";
+                }
+
+                if ($type === 'string' && $field === 'phone' && !$this->isValidPhoneFormat($value)) {
+                    $this->errors[$field][] = 'El teléfono debe tener el formato (xxx) xxx xxxx';
                 }
 
                 // Extra rule: password strength
@@ -91,6 +99,7 @@ class Validator
             'date' => $this->validateDate($value),
             'password' => is_string($value),
             'email' => filter_var($value, FILTER_VALIDATE_EMAIL) !== false,
+            'username' => $this->isValidUsername($value),
             default => false,
         };
     }
@@ -172,5 +181,15 @@ class Validator
     {
         $cleanData = $this->sanitize($data);
         return $this->cast($cleanData, $rules);
+    }
+
+    protected function isValidPhoneFormat(string $phone): bool
+    {
+        return preg_match('/^\(\d{3}\) \d{3} \d{4}$/', $phone);
+    }
+
+    protected function isValidUsername(string $username): bool
+    {
+        return preg_match('/^[a-zA-Z0-9]{3,20}$/', $username);
     }
 }

@@ -33,7 +33,7 @@ class BalanceModel
 
     public function getBalanceInfo()
     {
-        $this->db->query("SELECT * FROM daily_balance");
+        $this->db->query("SELECT * FROM daily_balance ORDER BY id DESC");
         return $this->db->records();
     }
 
@@ -41,6 +41,7 @@ class BalanceModel
     {
         $this->db->query("
         SELECT
+            date,
             net_profit,
             total_expenses,
             closing_cash,
@@ -50,7 +51,7 @@ class BalanceModel
             available_profit,
             total_platforms,
             platform_net_profit
-        FROM daily_balance
+        FROM daily_balance ORDER BY id DESC
     ");
         return $this->db->records();
     }

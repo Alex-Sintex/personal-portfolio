@@ -168,6 +168,7 @@ $(document).ready(function () {
                 return meta.row + 1;
             }
         },
+        { data: "date", title: "FECHA" },
         { data: 'utilidadNeta', title: 'UTILIDAD NETA', render: currencyRender },
         { data: 'totalEgresos', title: 'TOTAL EGRESOS', render: currencyRender },
         { data: 'ventaTarjeta', title: 'VENTA TARJETA - %', render: currencyRender },

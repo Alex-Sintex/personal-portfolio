@@ -66,6 +66,7 @@ class Balance extends Controller
 
         foreach ($balance_cal as $row) {
             $cleaned[] = [
+                'date'                => $row->date,
                 'utilidadNeta'        => $row->net_profit,
                 'totalEgresos'        => $row->total_expenses,
                 'ventaTarjeta'        => $row->card_sales_percent,

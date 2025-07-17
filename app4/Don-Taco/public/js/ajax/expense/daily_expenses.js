@@ -97,7 +97,7 @@ $(document).ready(function () {
             success(res);
           } else {
             toast.error(res.message || 'Error desconocido');
-            error(res);
+            error({ responseJSON: res });
           }
         },
         error: function (xhr) {
@@ -131,7 +131,7 @@ $(document).ready(function () {
             success(res);
           } else {
             toast.error(res.message || 'Error desconocido');
-            error(res);
+            error({ responseJSON: res });
           }
         },
         error: function (xhr) {
