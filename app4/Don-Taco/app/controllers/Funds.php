@@ -105,14 +105,15 @@ class Funds extends Controller
         $cleanData['card_id'] = 1;
 
         // get last balance
-        $lastBalance = $this->balanceModel->getLastBalance();
-        if (!$lastBalance) {
-            http_response_code(400);
-            return;
-        }
+        $nextBalance = $this->balanceModel->getNextUnusedBalance();
 
-        $balanceId = $lastBalance->id;
-        $totFixedExp = $lastBalance->tot_fixed_exp ?? 0;
+        if ($nextBalance) {
+            $balanceId = $nextBalance->id;
+            $totFixedExp = $nextBalance->tot_fixed_exp ?? 0;
+        } else {
+            $balanceId = null;
+            $totFixedExp = 0;
+        }
 
         // get previous saldo for the card (id=1)
         $prevSaldo = $this->modelFunds->getPreviousSaldo(1) ?? 0;

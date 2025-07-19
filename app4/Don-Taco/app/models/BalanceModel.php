@@ -137,4 +137,17 @@ class BalanceModel
         $this->db->query("SELECT * FROM daily_balance ORDER BY id DESC LIMIT 1");
         return $this->db->record();
     }
+
+    public function getNextUnusedBalance()
+    {
+        $sql = "SELECT b.*
+            FROM daily_balance b
+            WHERE NOT EXISTS (
+                SELECT 1 FROM funds f WHERE f.balance_id = b.id
+            )
+            ORDER BY b.id ASC
+            LIMIT 1";
+        $this->db->query($sql);
+        return $this->db->record();
+    }
 }
