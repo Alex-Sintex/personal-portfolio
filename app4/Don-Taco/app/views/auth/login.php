@@ -38,7 +38,7 @@
                                     </form>
                                 </div>
                                 <div class="card-footer text-center py-3">
-                                    <div class="small"><a href="register">Need an account? Sign up!</a></div>
+                                    <div class="small"><span>Ingrese sus credenciales para acceder al sistema</span></div>
                                 </div>
                             </div>
                         </div>

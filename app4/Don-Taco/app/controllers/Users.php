@@ -12,20 +12,22 @@ class Users extends Controller
     public function __construct()
     {
         requireLogin();
+        requireAdmin();
         $this->userModel = $this->model('UserModel');
     }
 
     public function index()
     {
         $this->view('modules/users', [
-            'loadStyles'            => true,
-            'loadDataTableStyles'   => true,
-            'loadToastStyle'        => true,
-            'loadJQueryLibrary'     => true,
-            'loadScriptSideBar'     => true,
-            'loadDataTables'        => true,
-            'loadDataTableUsers'    => true,
-            'loadToasty'            => true
+            'loadStyles'          => true, // CSS
+            'loadDataTableStyles' => true, // CSS
+            'loadToastStyle'      => true, // CSS
+            'loadJQueryLibrary'   => true, // JS
+            'loadScriptSideBar'   => true, // JS
+            'loadDataTables'      => true, // JS
+            'loadDataTableUsers'  => true, // JS
+            'loadToasty'          => true, // JS
+            'loadJSRoleHelper'    => true  // JS
         ]);
     }
 

@@ -42,11 +42,18 @@ $(document).ready(function () {
         responsive: true,
         altEditor: true,
         language: { url: "../../JSON/es-ES.json" },
-        buttons: [
-            { text: '➕ Añadir', name: 'add' },
-            { extend: 'selected', text: '✏️ Editar', name: 'edit' },
-            { extend: 'selected', text: '❌ Borrar', name: 'delete' }
-        ],
+        buttons: (function () {
+            // Solo admins pueden ver los botones de CRUD
+            if (isAdmin()) {
+                return [
+                    { text: '➕ Añadir', name: 'add' },
+                    { extend: 'selected', text: '✏️ Editar', name: 'edit' },
+                    { extend: 'selected', text: '❌ Borrar', name: 'delete' }
+                ];
+            } else {
+                return []; // Oculta los botones completamente
+            }
+        })(),
 
         onAddRow: function (datatable, rowdata, success, error) {
             const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
@@ -153,8 +160,8 @@ $(document).ready(function () {
     });
 
     attachInfoToAltEditorModal({
-        message: `Para ver reflejado correctamente algunos cálculos,
-                  debe insertar un nuevo registro en el módulo de <strong>Gastos Diarios</strong>.`,
+        message: `Para ver reflejado correctamente los cálculos de balance,
+                  debe insertar un nuevo registro en el módulo de <strong>Gastos Diarios</strong> consecutivamente.`,
         fieldAfterId: 'alteditor-row-totGF', // form-group container ID to insert message after
         alertId: 'alert-info-gastos'         // Unique ID for the alert block
     });

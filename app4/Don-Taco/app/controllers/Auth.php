@@ -76,6 +76,10 @@ class Auth extends Controller
                 // Agrega esto:
                 $_SESSION['user'] = $user;  // Guarda todo el objeto (incluyendo imagen si ya existe)
 
+                // Update status in db to set online user
+                $this->userModel->setStatusOnline($user->id);
+                $_SESSION['user_status'] = 'online';
+
                 echo json_encode([
                     'success' => true,
                     'redirect' => PATH_URL . 'dashboard'
@@ -106,6 +110,13 @@ class Auth extends Controller
     public function logout()
     {
         session_start();            // Start the session first
+
+        // Change status to offline before destroying session
+        if (isset($_SESSION['user_id'])) {
+            $this->userModel->setStatusOffline($_SESSION['user_id']);
+            $_SESSION['user_status'] = 'offline';
+        }
+
         session_unset();            // Remove all session variables
         session_destroy();          // Destroy the session completely
         redirection('auth/login');  // Redirect to login

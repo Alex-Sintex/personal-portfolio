@@ -30,7 +30,8 @@ class GastosD extends Controller
             'loadScriptSideBar'   => true, // JS
             'loadDataTables'      => true, // JS
             'loadDataTableGD'     => true, // JS
-            'loadToasty'          => true  // JS
+            'loadToasty'          => true, // JS
+            'loadJSRoleHelper'    => true  // JS
         ];
         $this->view('modules/gastos_diarios', $data);
     }
@@ -84,6 +85,7 @@ class GastosD extends Controller
     // Insert new record for daily expense
     public function insert()
     {
+        requireAdmin();
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -202,6 +204,7 @@ class GastosD extends Controller
     // Update record for daily expense
     public function update($id)
     {
+        requireAdmin();
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
@@ -294,6 +297,7 @@ class GastosD extends Controller
     // Delete record for daily expense
     public function delete($id)
     {
+        requireAdmin();
         header('Content-Type: application/json');
 
         if (!is_numeric($id)) {

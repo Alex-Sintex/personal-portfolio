@@ -28,7 +28,8 @@ class Balance extends Controller
             'loadScriptSideBar'     => true, // JS
             'loadDataTables'        => true, // JS
             'loadDataTableBalance'  => true, // JS
-            'loadToasty'            => true  // JS
+            'loadToasty'            => true, // JS
+            'loadJSRoleHelper'      => true, // JS
         ]);
     }
 
@@ -134,17 +135,17 @@ class Balance extends Controller
 
         // Prepara datos para el cálculo automático
         $inputForCalc = [
-            'gastEfect'    => $cleanData['gastEfect'],
-            'ventEfect'    => $cleanData['ventEfect'],
-            'ventTransf'   => $cleanData['ventTransf'],
-            'ventNetTar'   => $cleanData['ventNetTar'],
-            'depPlatf'     => $cleanData['depPlatf'],
-            'nomPlatf'     => $cleanData['nomPlatf'],
-            'reparUtil'    => $cleanData['reparUtil'],
-            'ub'           => $cleanData['ub'],
-            'did'          => $cleanData['did'],
-            'rap'          => $cleanData['rap'],
-            'totGF'        => $cleanData['totGF']
+            'cash_expenses'     => $cleanData['gastEfect'] ?? 0,
+            'cash_sales'        => $cleanData['ventEfect'] ?? 0,
+            'transfer_sales'    => $cleanData['ventTransf'] ?? 0,
+            'net_card_sales'    => $cleanData['ventNetTar'] ?? 0,
+            'platform_deposits' => $cleanData['depPlatf'] ?? 0,
+            'platform_name'     => $cleanData['nomPlatf'] ?? '',
+            'profit_sharing'    => $cleanData['reparUtil'] ?? 0,
+            'uber'              => $cleanData['ub'] ?? 0,
+            'didi'              => $cleanData['did'] ?? 0,
+            'rappi'             => $cleanData['rap'] ?? 0,
+            'tot_fixed_exp'     => $cleanData['totGF'] ?? 0
         ];
 
         $calculations = BalanceHelper::calculate($inputForCalc);
@@ -173,8 +174,9 @@ class Balance extends Controller
         ];
 
         foreach ($map as $oldKey => $newKey) {
-            $insertData[$newKey] = $insertData[$oldKey];
-            unset($insertData[$oldKey]);
+            if (isset($cleanData[$oldKey])) {
+                $insertData[$newKey] = $cleanData[$oldKey];
+            }
         }
 
         // Inserta el balance
@@ -236,16 +238,17 @@ class Balance extends Controller
 
         // Prepara datos para cálculos
         $inputForCalc = [
-            'cash_expenses'     => $cleanData['gastEfect'],
-            'cash_sales'        => $cleanData['ventEfect'],
-            'transfer_sales'    => $cleanData['ventTransf'],
-            'net_card_sales'    => $cleanData['ventNetTar'],
-            'platform_deposits' => $cleanData['depPlatf'],
-            'profit_sharing'    => $cleanData['reparUtil'],
-            'uber'              => $cleanData['ub'],
-            'didi'              => $cleanData['did'],
-            'rappi'             => $cleanData['rap'],
-            'tot_fixed_exp'     => $cleanData['totGF'],
+            'cash_expenses'     => $cleanData['gastEfect'] ?? 0,
+            'cash_sales'        => $cleanData['ventEfect'] ?? 0,
+            'transfer_sales'    => $cleanData['ventTransf'] ?? 0,
+            'net_card_sales'    => $cleanData['ventNetTar'] ?? 0,
+            'platform_deposits' => $cleanData['depPlatf'] ?? 0,
+            'platform_name'     => $cleanData['nomPlatf'] ?? '',
+            'profit_sharing'    => $cleanData['reparUtil'] ?? 0,
+            'uber'              => $cleanData['ub'] ?? 0,
+            'didi'              => $cleanData['did'] ?? 0,
+            'rappi'             => $cleanData['rap'] ?? 0,
+            'tot_fixed_exp'     => $cleanData['totGF'] ?? 0
         ];
 
         $calculations = BalanceHelper::calculate($inputForCalc);

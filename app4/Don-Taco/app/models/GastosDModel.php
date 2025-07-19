@@ -65,7 +65,7 @@ class GastosDModel
     {
         $this->db->query("SELECT * FROM daily_balance ORDER BY id DESC LIMIT 1");
         $row = $this->db->record();
-        return $row ?: (object)[];
+        return $row ?: null;
     }
 
     public function getPreviousBalance()

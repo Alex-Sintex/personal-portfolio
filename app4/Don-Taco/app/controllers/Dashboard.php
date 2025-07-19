@@ -31,6 +31,7 @@ class Dashboard extends Controller
             'loadCharts'           => true,     // JS
             'loadDataTablesSimple' => true,     // JS
             'loadToasty'           => true,     // JS
+            'loadJSRoleHelper'     => true,     // JS
             'products'             => $products // data
         ];
 

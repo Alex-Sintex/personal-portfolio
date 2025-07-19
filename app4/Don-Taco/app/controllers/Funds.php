@@ -22,14 +22,15 @@ class Funds extends Controller
     public function index()
     {
         $data = [
+            'loadStyles'          => true, // CSS
+            'loadDataTableStyles' => true, // CSS
+            'loadToastStyle'      => true, // CSS
             'loadJQueryLibrary'   => true, // JS
             'loadScriptSideBar'   => true, // JS
             'loadDataTables'      => true, // JS
             'loadDataTableF'      => true, // JS
             'loadToasty'          => true, // JS
-            'loadStyles'          => true, // CSS
-            'loadDataTableStyles' => true, // CSS
-            'loadToastStyle'      => true  // CSS
+            'loadJSRoleHelper'    => true  // JS
         ];
         $this->view('modules/funds', $data);
     }
@@ -59,6 +60,7 @@ class Funds extends Controller
     // Insert new record for funds
     public function insert()
     {
+        requireAdmin();
         $data = json_decode(file_get_contents('php://input'), true);
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -146,6 +148,7 @@ class Funds extends Controller
     // Update record for funds
     public function update($id)
     {
+        requireAdmin();
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
@@ -232,6 +235,7 @@ class Funds extends Controller
     // Delete record for funds
     public function delete($id)
     {
+        requireAdmin();
         header('Content-Type: application/json');
 
         if (!is_numeric($id)) {

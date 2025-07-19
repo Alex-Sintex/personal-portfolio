@@ -276,6 +276,8 @@ table.dataTable, table.dataTable th, table.dataTable td {
 .dataTables_wrapper .dataTables_filter {
     float: right;
     text-align: right;
+    padding-bottom: 15px !important;
+
 }
 
 .dataTables_wrapper .dataTables_filter input {

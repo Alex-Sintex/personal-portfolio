@@ -58,6 +58,9 @@ $loadShowHidePasswd = $data['loadShowHidePasswd'] ?? false;
 
 // Load asset for account/settings module
 $loadAccountScripts = $data['loadAccountScripts'] ?? false;
+
+// Load asset for Role helper
+$loadJSRoleHelper = $data['loadJSRoleHelper'] ?? false;
 ?>
 
 <!-- Core JS -->
@@ -71,6 +74,13 @@ $loadAccountScripts = $data['loadAccountScripts'] ?? false;
 <!-- Load JQuery Library -->
 <?php if ($loadJQueryLibrary): ?>
     <script src="<?= PATH_URL ?>js/main/jquery-3.7.1.min.js"></script>
+<?php endif; ?>
+
+<?php if (!empty($loadJSRoleHelper)): ?>
+    <script>
+        window.USER_ROLE = "<?= userRole() ?>";
+    </script>
+    <script src="<?= PATH_URL ?>js/ajax/helper/role_helper.js"></script>
 <?php endif; ?>
 
 <?php if (!empty($loadJSLogin)): ?>

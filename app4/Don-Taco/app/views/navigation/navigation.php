@@ -139,19 +139,21 @@
                                 </div>
                             </li>
 
-                            <li class="sidebar-dropdown">
-                                <a href="javascript:void(0)">
-                                    <i class="fa fa-users"></i>
-                                    <span>Cuentas</span>
-                                </a>
-                                <div class="sidebar-submenu">
-                                    <ul>
-                                        <li>
-                                            <a href="users">Usuarios</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+                            <?php if (isAdmin()): ?>
+                                <li class="sidebar-dropdown">
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-users"></i>
+                                        <span>Cuentas</span>
+                                    </a>
+                                    <div class="sidebar-submenu">
+                                        <ul>
+                                            <li>
+                                                <a href="users">Usuarios</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
 
                             <li class="header-menu">
                                 <span>Extra</span>

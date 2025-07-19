@@ -62,4 +62,14 @@ class UserModel
     {
         return $this->db->delete('users', 'id = :id', ['id' => $id]);
     }
+
+    public function setStatusOnline($userId)
+    {
+        return $this->updateUser($userId, ['status' => 'online']);
+    }
+
+    public function setStatusOffline($userId)
+    {
+        return $this->updateUser($userId, ['status' => 'offline']);
+    }
 }

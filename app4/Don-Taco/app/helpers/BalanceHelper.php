@@ -16,16 +16,19 @@ class BalanceHelper
 
         // ✅ Obtener el balance anterior (OFFSET 1)
         $prevBalance = $expModel->getPreviousBalance(); // nuevo método
-        $utilidadDisponibleAnt = $prevBalance?->available_profit ?? 0;
+        $utilidadDisponibleAnt = isset($prevBalance->available_profit)
+            ? $prevBalance->available_profit
+            : 0;
 
         // ✅ Obtener el balance actual (último) para el cálculo del gasto diario
         $lastBalance = $expModel->getLastRecord();
-        $totGD = $lastBalance?->id
-            ? $expModel->getTotalGDByBalanceId($lastBalance->id)
-            : 0;
+        $totGD = 0;
+        if ($lastBalance && isset($lastBalance->id)) {
+            $totGD = $expModel->getTotalGDByBalanceId($lastBalance->id);
+        }
 
         // Extracción de datos como ya tenías
-        $cashExpenses     = (float) ($data['cash_expenses']     ?? 0);
+        //$cashExpenses     = (float) ($data['cash_expenses']     ?? 0);
         $cashSales        = (float) ($data['cash_sales']        ?? 0);
         $netCardSales     = (float) ($data['net_card_sales']    ?? 0);
         $transferSales    = (float) ($data['transfer_sales']    ?? 0);

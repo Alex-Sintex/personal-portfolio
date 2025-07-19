@@ -29,7 +29,8 @@ class GastosFD extends Controller
             'loadScriptSideBar'   => true, // JS
             'loadDataTables'      => true, // JS
             'loadDataTableGFD'    => true, // JS
-            'loadToasty'          => true  // JS
+            'loadToasty'          => true, // JS
+            'loadJSRoleHelper'    => true  // JS
         ];
         $this->view('modules/gastos_fijos', $data);
     }
@@ -61,6 +62,7 @@ class GastosFD extends Controller
     // Insert new record for daily fixed expense
     public function insert()
     {
+        requireAdmin();
         $data = json_decode(file_get_contents('php://input'), true);
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -149,6 +151,7 @@ class GastosFD extends Controller
     // Update record for daily fixed expense
     public function update($id)
     {
+        requireAdmin();
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
@@ -223,6 +226,7 @@ class GastosFD extends Controller
     // Delete record for daily fixed expense
     public function delete($id)
     {
+        requireAdmin();
         header('Content-Type: application/json');
 
         if (!is_numeric($id)) {

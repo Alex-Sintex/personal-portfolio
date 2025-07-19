@@ -64,11 +64,18 @@ $(document).ready(function () {
             responsive: true,
             altEditor: true,
             language: { url: "../../JSON/es-ES.json" },
-            buttons: [
-                { text: '➕ Añadir', name: 'add' },
-                { extend: 'selected', text: '✏️ Editar', name: 'edit' },
-                { extend: 'selected', text: '❌ Borrar', name: 'delete' }
-            ],
+            buttons: (function () {
+                // Solo admins pueden ver los botones de CRUD
+                if (isAdmin()) {
+                    return [
+                        { text: '➕ Añadir', name: 'add' },
+                        { extend: 'selected', text: '✏️ Editar', name: 'edit' },
+                        { extend: 'selected', text: '❌ Borrar', name: 'delete' }
+                    ];
+                } else {
+                    return []; // Oculta los botones completamente
+                }
+            })(),
 
             onAddRow: function (datatable, rowdata, success, error) {
                 const data = typeof rowdata === "string" ? JSON.parse(rowdata) : rowdata;
@@ -139,7 +146,7 @@ $(document).ready(function () {
                     }
                 });
             },
-            
+
             onDeleteRow: function (datatable, rowdata, success, error) {
 
                 const id = rowdata[0]?.id;

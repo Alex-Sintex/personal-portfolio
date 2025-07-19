@@ -26,7 +26,8 @@ class Product extends Controller
             'loadScriptSideBar'    => true, // JS
             'loadDataTables'       => true, // JS
             'loadDataTableProduct' => true, // JS
-            'loadToasty'           => true  // JS
+            'loadToasty'           => true, // JS
+            'loadJSRoleHelper'     => true  // JS
         ];
         $this->view('modules/product', $data);
     }
@@ -53,6 +54,7 @@ class Product extends Controller
     // Insert new product
     public function insert()
     {
+        requireAdmin();
         header('Content-Type: application/json'); // ✅ Asegura salida JSON
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -118,6 +120,7 @@ class Product extends Controller
     // Update product
     public function update($id)
     {
+        requireAdmin();
         header('Content-Type: application/json'); // ✅ Asegura salida JSON
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
@@ -183,6 +186,7 @@ class Product extends Controller
     // Delete product
     public function delete($id)
     {
+        requireAdmin();
         header('Content-Type: application/json');
 
         if (!is_numeric($id)) {

@@ -26,7 +26,8 @@ class Suppliers extends Controller
             'loadScriptSideBar'   => true, // JS
             'loadDataTables'      => true, // JS
             'loadDataTableSupp'   => true, // JS
-            'loadToasty'          => true  // JS
+            'loadToasty'          => true, // JS
+            'loadJSRoleHelper'    => true  // JS
         ];
 
         $this->view('modules/suppliers', $data);
@@ -53,6 +54,7 @@ class Suppliers extends Controller
     // Insert new supplier
     public function insert()
     {
+        requireAdmin();
         header('Content-Type: application/json'); // ✅ Asegura salida JSON
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -101,6 +103,7 @@ class Suppliers extends Controller
     // Update supplier
     public function update($id)
     {
+        requireAdmin();
         header('Content-Type: application/json'); // ✅ Asegura salida JSON
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
@@ -149,6 +152,7 @@ class Suppliers extends Controller
     // Delete supplier
     public function delete($id)
     {
+        requireAdmin();
         header('Content-Type: application/json');
 
         if (!is_numeric($id)) {

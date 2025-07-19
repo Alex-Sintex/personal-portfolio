@@ -27,7 +27,8 @@ class Unitoms extends Controller
             'loadScriptSideBar'    => true, // JS
             'loadDataTables'       => true, // JS
             'loadDataTableUnitoms' => true, // JS
-            'loadToasty'           => true  // JS
+            'loadToasty'           => true, // JS
+            'loadJSRoleHelper'     => true  // JS
         ];
 
         $this->view('modules/unitoms', $data);
@@ -54,6 +55,7 @@ class Unitoms extends Controller
     // Insert new supplier
     public function insert()
     {
+        requireAdmin();
         header('Content-Type: application/json'); // ✅ Asegura salida JSON
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -102,6 +104,7 @@ class Unitoms extends Controller
     // Update supplier
     public function update($id)
     {
+        requireAdmin();
         header('Content-Type: application/json'); // ✅ Asegura salida JSON
 
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
@@ -150,6 +153,7 @@ class Unitoms extends Controller
     // Delete supplier
     public function delete($id)
     {
+        requireAdmin();
         header('Content-Type: application/json');
 
         if (!is_numeric($id)) {
