@@ -1,0 +1,203 @@
+.log {
+    display: flex;
+    justify-content: space-around;
+    font-weight: bold;
+}
+
+.credits {
+    margin: 10px auto;
+}
+
+.container-log {
+    height: 650px;
+    width: 500px;
+    box-shadow: 0 3px 5px rgb(128, 128, 128);
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.btn-log {
+    height: 60px;
+    width: 200px;
+    margin: 20px auto;
+    box-shadow: 0 15px 49px rgb(204, 204, 204);
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: black;
+    padding: 10px;
+
+}
+
+.login,
+.student {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    position: relative;
+    color: color(srgb 0.9999 1 1);
+
+}
+
+.slider {
+    height: 10%;
+    width: 21%;
+    border-radius: 50px;
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(63, 90, 53) 5.04%, rgb(63, 90, 53) 97.06%, rgb(255, 255, 255));
+    position: absolute;
+    top: 6.4%;
+    left: 150px;
+    transition: all 0.5s ease-in-out;
+
+}
+
+.movesliderLog {
+    left: 190px;
+}
+
+.movesliderReg {
+    left: 190px;
+}
+
+.movesliderStud {
+    left: 245px;
+
+}
+
+.login-box {
+    min-width: 100%;
+    padding: 0px 40px;
+    gap: 50px;
+
+}
+
+.student-box {
+    min-width: 100%;
+    padding: 0px 40px;
+    gap: 30px;
+    overflow-y: -webkit-paged-y;
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+}
+
+/*
+    CSS FORM-SECTION RULES
+*/
+.form-section {
+    display: flex;
+    transition: all 0.5s ease-in-out;
+    left: 0px;
+    position: relative;
+    width: -webkit-fill-available;
+
+}
+
+.form-section-moveLog {
+    left: -500px;
+}
+
+.form-section-moveReg {
+    left: -500px;
+
+}
+
+.form-section-moveStud {
+    left: -500px;
+
+}
+
+/*
+  ENDING OF FORM-SECTION RULES
+*/
+
+@media screen and (max-width: 950px) {
+    .container-log {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        display: block;
+    }
+
+    .btn-log {
+        margin: 15px;
+        width: 100%;
+        padding: 7px;
+    }
+
+    .login,
+    .student {
+        font-size: 19px;
+    }
+
+    .slider {
+        height: 10%;
+        width: 25%;
+        border-radius: 50px;
+        background-image: linear-gradient(rgb(255, 255, 255), rgb(63, 90, 53) 5.04%, rgb(63, 90, 53) 97.06%, rgb(255, 255, 255));
+        position: absolute;
+        top: 5%;
+        left: 24%;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .movesliderLog {
+        left: 190px;
+    }
+
+    .movesliderReg {
+        left: 120px;
+
+    }
+
+    .movesliderStud {
+        left: 47%;
+    }
+
+    .form-section {
+        height: 500px;
+        width: 100%;
+        left: 0%;
+        position: relative;
+        display: flex;
+    }
+
+    .form-section-moveLog {
+        left: -350px;
+    }
+
+    .form-section-moveReg {
+        left: -350px;
+    }
+
+    .form-section-moveStud {
+        left: -100%;
+    }
+
+    .form-sectionStud {
+        display: flex;
+        transition: all 0.5s ease-in-out;
+        /*left: 0px;*/
+        position: relative;
+        width: inherit;
+    }
+
+    .login-box {
+        min-width: 100%;
+        padding: 0 10px;
+        gap: 50px;
+    }
+
+    .student-box {
+        height: 100%;
+        max-width: 100%;
+
+    }
+}

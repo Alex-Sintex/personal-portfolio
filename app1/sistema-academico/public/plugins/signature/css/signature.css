@@ -1,0 +1,16 @@
+#sig canvas {
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    cursor: crosshair;
+    width: 100% !important;
+    height: auto;
+}
+
+.kbw-signature {
+    width: 400px;
+    height: 200px;
+}
+
+.kbw-signature-disabled {
+    opacity: 0.35;
+}
