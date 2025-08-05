@@ -138,6 +138,13 @@ class BalanceModel
         return $this->db->record();
     }
 
+    public function getById($id)
+    {
+        $this->db->query("SELECT * FROM daily_balance WHERE id = :id");
+        $this->db->bind(':id', $id);
+        return $this->db->record();
+    }
+
     public function getNextUnusedBalance()
     {
         $sql = "SELECT b.*

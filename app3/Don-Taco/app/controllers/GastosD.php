@@ -154,12 +154,6 @@ class GastosD extends Controller
             return;
         }
 
-        /*// ✅ Prevent duplicate expense per balance
-        if ($this->modelGastosD->existsExpenseForBalance($lastBalance->id)) {
-            echo json_encode(['status' => 'error', 'message' => 'Ya existe un gasto diario asociado a este balance.']);
-            return;
-        }*/
-
         // ✅ Insert expense
         $insertData = [
             'date'            => $cleanData['date'],
@@ -266,6 +260,15 @@ class GastosD extends Controller
                 'status' => 'error',
                 'message' => 'Ya existe un gasto diario con esa fecha'
             ]);
+            return;
+        }
+
+        $existing = $this->balanceModel->getById($id);
+        $map = array_keys($rules); // Compare only fields we validate
+        $hasChanges = DataHelper::hasChanges($cleanData, $existing, $map);
+
+        if ($hasChanges) {
+            echo json_encode(['status' => 'success', 'message' => 'Registro actualizado sin cambios nuevos']);
             return;
         }
 

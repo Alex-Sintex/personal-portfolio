@@ -5584,6 +5584,13 @@ textarea.form-control-lg {
     overflow-wrap: break-word;
 }
 
+/* BLURRING BACKGROUND RESETPASSWD */
+#resetPasswordModal {
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1 !important;
+}
+
 .modal {
     --bs-modal-zindex: 1055;
     --bs-modal-width: 500px;

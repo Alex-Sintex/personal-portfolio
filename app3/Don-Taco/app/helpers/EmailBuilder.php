@@ -31,7 +31,7 @@ class EmailBuilder
                             </tr>
                             <tr>
                                 <td style='font-size: 16px; color: #555555; padding-bottom: 30px;'>
-                                    Por favor, da click en el siguiente enlace para verificar tu email:
+                                    Por favor, da click en el siguiente enlace para verificar tu correo electrónico:
                                 </td>
                             </tr>
                             <tr>
@@ -41,7 +41,7 @@ class EmailBuilder
                             </tr>
                             <tr>
                                 <td style='font-size: 14px; color: #999999;'>
-                                    Si no solicitaste este proceso, puedes ignorar este correo.
+                                    Si no solicitaste esta verificación, puedes ignorar este correo.
                                 </td>
                             </tr>
                         </table>

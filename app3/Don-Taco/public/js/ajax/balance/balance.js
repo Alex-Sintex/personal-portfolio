@@ -59,10 +59,25 @@ $(document).ready(function () {
                         return [
                             { text: '➕ Añadir', name: 'add' },
                             { extend: 'selected', text: '✏️ Editar', name: 'edit' },
-                            { extend: 'selected', text: '❌ Borrar', name: 'delete' }
+                            { extend: 'selected', text: '❌ Borrar', name: 'delete' },
+                            {
+                                text: "<span>Refrescar</span>",
+                                action: function (e, dt, node, config) {
+                                    inTbl.ajax.reload(null, false);
+                                    calTbl.ajax.reload(null, false);
+                                }
+                            }
                         ];
                     } else {
-                        return []; // Oculta los botones completamente
+                        return [
+                            {
+                                text: "<span>Refrescar</span>",
+                                action: function (e, dt, node, config) {
+                                    inTbl.ajax.reload(null, false);
+                                    calTbl.ajax.reload(null, false);
+                                }
+                            }
+                        ]; // Oculta los botones completamente
                     }
                 })(),
 
@@ -209,6 +224,7 @@ $(document).ready(function () {
                 language: { url: "../../JSON/es-ES.json" },
                 buttons: (function () {
                     const buttons = [
+                        'excel',
                         {
                             extend: 'print',
                             title: 'Reporte',

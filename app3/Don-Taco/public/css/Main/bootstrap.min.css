@@ -64,7 +64,7 @@ body {
 }
 
 [tabindex="-1"]:focus {
-    outline: 0 !important
+    outline: 0 !important;
 }
 
 hr {
@@ -3096,7 +3096,8 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 }
 
 .fade.show {
-    opacity: 1
+    opacity: 1 !important;
+    backdrop-filter: blur(5px);
 }
 
 .collapse {

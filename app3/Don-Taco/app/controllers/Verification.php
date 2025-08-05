@@ -91,11 +91,15 @@ class Verification extends Controller
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
+            // ✅ Fix encoding issue
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';
+
             $mail->setFrom($_ENV['SMTP_FROM'], $_ENV['SMTP_FROM_NAME']);
             $mail->addAddress($user->email, $user->fname ?? $user->username);
 
             $mail->isHTML(true);
-            $mail->Subject = 'Verifica tu email';
+            $mail->Subject = 'Verifica tu correo electrónico';
             $mail->Body    = $emailHtml;
             $mail->AltBody = "Hola {$user->fname},\n\nHaz clic en el siguiente enlace para verificar tu correo:\n{$verificationUrl}";
 

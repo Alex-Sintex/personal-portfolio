@@ -274,6 +274,15 @@ class Balance extends Controller
             'tot_fixed_exp'     => $cleanData['totGF'] ?? 0
         ];
 
+        $existing = $this->modelBalance->getById($id);
+        $map = array_keys($rules); // Compare only fields we validate
+        $hasChanges = DataHelper::hasChanges($cleanData, $existing, $map);
+
+        if ($hasChanges) {
+            echo json_encode(['status' => 'success', 'message' => 'Registro actualizado sin cambios nuevos']);
+            return;
+        }
+
         $calculations = BalanceHelper::calculate($inputForCalc);
 
         $updateData = array_merge(
