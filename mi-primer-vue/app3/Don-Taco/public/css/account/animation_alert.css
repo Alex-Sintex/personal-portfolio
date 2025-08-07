@@ -1,0 +1,49 @@
+.pulse-alert {
+    animation: 2s ease-in-out infinite pulse-glow;
+    border: 1px solid rgb(255, 193, 7);
+    box-shadow: rgba(255, 193, 7, 0.6) 0px 0px 10px;
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: rgba(255, 193, 7, 0.6) 0px 0px 0px;
+    }
+
+    50% {
+        box-shadow: rgba(255, 193, 7, 0.2) 0px 0px 15px;
+    }
+
+    100% {
+        box-shadow: rgba(255, 193, 7, 0.6) 0px 0px 0px;
+    }
+}
+
+.fade-out {
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.fade-out.remove {
+    opacity: 0;
+}
+
+#email-verified {
+    font-weight: 500;
+    border: 1px solid rgb(40, 167, 69);
+    background-color: rgb(212, 237, 218);
+    border-radius: 4px;
+    padding: 10px;
+    margin: 0px;
+}
+
+#email-not-verified {
+    border-left-width: 5px;
+    border-left-style: solid;
+    border-left-color: rgb(255, 193, 7);
+    background-color: rgb(255, 248, 225);
+    color: rgb(102, 77, 3);
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 3px;
+    margin: 0px;
+}

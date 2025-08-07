@@ -1,0 +1,22 @@
+{
+    "name": "alex-sintex/don-taco",
+    "description": "Personal project for a local inventory of Mexican food control (Don-Taco)",
+    "type": "project",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app3/Don-Taco/app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Alex-Sintex",
+            "email": "60632811+Alex-Sintex@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.10",
+        "vlucas/phpdotenv": "^5.6",
+        "dompdf/dompdf": "^3.1"
+    }
+}
