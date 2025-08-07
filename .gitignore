@@ -30,8 +30,12 @@ coverage
 *.tsbuildinfo
 *.DS_Store
 *.pem
+*.pdf
 .vscode/
 /vendor/
 app3/.DS_Store
 app3/Don-Taco/.DS_Store
 app3/Don-Taco/app/.DS_Store
+app1/.DS_Store
+app1/sistema-academico/.DS_Store
+app1/sistema-academico/public/.DS_Store
