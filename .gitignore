@@ -28,3 +28,10 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+*.DS_Store
+*.pem
+.vscode/
+/vendor/
+app3/.DS_Store
+app3/Don-Taco/.DS_Store
+app3/Don-Taco/app/.DS_Store

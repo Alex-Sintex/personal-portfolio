@@ -1,0 +1,120 @@
+<?php require PATH_APP . '/views/header/header.php'; ?>
+<div id="layoutSidenav">
+    <?php require PATH_APP . '/views/navigation/navigation.php'; ?>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">RESUMEN FINANCIERO</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4">
+                            <div class="card-body">PRODUCTO</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="product">VER MÓDULO</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-warning text-white mb-4">
+                            <div class="card-body">BALANCE</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="balance">VER MÓDULO</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-secondary text-white mb-4">
+                            <div class="card-body">GASTOS FIJOS DIARIOS</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="gastosfd">VER MÓDULO</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-success text-white mb-4">
+                            <div class="card-body">GASTOS DIARIOS</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="gastosd">VER MÓDULO</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-danger text-white mb-4">
+                            <div class="card-body">TARJETA KLAR</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="funds">VER MÓDULO</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area me-1"></i>
+                                TOTAL INGRESOS
+                            </div>
+                            <div class="card-body"><canvas id="incomesChart" width="100%" height="40"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar me-1"></i>
+                                TOTAL GASTOS DIARIOS
+                            </div>
+                            <div class="card-body"><canvas id="outcomesChart" width="100%" height="40"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        PRODUCTOS
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>NOMBRE PRODUCTO</th>
+                                    <th>PRECIO</th>
+                                    <th>UNIDAD DE MEDIDA</th>
+                                    <th>PROVEEDOR</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>NOMBRE PRODUCTO</th>
+                                    <th>PRECIO</th>
+                                    <th>UNIDAD DE MEDIDA</th>
+                                    <th>PROVEEDOR</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <?php $counter = 1 ?>
+                                <?php foreach ($data['products'] as $product) : ?>
+                                    <tr>
+                                        <td><?= $counter++; ?></td>
+                                        <td><?= $product->in_product_name; ?></td>
+                                        <td><?= $product->unit_price_product; ?></td>
+                                        <td><?= $product->measure_name; ?></td>
+                                        <td><?= $product->provider_name; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <?php require PATH_APP . '/views/footer/footer.php'; ?>
