@@ -18,8 +18,8 @@
     *                                                                           *
     *****************************************************************************
 
-Repositorio personal que reúne una selección de proyectos desarrollados como parte de mi proceso de aprendizaje,
+*Repositorio personal* que reúne una selección de proyectos desarrollados como parte de mi proceso de aprendizaje,
 con el objetivo de demostrar mis habilidades actuales en diversos lenguajes y tecnologías de programación.
 
-Personal repository showcasing a selection of projects developed as part of my learning journey,
+*Personal repository* showcasing a selection of projects developed as part of my learning journey,
 with the aim of demonstrating my current skills in various programming languages and technologies.
