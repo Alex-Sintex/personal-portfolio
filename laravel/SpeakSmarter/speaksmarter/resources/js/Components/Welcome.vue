@@ -3,5 +3,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 </script>
 
 <template>
-    <h1>Hello World</h1>
+    <div class="m-4">
+        <h1>Hello {{ $page.props.auth.user.name }}</h1>
+    </div>
 </template>

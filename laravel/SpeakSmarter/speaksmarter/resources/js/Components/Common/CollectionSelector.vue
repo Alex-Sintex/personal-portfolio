@@ -45,7 +45,9 @@ const handleRemoveSelection = (id) => {
                 </option>
             </select>
             <button type="button" class="text-white bg-indigo-500 hover:bg-indigo-700 py-2 px-4 rounded ml-1"
-                @click="handleAddToSelection">Add</button>
+                @click="handleAddToSelection">
+                Add
+            </button>
         </div>
         <div>
             <ul>
