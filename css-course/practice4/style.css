@@ -1,0 +1,24 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.card {
+    margin-top: 50px;
+    position: static;
+    background-color: brown;
+    width: 500px;
+    height: 500px;
+    margin: 5px;
+}
+
+.card h3 {
+    float: right;
+    background-color: blueviolet;
+    color: white;
+    margin: 5px;
+}
+
+#cleaner {
+    clear: both;
+}

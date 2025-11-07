@@ -1,0 +1,36 @@
+/*
+Pseudo-elements for WebKit browsers to style the scrollbar
+*/
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ccc;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: gray;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: darkgray;
+}
+
+.container {
+  height: 100px;
+  overflow-y: scroll;
+}
+
+/* Pseudo-selector to style the selected text */
+::selection {
+  color: red;
+  background: yellow;
+}
+
+::-moz-selection {
+  color: red;
+  background: yellow;
+}

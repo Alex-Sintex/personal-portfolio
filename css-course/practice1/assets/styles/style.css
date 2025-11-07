@@ -1,0 +1,52 @@
+/* WILDCARD */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*
+selector {
+    conjunto de propiedades y valores dentro de las llaves {}
+    propiedad: color
+    valor: red
+    Ejemplo:
+    color: red;
+}
+*/
+
+/* Agrupación de contenido */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: darkcyan;
+  font-size: 72px;
+}
+
+h1 {
+    margin: 5px;
+}
+
+p {
+  color: green;
+  font-size: 40px;
+}
+
+.example {
+  color: blue;
+}
+
+#my-p {
+  color: chocolate;
+}
+
+.card a {
+    color: aqua;
+}
+
+div ul li a {
+    color: black;
+}
