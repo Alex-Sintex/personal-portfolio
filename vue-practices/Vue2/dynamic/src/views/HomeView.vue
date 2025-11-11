@@ -12,13 +12,19 @@
 <script lang="ts" setup>
 import { ref, defineAsyncComponent } from 'vue';
 
+interface User {
+  name: string;
+  age: number;
+  position: string;
+}
+
 const ListLayout = defineAsyncComponent(() => import ('@/layouts/ListLayout.vue'));
 const TableLayout = defineAsyncComponent(() => import ('@/layouts/TableLayout.vue'));
 const CardLayout = defineAsyncComponent(() => import ('@/layouts/CardLayout.vue'));
 
 const layout = ref(ListLayout);
 
-const handleLayout = (cmp) => layout.value = cmp;
+const handleLayout = (cmp: any) => layout.value = cmp;
 
 const search = ref('');
 
@@ -26,7 +32,7 @@ const handleSearch = () => {
   filterUsers.value = users.value.filter(item => item.name.toLowerCase().includes(search.value.toLowerCase()));
 }
 
-const users = ref([
+const users = ref<User[]>([
   {
     name: "Luis",
     age: 30,
@@ -54,7 +60,7 @@ const users = ref([
   }
 ]);
 
-const filterUsers = ref([]);
+const filterUsers = ref<User[]>([]);
 
 filterUsers.value = users.value;
 </script>
