@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON, LECTURA DE ARCHIVOS CON FETCH (VIDEO 58)</title>
+  </head>
+  <body>
+    <div id="name"></div>
+    <script>
+      /*
+       * fetch = extraer / recuperar
+       * http asynchronous request
+       * alternative to xhr
+       * interface + simple syntax
+       */
+
+      // declare a variable
+      let Jsondata;
+      // fetch the file
+      fetch("practice53.json")
+        // convert the response to json
+        .then((res) => res.json())
+        // display the data
+        .then((output) => {
+          // get data
+          Jsondata = output;
+          // display the data
+          let textElement = document.getElementById("name");
+          textElement.textContent = Jsondata.address.street;
+        });
+    </script>
+  </body>
+</html>

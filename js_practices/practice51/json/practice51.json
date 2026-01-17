@@ -1,0 +1,13 @@
+{
+  "_comment": "[introducción] (video 56)",
+  "name": "Steve Jobs",
+  "age": 34,
+  "student": false,
+  "company": "Apple",
+  "address": {
+    "street": "Apple Park",
+    "city": "Cupertino",
+    "country": "USA"
+  },
+  "phone": ["555-555-5555", "555-555-5556"]
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HERENCIA - SUBCLASES (video 53)</title>
+  </head>
+  <body>
+    <script>
+      class Sportsman {
+        constructor(name, lastName) {
+          this.name = name;
+          this.lastName = lastName;
+        }
+      }
+
+      class Footballer extends Sportsman {
+        constructor(name, lastName, goals) {
+          super(name, lastName);
+          this.goals = goals;
+        }
+      }
+    </script>
+  </body>
+</html>

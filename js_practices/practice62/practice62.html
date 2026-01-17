@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EVENTOS PERSONALIZADOS (audio Player) (video 67)</title>
+  </head>
+  <body>
+    <audio controls id="audio" src=""></audio><br />
+    <select id="listTracks" title="Select a track">
+      <option value="Gorillaz - Dare (Noize Generation Remix).mp3">
+        Gorillaz - Dare (Noize Generation Remix)
+      </option>
+      <option value="Gorillaz - Feel Good Inc (Trapzillas Remix).mp3">
+        Gorillaz - Feel Good Inc (Trapzillas Remix)
+      </option>
+      <option value="Gorillaz - Stylo (Alex Metric Remix).mp3">
+        Gorillaz - Stylo (Alex Metric Remix)
+      </option>
+    </select>
+    <script>
+      let audio = document.getElementById("audio");
+      let listTracks = document.getElementById("listTracks");
+
+      listTracks.addEventListener("change", changeTrack);
+
+      function changeTrack() {
+        let chosenTrack = listTracks.value;
+        audio.src = "sounds/" + chosenTrack;
+        audio.play();
+        let event = new CustomEvent("trackChanged");
+        audio.dispatchEvent(event);
+      }
+      audio.addEventListener("trackChanged", showTrack);
+
+      function showTrack() {
+        console.log("Current track: " + listTracks.value);
+      }
+    </script>
+  </body>
+</html>

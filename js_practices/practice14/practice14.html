@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice 14 - Arrays (Arreglos)</title>
+  </head>
+  <body>
+    <h4>Arrays in JavaScript</h4>
+    <script>
+      let numbers = [];
+      // Declare an array
+      /*
+       * Arrays always gonna start with index 0
+       */
+      numbers = [15, 80, 650, 50.3, -10];
+      document.write("Elements: ", numbers);
+      document.write("<br>");
+      document.write("First element: ", numbers[4]);
+      document.write("<br>");
+      numbers[0] = 14;
+      document.write("Modified first element: ", numbers[0]);
+      document.write("<br>---------------------------------------------");
+
+      let fruits = ["Apple", "Banana", "Grapes", "Mango"];
+      document.write("<br>");
+      document.write("Fruits: ", fruits);
+      document.write("<br>");
+
+      /*
+       * Array Methods
+       */
+      // Display length of the array
+      document.write("Lenght: ", fruits.length);
+      document.write("<br>");
+
+      // Display last element of the array
+      document.write("Last element: ", numbers[numbers.length - 1]);
+      document.write("<br>");
+
+      // Convert array to string
+      document.write("String: ", numbers.toString());
+      document.write("<br>");
+
+      // Join array elements
+      let letters = ["a", "b", "c", "d"];
+      let numbers2 = [1, 2, 3, 4];
+      document.write("Alphanumeric: ", letters.concat(numbers2));
+      document.write("<br>");
+      document.write("<br>");
+
+      // Remove a specific element
+      document.write("Original Array: ", numbers);
+      numbers.pop(); // removes last element
+      document.write("<br>");
+      document.write("After pop(-10): ", numbers);
+      document.write("<br>");
+
+      // Add a specific element
+      numbers.push(-10); // adds element at the end
+      document.write("After push(-10): ", numbers);
+      document.write("<br>");
+
+      // Insert element at the beginning
+      numbers.unshift(140); // adds element at the beginning
+      document.write("After unshift(140): ", numbers);
+      document.write("<br>");
+
+      // Remove elements from a specific position
+      numbers.splice(2, 1); // Removes 1 element at index 2
+      document.write("After splice(2, 1): ", numbers);
+      document.write("<br>");
+      document.write("<br>");
+
+      // Copy array
+      let newNumbers = [100, 200, 500, 600, 800];
+      let copiedArray = newNumbers.slice(1); // copies from index 1
+      document.write("Original Array: ", newNumbers);
+      document.write("<br>");
+      document.write("Copied Array: ", copiedArray);
+      document.write("<br>");
+      document.write("<br>");
+
+      // Sort array
+      let objects = ["Table", "Chair", "Laptop", "Mouse"];
+      document.write("Objects: ", objects.sort());
+      document.write("<br>");
+
+      // Reverse array
+      document.write(objects.reverse());
+    </script>
+  </body>
+</html>

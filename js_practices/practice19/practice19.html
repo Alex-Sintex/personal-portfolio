@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice 19 - Do While Loop</title>
+  </head>
+  <body>
+    <script>
+      const MAX_ATTEMPTS = 3;
+      let attempts = 0;
+
+      do {
+        const user = prompt("Enter your user...");
+        const password = prompt("Enter your password...");
+
+        if (user !== "admin" || password !== "123") {
+          attempts++;
+          alert("Incorrect user or password. Try again.");
+        } else {
+          document.write(`Welcome ${user}!`);
+          break;
+        }
+      } while (attempts < MAX_ATTEMPTS);
+
+      if (attempts >= MAX_ATTEMPTS) {
+        document.write("You have exceeded the maximum number of attempts.");
+      }
+    </script>
+  </body>
+</html>

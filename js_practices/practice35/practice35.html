@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice 35 - Textarea</title>
+  </head>
+  <body>
+    <h5>Comments</h5>
+    <form>
+      <p>
+        <textarea
+          placeholder="Enter text..."
+          id="comments"
+          rows="10"
+          cols="30"
+        ></textarea>
+        <br />
+        <input type="button" value="Submit" onclick="comment()" />
+      </p>
+    </form>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        // Get the textarea element
+        let area = document.getElementById("comments");
+        // Disable resizing
+        area.style.resize = "none";
+      function comment() {
+        // Check the length of the comment
+        if (document.getElementById("comments").value.length > 100) {
+          swal("Comment is too large");
+        } else {
+          swal("Thanks!");
+        }
+      }
+    </script>
+  </body>
+</html>

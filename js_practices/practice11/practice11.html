@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice 11 - Mathematics functions</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 2px solid #ddd;
+        padding: 8px;
+      }
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #f6da08;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Mathematics Functions</h1>
+    <table>
+      <tr>
+        <th>Function</th>
+        <th>Operation Name</th>
+        <th>Result</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>Math.round()</td>
+        <td>Rounded Price</td>
+        <td>
+          <script>
+            document.write(Math.round(399.53));
+          </script>
+        </td>
+        <td>Round a number to the nearest integer</td>
+      </tr>
+      <tr>
+        <td>Math.ceil()</td>
+        <td>Ceiled Price</td>
+        <td>
+          <script>
+            document.write(Math.ceil(299.9));
+          </script>
+        </td>
+        <td>Round a number up to the nearest integer</td>
+      </tr>
+      <tr>
+        <td>Math.floor()</td>
+        <td>Floored Price</td>
+        <td>
+          <script>
+            document.write(Math.floor(540.1));
+          </script>
+        </td>
+        <td>Round a number down to the nearest integer</td>
+      </tr>
+      <tr>
+        <td>Math.sin()</td>
+        <td>Sine of 45 radians</td>
+        <td>
+          <script>
+            document.write(Math.sin(45).toFixed(2));
+          </script>
+        </td>
+        <td>Return the sine of an angle given in radians</td>
+      </tr>
+      <tr>
+        <td>Math.sin()</td>
+        <td>Sine of 45 degrees</td>
+        <td>
+          <script>
+            document.write(Math.sin(Math.PI / 4).toFixed(2));
+          </script>
+        </td>
+        <td>
+          Return the sine of an angle given in degrees (need to convert to
+          radians first)
+        </td>
+      </tr>
+      <tr>
+        <td>Math.exp()</td>
+        <td>Exponential of 2</td>
+        <td>
+          <script>
+            document.write(Math.exp(2).toFixed(2));
+          </script>
+        </td>
+        <td>Return the exponential of a given number</td>
+      </tr>
+      <tr>
+        <td>Math.log()</td>
+        <td>Natural Logarithm of 10</td>
+        <td>
+          <script>
+            document.write(Math.log(10).toFixed(2));
+          </script>
+        </td>
+        <td>Return the natural logarithm of a given number</td>
+      </tr>
+      <tr>
+        <td>Math.abs()</td>
+        <td>Absolute Value</td>
+        <td>
+          <script>
+            document.write(Math.abs(-10));
+          </script>
+        </td>
+        <td>Return the absolute value of a given number</td>
+      </tr>
+      <tr>
+        <td>Math.max()</td>
+        <td>Maximum Value</td>
+        <td>
+          <script>
+            document.write(Math.max(10, 20, 5, 40, 25));
+          </script>
+        </td>
+        <td>Return the maximum value of a set of given numbers</td>
+      </tr>
+      <tr>
+        <td>Math.random()</td>
+        <td>Random Number</td>
+        <td>
+          <script>
+            document.write(Math.round(Math.random() * 10));
+          </script>
+        </td>
+        <td>Return a random number between 0 and 10</td>
+      </tr>
+      <tr>
+        <td>Math.sqrt()</td>
+        <td>Square Root</td>
+        <td>
+          <script>
+            document.write(Math.sqrt(25));
+          </script>
+        </td>
+        <td>Return the square root of a given number</td>
+      </tr>
+      <tr>
+        <td>Math.pow()</td>
+        <td>Exponentiation</td>
+        <td>
+          <script>
+            document.write(Math.pow(4, 2));
+          </script>
+        </td>
+        <td>Return the result of raising a number to a power</td>
+      </tr>
+    </table>
+  </body>
+</html>

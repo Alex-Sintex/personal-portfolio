@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EVENTOS [BUSCADOR DE PELICULAS (video 68)</title>
+    <link rel="stylesheet" href="practice63.css" />
+  </head>
+  <body>
+    <h1>Buscador</h1>
+    <div class="block">
+      Select an option:
+      <select title="Select an option..." name="" id="mySelector">
+        <option value="peliculas.json">Movies</option>
+        <option value="series.json">Series</option>
+      </select>
+    </div>
+    <div class="block">
+      <input type="text" id="myInput" placeholder="Enter search..." />
+      <button type="button" id="myBtn">Search</button>
+    </div>
+    <div id="res" class="block">
+      <ul id="myList"></ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="practice63.js"></script>
+  </body>
+</html>

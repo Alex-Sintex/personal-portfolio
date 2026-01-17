@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice 21 - FOR IN LOOP</title>
+  </head>
+  <body>
+    <script>
+      // FOR IN LOOP EXAMPLE
+      let value = "JavaScript";
+
+      // Using FOR IN loop to iterate over the indices of the string
+      // FOR IN only works with objects and strings
+      for (let index in value) {
+        document.write(`Index: ${index}, character: ${value[index]} <br>`);
+      }
+
+      let word = "Programming";
+      let vowel = 0;
+
+      for (let i in word) {
+        if (
+          word[i] === "a" ||
+          word[i] === "e" ||
+          word[i] === "i" ||
+          word[i] === "o" ||
+          word[i] === "u"
+        ) {
+          vowel++;
+        }
+      }
+      document.write("<br>");
+      document.write(`Total Vowels in ${word} is: ${vowel}`);
+    </script>
+  </body>
+</html>

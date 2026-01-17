@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice 37 - Onblur</title>
+  </head>
+  <body>
+    <h5>Enter your data</h5>
+    <label for="name"
+      >Enter ur name:
+      <input
+        type="text"
+        name="name"
+        id="name"
+        onfocus="f_focus()"
+        onblur="f_blur()"
+        placeholder="Enter ur name..."
+    /></label>
+    <script>
+      function f_focus() {
+        document.getElementById("name").value = "";
+        document.getElementById("name").style.background = "white";
+      }
+
+      function f_blur() {
+        if(document.getElementById("name").value === "") {
+            document.getElementById("name").style.background = "red";
+            alert("You must enter your name!");
+        }
+      }
+    </script>
+  </body>
+</html>

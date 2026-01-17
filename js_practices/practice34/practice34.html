@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice 34 - Radio buttons</title>
+  </head>
+  <body>
+    <h4>Select an available schedule</h4>
+    <form>
+      <label for="radio"
+        ><input type="radio" name="schedule" id="radio1" />Tomorrow<br
+      /></label>
+      <label for="radio"
+        ><input type="radio" name="schedule" id="radio2" />Evening<br
+      /></label>
+      <label for="radio"
+        ><input type="radio" name="schedule" id="radio3" />Night<br
+      /></label>
+      <input type="button" value="Submit" onclick="selection()" />
+    </form>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      function selection() {
+        if (document.getElementById("radio1").checked) {
+          swal("Schedule from 8am to 12am");
+        } else if (document.getElementById("radio2").checked) {
+          swal("Schedule from 1pm to 6pm");
+        } else if (document.getElementById("radio3").checked) {
+          swal("Schedule from 7pm to 11pm");
+        } else {
+          swal("Please select a schedule");
+        }
+      }
+    </script>
+  </body>
+</html>
