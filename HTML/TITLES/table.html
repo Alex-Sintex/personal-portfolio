@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tables</title>
+    <style>
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <caption>
+        My first table
+      </caption>
+      <tr>
+        <th>Headline</th>
+        <th>Headline</th>
+        <th>Headline</th>
+      </tr>
+      <tr>
+        <td colspan="2">Cell</td>
+        <td rowspan="2">Cell</td>
+      </tr>
+      <tr>
+        <td>Cell</td>
+        <td>Cell</td>
+      </tr>
+    </table>
+    <br />
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th colspan="2">Steve</th>
+          <th colspan="2">Bill</th>
+        </tr>
+        <tr>
+          <th>Date</th>
+          <th>Income</th>
+          <th>Expenses</th>
+          <th>Income</th>
+          <th>Expenses</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>15/10/2023</th>
+          <td>$1000</td>
+          <td>$500</td>
+          <td>$1000</td>
+          <td>$500</td>
+        </tr>
+        <tr>
+          <th>15/10/2023</th>
+          <td>$1000</td>
+          <td>$500</td>
+          <td>$1000</td>
+          <td>$500</td>
+        </tr>
+        <tr>
+          <th>15/10/2023</th>
+          <td>$1000</td>
+          <td>$500</td>
+          <td>$1000</td>
+          <td>$500</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Total</th>
+          <td colspan="2">$3000</td>
+          <td colspan="2">$5000</td>
+        </tr>
+      </tfoot>
+    </table>
+    <br />
+    <table>
+      <caption>
+        Time Report
+      </caption>
+      <thead>
+        <tr>
+          <th></th>
+          <th colspan="2">Steve</th>
+          <th colspan="2">Bill</th>
+          <th colspan="2">Sonia</th>
+          <th colspan="2">Samantha</th>
+        </tr>
+        <tr>
+          <th>Day</th>
+          <th>Entry</th>
+          <th>Exit</th>
+          <th>Entry</th>
+          <th>Exit</th>
+          <th>Entry</th>
+          <th>Exit</th>
+          <th>Entry</th>
+          <th>Exit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Monday</th>
+          <td>9:00</td>
+          <td>16:00</td>
+          <td>8:30</td>
+          <td>15:30</td>
+          <td>9:00</td>
+          <td>16:00</td>
+          <td>8:30</td>
+          <td>15:30</td>
+        </tr>
+        <tr>
+          <th>Tuesday</th>
+          <td>9:00</td>
+          <td>16:00</td>
+          <td>8:30</td>
+          <td>15:30</td>
+          <td>9:00</td>
+          <td>16:00</td>
+          <td>8:30</td>
+          <td>15:30</td>
+        </tr>
+        <tr>
+          <th>Wednesday</th>
+          <td>9:00</td>
+          <td>16:00</td>
+          <td>8:30</td>
+          <td>15:30</td>
+          <td>9:00</td>
+          <td>16:00</td>
+          <td>8:30</td>
+          <td>15:30</td>
+        </tr>
+        <tr>
+          <th>Thursday</th>
+          <td>9:00</td>
+          <td>16:00</td>
+          <td>8:30</td>
+          <td>15:30</td>
+          <td>9:00</td>
+          <td>16:00</td>
+          <td>8:30</td>
+          <td>15:30</td>
+        </tr>
+        <tr>
+          <th>Friday</th>
+          <td>9:00</td>
+          <td>16:00</td>
+          <td>8:30</td>
+          <td>15:30</td>
+          <td>9:00</td>
+          <td>16:00</td>
+          <td>8:30</td>
+          <td>15:30</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Date</th>
+          <td style="text-align: center" colspan="8">18/04/22</td>
+        </tr>
+      </tfoot>
+    </table>
+  </body>
+</html>
