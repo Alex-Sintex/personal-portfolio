@@ -1,0 +1,135 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About me",
+    "portfolio": "Portfolio",
+    "services": "Services",
+    "updates": "Updates",
+    "contact": "Contact"
+  },
+  "theme": {
+    "dark": "Dark mode",
+    "light": "Light mode"
+  },
+  "hero": {
+    "roles": [
+      "Mobile Developer (iOS).",
+      "Web Developer.",
+      "Freelancer.",
+      "Programmer."
+    ]
+  },
+  "about": {
+    "title": "ABOUT ME",
+    "orbit": "Full Stack Developer (Web & Mobile) - Full Stack Developer (Web & Mobile)",
+    "bio": "I'm Kevin Alexis. I am a software engineer, and I'm very passionate and dedicated to programming tech solutions. With over two years of experience as a full stack developer, I've participated with leading organizations to help drive their success and growth.",
+    "info": {
+      "languages": {
+        "title": "Languages",
+        "value": "PHP, HTML, CSS, JavaScript\nVue.js, Laravel, SwiftUI, Shell"
+      },
+      "education": {
+        "title": "Education",
+        "value": "Computer Systems Engineering"
+      },
+      "projects": {
+        "title": "Projects",
+        "value": "Built more than 3 projects"
+      }
+    },
+    "tools": {
+      "title": "Tools I Use"
+    }
+  },
+  "portfolio": {
+    "title": "PORTFOLIO",
+    "subtitle": "Welcome to my web and mobile development portfolio! Explore a collection of projects showcasing my expertise in front-end and backend development.",
+    "categories": {
+      "web": "Web Apps",
+      "mobile": "Mobile Apps"
+    },
+    "projects": {
+      "accounting": "Accounting System",
+      "academic": "Academic System Administration",
+      "band": "Band ecommerce web application",
+      "iautism": "IAutism App – Therapeutic support for children with Autism Spectrum Disorder",
+      "itracker": "iTracker App – Money saver"
+    }
+  },
+  "services": {
+    "title": "SERVICES",
+    "subtitle": "WHAT I DO",
+    "items": {
+      "webDesign": {
+        "title": "Web Design",
+        "description": "Creation of intuitive and attractive interfaces focused on user experience."
+      },
+      "development": {
+        "title": "Development",
+        "description": "Building scalable and maintainable web and mobile applications."
+      },
+      "branding": {
+        "title": "Branding & Visual Identity",
+        "description": "Definition of color palettes, typography, and consistent styles to strengthen visual identity."
+      },
+      "responsive": {
+        "title": "Responsive Design",
+        "description": "Adaptation of interfaces to deliver smooth experiences across all devices and screen sizes."
+      },
+      "pwa": {
+        "title": "Progressive Web Apps",
+        "description": "Implementation of offline support, push notifications, and installable apps for a native-like experience."
+      },
+      "support": {
+        "title": "Support",
+        "description": "Providing ongoing support and updates to keep projects in optimal condition."
+      }
+    }
+  },
+  "updates": {
+    "title": "UPDATES",
+    "statusLabel": "Status",
+    "viewMore": "VIEW MORE",
+    "showLess": "SHOW LESS",
+    "loading": "Loading…",
+    "status": {
+      "inProgress": "In Progress",
+      "completed": "Completed"
+    },
+    "items": {
+      "portfolio": {
+        "title": "Personal Portfolio (Vue 3)",
+        "description": "Building my personal portfolio."
+      },
+      "cyber": {
+        "title": "Cybersecurity Fundamentals",
+        "description": "Studying cybersecurity concepts.",
+        "tech": "Preparatory course"
+      }
+    }
+  },
+  "contact": {
+    "title": "CONTACT",
+    "subtitle": "Get in touch",
+    "message": "I'd love to hear from you! If you have any questions, comments or feedback, please use the form below.",
+    "form": {
+      "name": "Enter your name",
+      "email": "Enter your email",
+      "message": "Enter your message",
+      "submit": "Submit",
+      "sending": "Sending…"
+    },
+    "toast": {
+      "required": "Please fill in all fields",
+      "invalidEmail": "Please enter a valid email",
+      "maxName": "Name cannot exceed {max} characters",
+      "maxEmail": "Email cannot exceed {max} characters",
+      "maxMessage": "Message cannot exceed {max} characters",
+      "success": "Message sent successfully ✔",
+      "error": "Failed to send message ✖"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 Kevin Alexis. All rights reserved."
+  }
+}

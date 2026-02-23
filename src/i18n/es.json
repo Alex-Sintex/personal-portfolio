@@ -1,0 +1,135 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre mí",
+    "portfolio": "Portafolio",
+    "services": "Servicios",
+    "updates": "Actualizaciones",
+    "contact": "Contacto"
+  },
+  "theme": {
+    "dark": "Modo oscuro",
+    "light": "Modo claro"
+  },
+  "hero": {
+    "roles": [
+      "Desarrollador móvil (iOS).",
+      "Desarrollador web.",
+      "Freelancer.",
+      "Programador."
+    ]
+  },
+  "about": {
+    "title": "SOBRE MÍ",
+    "orbit": "Desarrollador Full Stack (Web & Móvil) - Desarrollador Full Stack (Web & Móvil)",
+    "bio": "Soy Kevin Alexis. Soy ingeniero de software y me apasiona profundamente desarrollar soluciones tecnológicas. Con más de dos años de experiencia como desarrollador full stack, he participado con organizaciones líderes para ayudar a impulsar su éxito y crecimiento.",
+    "info": {
+      "languages": {
+        "title": "Lenguajes",
+        "value": "PHP, HTML, CSS, JavaScript\nVue.js, Laravel, SwiftUI, Shell"
+      },
+      "education": {
+        "title": "Educación",
+        "value": "Ingeniería en Sistemas Computacionales"
+      },
+      "projects": {
+        "title": "Proyectos",
+        "value": "He construido más de 3 proyectos"
+      }
+    },
+    "tools": {
+      "title": "Herramientas que uso"
+    }
+  },
+  "portfolio": {
+    "title": "PORTAFOLIO",
+    "subtitle": "Bienvenido a mi portafolio de desarrollo web y móvil. Explora una colección de proyectos que muestran mi experiencia en desarrollo frontend y backend.",
+    "categories": {
+      "web": "Aplicaciones Web",
+      "mobile": "Aplicaciones Móviles"
+    },
+    "projects": {
+      "accounting": "Sistema de Contabilidad",
+      "academic": "Sistema de Administración Académica",
+      "band": "Aplicación web de comercio electrónico para banda",
+      "iautism": "App IAutism – Apoyo terapéutico para niños con Trastorno del Espectro Autista",
+      "itracker": "App iTracker – Ahorro y control de gastos"
+    }
+  },
+  "services": {
+    "title": "SERVICIOS",
+    "subtitle": "LO QUE HAGO",
+    "items": {
+      "webDesign": {
+        "title": "Diseño Web",
+        "description": "Creación de interfaces intuitivas y atractivas, centradas en la experiencia del usuario."
+      },
+      "development": {
+        "title": "Desarrollo",
+        "description": "Construcción de aplicaciones web y móviles escalables y fáciles de mantener."
+      },
+      "branding": {
+        "title": "Branding e Identidad Visual",
+        "description": "Definición de paletas de colores, tipografía y estilos consistentes para fortalecer la identidad visual."
+      },
+      "responsive": {
+        "title": "Diseño Responsivo",
+        "description": "Adaptación de interfaces para ofrecer experiencias fluidas en todos los dispositivos y tamaños de pantalla."
+      },
+      "pwa": {
+        "title": "Aplicaciones Web Progresivas",
+        "description": "Implementación de soporte offline, notificaciones push y apps instalables para una experiencia tipo app nativa."
+      },
+      "support": {
+        "title": "Soporte",
+        "description": "Provisión de asistencia continua y actualizaciones para mantener los proyectos en óptimas condiciones."
+      }
+    }
+  },
+  "updates": {
+    "title": "ACTUALIZACIONES",
+    "statusLabel": "Estado",
+    "viewMore": "VER MÁS",
+    "showLess": "VER MENOS",
+    "loading": "Cargando…",
+    "status": {
+      "inProgress": "En progreso",
+      "completed": "Completado"
+    },
+    "items": {
+      "portfolio": {
+        "title": "Portafolio Personal (Vue 3)",
+        "description": "Desarrollando mi portafolio personal usando Vue 3."
+      },
+      "cyber": {
+        "title": "Fundamentos de Ciberseguridad",
+        "description": "Estudiando conceptos fundamentales de ciberseguridad.",
+        "tech": "Curso propedéutico"
+      }
+    }
+  },
+  "contact": {
+    "title": "CONTACTO",
+    "subtitle": "Ponte en contacto",
+    "message": "¡Me encantaría saber de ti! Si tienes alguna pregunta, comentario o sugerencia, por favor usa el formulario de abajo.",
+    "form": {
+      "name": "Ingresa tu nombre",
+      "email": "Ingresa tu correo",
+      "message": "Escribe tu mensaje",
+      "submit": "Enviar",
+      "sending": "Enviando…"
+    },
+    "toast": {
+      "required": "Por favor completa todos los campos",
+      "invalidEmail": "Ingresa un correo válido",
+      "maxName": "El nombre no puede superar los {max} caracteres",
+      "maxEmail": "El correo no puede superar los {max} caracteres",
+      "maxMessage": "El mensaje no puede superar los {max} caracteres",
+      "success": "Mensaje enviado correctamente ✔",
+      "error": "Error al enviar el mensaje ✖"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 Kevin Alexis. Todos los derechos reservados."
+  }
+}

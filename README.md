@@ -1,25 +1,34 @@
-    *****************************************************************************
-    *                                                                           *
-    *                                                                           *
-    *  ██████╗ ███████╗██████╗ ███████╗ ██████╗ ███╗   ██╗ █████╗ ██╗           *
-    *  ██╔══██╗██╔════╝██╔══██╗██╔════╝██╔═══██╗████╗  ██║██╔══██╗██║           *
-    *  ██████╔╝█████╗  ██████╔╝███████╗██║   ██║██╔██╗ ██║███████║██║           *
-    *  ██╔═══╝ ██╔══╝  ██╔══██╗╚════██║██║   ██║██║╚██╗██║██╔══██║██║           *
-    *  ██║     ███████╗██║  ██║███████║╚██████╔╝██║ ╚████║██║  ██║███████╗      *
-    *  ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝      *
-    *                                                                           *
-    *  ██████╗  ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗     ██╗ ██████╗   *
-    *  ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║     ██║██╔═══██╗  *
-    *  ██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██║   ██║██║     ██║██║   ██║  *
-    *  ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██║   ██║██║     ██║██║   ██║  *
-    *  ██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝  *
-    *  ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝   *
-    *                                                                           *
-    *                                                                           *
-    *****************************************************************************
+# 🌐 Alex-Sintex – 🧑‍💻 Full Stack Developer Portfolio
 
-*Repositorio personal* que reúne una selección de proyectos desarrollados como parte de mi proceso de aprendizaje,
-con el objetivo de demostrar mis habilidades actuales en diversos lenguajes y tecnologías de programación.
+## 🇪🇸 Español
 
-*Personal repository* showcasing a selection of projects developed as part of my learning journey,
-with the aim of demonstrating my current skills in various programming languages and technologies.
+Portafolio profesional desarrollado con Vue 3 y Vite.
+Incluye una selección de proyectos backend y frontend, destacando arquitectura MVC en PHP, autenticación con AJAX y aplicaciones modernas en JavaScript.
+
+## 🇺🇸 English
+
+Professional portfolio built with Vue 3 and Vite.
+Showcases backend and frontend projects including a custom PHP MVC system, AJAX authentication, and modern JavaScript applications.
+
+---
+
+## 🔗 Live Website
+
+https://kevin-alexis-portfolio.netlify.app
+
+---
+
+## 🛠 Tech Stack
+
+- Vue 3
+- Vite
+- JavaScript (ES6+)
+- Responsive Design
+- Git & GitHub
+
+---
+
+## ▶️ Run Locally
+
+npm install  
+npm run dev
