@@ -2,13 +2,15 @@
 
 ## 🇪🇸 Español
 
-Portafolio profesional desarrollado con Vue 3 y Vite.
-Incluye una selección de proyectos backend y frontend, destacando arquitectura MVC en PHP, autenticación con AJAX y aplicaciones modernas en JavaScript.
+Portafolio profesional que incluye proyectos web full-stack desarrollados con Laravel y Vue 3 + Vite, así como aplicaciones iOS nativas desarrolladas con SwiftUI.
+Los proyectos web muestran arquitecturas modernas, autenticación segura, gestión de datos y interfaces responsivas.
+Los proyectos iOS demuestran diseño de interfaces nativas, integración con datos y buenas prácticas en Swift.
 
 ## 🇺🇸 English
 
-Professional portfolio built with Vue 3 and Vite.
-Showcases backend and frontend projects including a custom PHP MVC system, AJAX authentication, and modern JavaScript applications.
+Professional portfolio featuring full-stack web projects built with Laravel and Vue 3 + Vite, alongside native iOS applications developed with SwiftUI.
+Web projects demonstrate modern architectures, secure authentication, data management, and responsive UI.
+iOS projects showcase native interfaces, data integration, and best practices in Swift development.
 
 ---
 
