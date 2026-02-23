@@ -3,7 +3,7 @@
 ## 🇪🇸 Español
 
 Portafolio profesional que incluye proyectos web full-stack desarrollados con Laravel y Vue 3 + Vite, así como aplicaciones iOS nativas desarrolladas con SwiftUI.
-Los proyectos web muestran arquitecturas modernas, autenticación segura, gestión de datos y interfaces responsivas.
+Los proyectos web muestran arquitecturas modernas, autenticación segura, gestión de datos e interfaces responsivas.
 Los proyectos iOS demuestran diseño de interfaces nativas, integración con datos y buenas prácticas en Swift.
 
 ## 🇺🇸 English
