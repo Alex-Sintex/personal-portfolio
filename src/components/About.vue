@@ -56,6 +56,7 @@
                         <div class="tool-icon"><img src="@/assets/icons/mysql.png" alt="MySQL" /></div>
                         <div class="tool-icon"><img src="@/assets/icons/xcode.png" alt="Xcode" /></div>
                         <div class="tool-icon"><img src="@/assets/icons/firebase.png" alt="Firebase" /></div>
+                        <div class="tool-icon"><img src="@/assets/icons/azure.png" alt="Azure" /></div>
                     </div>
                 </div>
             </div>

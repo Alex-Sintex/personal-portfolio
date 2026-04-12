@@ -9,8 +9,16 @@
                     <img :src="update.image" :alt="update.title" />
                 </div>
 
+                <a v-if="update.certificateUrl" :href="update.certificateUrl" target="_blank" rel="noopener noreferrer" class="certificate-link">
+                    <span class="certificate-link-text">{{ t('updates.viewCertificate') }}</span>
+                </a>
+
                 <h3 class="update-title">{{ update.title }}</h3>
                 <p class="update-description">{{ update.description }}</p>
+                <p class="update-meta" v-if="update.date">
+                    <strong>{{ t('updates.dateLabel') }}:</strong>
+                    {{ update.date }}
+                </p>
                 <p class="update-meta">
                     <strong>{{ t('updates.statusLabel') }}:</strong>
                     {{ update.status }} · {{ update.tech }}
@@ -42,7 +50,7 @@ import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import portfolio_web from '@/assets/images/portfolio/web/portfolio_web.png'
-import mootec from '@/assets/images/portfolio/web/mootec.png'
+import certificate from '@/assets/images/portfolio/web/certificate.png'
 
 const { t } = useI18n()
 
@@ -59,10 +67,12 @@ const allUpdates = computed(() => [
     {
         id: 2,
         title: t('updates.items.cyber.title'),
-        image: mootec,
+        image: certificate,
         description: t('updates.items.cyber.description'),
+        date: t('updates.items.cyber.date'),
         status: t('updates.status.completed'),
-        tech: t('updates.items.cyber.tech')
+        tech: t('updates.items.cyber.tech'),
+        certificateUrl: 'https://learn.microsoft.com/api/credentials/share/es-es/KevinAlexis-3249/F0F478E8F620D1FF?sharingId=B72E652594DB4365'
     }
 ])
 
@@ -180,6 +190,80 @@ function toggleUpdates() {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* ------------------------
+   CERTIFICATE LINK
+------------------------ */
+.certificate-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.8rem 1.5rem 0;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(130deg, var(--text-main) 0%, rgba(0, 0, 0, 0.8) 10%);
+    background-size: 200% 200%;
+    border: 1px solid var(--text-main);
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.certificate-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(45, 46, 49, 0.8) 0%, var(--text-main) 100%);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.certificate-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.certificate-link-text {
+    position: relative;
+    z-index: 1;
+}
+
+.certificate-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(67, 70, 81, 0.3);
+}
+
+.certificate-link:hover::before {
+    left: 0;
+}
+
+.certificate-link:hover::after {
+    opacity: 1;
+}
+
+.certificate-link:hover {
+    transform: translateX(4px);
+}
+
+.certificate-link:active {
+    transform: translateY(0);
 }
 
 /* ------------------------

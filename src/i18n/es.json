@@ -81,14 +81,16 @@
         "description": "Implementación de soporte offline, notificaciones push y apps instalables para una experiencia tipo app nativa."
       },
       "support": {
-        "title": "Soporte",
-        "description": "Provisión de asistencia continua y actualizaciones para mantener los proyectos en óptimas condiciones."
+        "title": "Soporte y Seguridad",
+        "description": "Asistencia continua, actualizaciones y aplicación de buenas prácticas de seguridad para mantener los sistemas estables, confiables y protegidos."
       }
     }
   },
   "updates": {
     "title": "ACTUALIZACIONES",
     "statusLabel": "Estado",
+    "dateLabel": "Fecha",
+    "viewCertificate": "Ver Certificado",
     "viewMore": "VER MÁS",
     "showLess": "VER MENOS",
     "loading": "Cargando…",
@@ -102,9 +104,10 @@
         "description": "Desarrollando mi portafolio personal usando Vue 3."
       },
       "cyber": {
-        "title": "Fundamentos de Ciberseguridad",
-        "description": "Estudiando conceptos fundamentales de ciberseguridad.",
-        "tech": "Curso propedéutico"
+        "title": "Microsoft Certified: Fundamentos de Seguridad, Cumplimiento e Identidad (SC-900)",
+        "description": "Emitido por Microsoft",
+        "date": "Abril 2026",
+        "tech": "Certificado · Certificación oficial en fundamentos de ciberseguridad, cumplimiento e identidad."
       }
     }
   },

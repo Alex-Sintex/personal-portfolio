@@ -81,14 +81,16 @@
         "description": "Implementation of offline support, push notifications, and installable apps for a native-like experience."
       },
       "support": {
-        "title": "Support",
-        "description": "Providing ongoing support and updates to keep projects in optimal condition."
+        "title": "Support & Security",
+        "description": "Ongoing assistance, updates, and implementation of security best practices to keep systems stable, reliable, and protected."
       }
     }
   },
   "updates": {
     "title": "UPDATES",
     "statusLabel": "Status",
+    "dateLabel": "Date",
+    "viewCertificate": "View Certificate",
     "viewMore": "VIEW MORE",
     "showLess": "SHOW LESS",
     "loading": "Loading…",
@@ -102,9 +104,10 @@
         "description": "Building my personal portfolio."
       },
       "cyber": {
-        "title": "Cybersecurity Fundamentals",
-        "description": "Studying cybersecurity concepts.",
-        "tech": "Preparatory course"
+        "title": "Microsoft Certified: Security, Compliance, and Identity Fundamentals (SC-900)",
+        "description": "Issued by Microsoft",
+        "date": "April 2026",
+        "tech": "Certified · Completed foundational training in cybersecurity, compliance, and identity concepts."
       }
     }
   },
