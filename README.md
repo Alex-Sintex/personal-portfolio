@@ -29,8 +29,3 @@ https://kevin-alexis-portfolio.netlify.app
 - Git & GitHub
 
 ---
-
-## ▶️ Run Locally
-
-npm install  
-npm run dev
